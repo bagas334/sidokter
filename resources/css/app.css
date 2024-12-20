@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.table-custom {
+    @apply w-full text-sm text-left text-gray-700;
+}
+
+.table-custom thead {
+    @apply text-xs text-gray-50 uppercase bg-teal-600;
+}
+
+.table-custom tbody tr {
+    @apply bg-white border-b;
+}
+
+.table-custom td{
+    @apply text-sm;
+}
+
+.table-custom td,
+.table-custom th {
+    @apply px-2 py-2.5;
+}
+
+.table-custom .date-cell {
+    @apply font-medium text-cyan-950 whitespace-nowrap;
+}
+
+.table-custom th {
+    @apply border-x-[1px] border-gray-200;
+}
+
+.table-custom th:last-child {
+    border-right: none;
+}
+
+
