@@ -18,13 +18,24 @@
                 :name="'nama'"
                 required></x-input.text-field>
 
+            @if(auth()->check() && in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan']))
             <x-input.dropdown-single
                 :label="'Asal Fungsi'"
                 :name="'asal_fungsi'"
+                :value="''"
                 :options="$fungsi">
-
-
             </x-input.dropdown-single>
+            @else
+            <x-input.dropdown-single
+                :label="'Asal Fungsi'"
+                :name="'asal_fungsi'"
+                :value="auth()->user()->fungsi_ketua_tim"
+                :options="$fungsi" hidden>
+            </x-input.dropdown-single>
+            @endif
+
+
+
 
             <x-input.double-input-layout
                 :label="'Kuantitas'"

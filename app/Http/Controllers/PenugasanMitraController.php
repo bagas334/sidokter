@@ -28,7 +28,7 @@ class PenugasanMitraController extends Controller
 
     public function create($id)
     {
-        $kegiatan = Kegiatan::where('id', $id);
+        $kegiatan = Kegiatan::where('id', $id)->first();
         $mitra = Mitra::all();
 
         return view('penugasan-mitra-create', compact('id', 'kegiatan', 'mitra'));

@@ -13,7 +13,6 @@
                 <p class="text-sm"><?php echo $nama_kegiatan ?> / Penugasan</p>
                 <p class="text-3xl font-bold"><?php echo $nama_pegawai ?></p>
             </div>
-            <a href="/" class="button button-gray-500 bg-gray-500 py-2 px-1 text-white m-auto">Tandai selesai</a>
         </div>
     </div>
 
@@ -51,15 +50,18 @@
                                         <td class="text-center">{{$item->created_at}}</td>
                                         <td class="text-center">{{$item->status}}</td>
                                         <td class="text-center">
-                                            <a href="/" class="button px-2 py-1 rounded-md bg-blue-600 text-white">Lihat</a>
+                                            <a href="{{$item->bukti}}" class="button px-2 py-1 rounded-md bg-blue-600 text-white">Lihat</a>
                                         </td>
-                                        <td class="text-center flex justify-between">
+                                        <td class="text-center flex">
                                             <form action="{{ route('penugasan-organik-approve', ['id' => $id, 'petugas' => $pegawai, 'tugasId' => $item->id]) }}" method="POST" style="display:inline;">
-
+                                                @if($item->status=='proses')
                                                 @csrf
                                                 <x-acc-button />
+                                                @elseif($item->status=='selesai')
+                                                @csrf
+                                                <x-batalkan-button />
+                                                @endif
                                             </form>
-                                            <a href="/" class="button px-2 py-1 rounded-md bg-blue-600 text-white">Lihat</a>
                                         </td>
                                         <td class="text-center">{{$item->catatan}}</td>
                                     </tr>

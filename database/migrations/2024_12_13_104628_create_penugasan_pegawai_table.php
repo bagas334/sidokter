@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePenugasanPegawaiTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('penugasan_pegawai', function (Blueprint $table) {
@@ -27,11 +22,6 @@ class CreatePenugasanPegawaiTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('penugasan_pegawai');

@@ -14,18 +14,17 @@
                 :title="'Dashboard'"
                 :href="route('dashboard')" />
 
+            @if(auth()->user()->jabatan == 'Admin Kabupaten')
             <x-sidebar-button
                 :icon="'M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z'"
                 :title="'Manajemen User'"
                 :href="route('manajemen-user')" />
+            @endif
 
-            <x-sidebar-dropdown
-                :toggle_id="'capaian-kegiatan'"
+            <x-sidebar-button
+                :icon="'M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z'"
                 :title="'Capaian Kegiatan'"
-                :icon="'M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z'">
-                <x-sidebar-button :icon="null" :href="route('capaian-agregat')" :title="'Agregat'" class="pl-11" />
-                <x-sidebar-button :icon="null" :href="route('capaian-organik')" :title="'Organik'" class="pl-11" />
-            </x-sidebar-dropdown>
+                :href="route('dashboard')" />
 
             <x-sidebar-dropdown
                 :toggle_id="'beban-kerja'"
@@ -37,10 +36,12 @@
                 <x-sidebar-button :icon="null" :href="route('beban-kerja-mitra')" :title="'Mitra'" class="pl-11" />
             </x-sidebar-dropdown>
 
+            @if(auth()->user()->jabatan == 'Admin Kabupaten')
             <x-sidebar-button
                 :icon="'M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z'"
                 :title="'Manajemen Sampel'"
                 :href="route('sampel-index')" />
+
 
             <x-sidebar-dropdown
                 :toggle_id="'master-file'"
@@ -50,6 +51,7 @@
                 <x-sidebar-button :icon="null" :href="route('master-mitra')" :title="'Mitra'" class="pl-11" />
                 <x-sidebar-button :icon="null" :href="route('perusahaan-index')" :title="'Perusahaan'" class="pl-11" />
             </x-sidebar-dropdown>
+            @endif
         </ul>
     </div>
 </aside>

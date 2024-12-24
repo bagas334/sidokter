@@ -6,6 +6,3 @@
         Finalisasi
     </button>
 </div>
-
-
-

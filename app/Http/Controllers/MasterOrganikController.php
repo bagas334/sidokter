@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class MasterOrganikController extends Controller
 {
@@ -26,7 +27,7 @@ class MasterOrganikController extends Controller
 
     public function create()
     {
-        $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi'];
+        $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];
         $options = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
 
         return view('manajemen-user-create', compact('options', 'fungsi_ketua_tim'));
@@ -58,5 +59,22 @@ class MasterOrganikController extends Controller
     {
         Pegawai::where('id', $id)->delete();
         return redirect()->route('master-organik');
+    }
+
+    public function validateUser(Request $request)
+    {
+        $credentials = $request->validate([
+            'nip_bps' => 'required',
+            'password' => 'required'
+        ]);
+
+        if (Auth::guard('web')->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('beban-kerja-all');
+        }
+
+        dd('Username atau password salah');
+
+        return back()->with('loginError', 'NIP BPS atau Password salah');
     }
 }

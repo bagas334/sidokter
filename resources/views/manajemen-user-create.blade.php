@@ -3,10 +3,16 @@
 @section('title', 'Buat Organik')
 
 @section('content')
+<style>
+    #fungsi {
+        display: none;
+    }
+</style>
+
 <div class="size-full flex flex-col items-center px-4 py-6">
     <div class="w-full bg-white shadow-lg rounded-lg p-6">
         <div class="w-full pb-6 flex">
-            <x-judul text="Buat Organik" />
+            <x-judul text="Buat User Baru (Organik)" />
         </div>
 
         <form action="{{ route('manajemen-user-save') }}" method="POST">
@@ -14,7 +20,7 @@
             @method('POST')
 
             <div class="w-full pb-2">
-                <label class="text-lg text-cyan-950 font-medium">Nama Pegawai</label>
+                <label class="text-lg text-cyan-950 font-medium" style="">Nama Pegawai</label>
                 <input type="text" id="nama" name="nama"
                     class="text-gray-600 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
             </div>
@@ -38,14 +44,18 @@
             </div>
 
             <label for="jabatan" class="text-lg text-cyan-950 font-medium">Jabatan</label>
-            <x-input.dropdown-single :options="$options" :name="'jabatan'">
+            <x-input.dropdown-single id="jabatan" :options="$options" :name="'jabatan'">
 
             </x-input.dropdown-single>
 
-            <label for="fungsi" class="text-lg text-cyan-950 font-medium">Fungsi (Ketua Tim)</label>
-            <x-input.dropdown-single :options="$fungsi_ketua_tim" :name="'fungsi_ketua_tim'">
 
-            </x-input.dropdown-single>
+            <div id="fungsi">
+                <label for="fungsi" class="text-lg text-cyan-950 font-medium">Fungsi (Ketua Tim)</label>
+                <x-input.dropdown-single :options="$fungsi_ketua_tim" name="fungsi_ketua_tim">
+                </x-input.dropdown-single>
+            </div>
+
+
 
             <div class="w-full pb-2">
                 <label class="text-lg text-cyan-950 font-medium">Password</label>
@@ -61,4 +71,20 @@
         </form>
     </div>
 </div>
+
+
+
+<script>
+    const jabatan = document.getElementById('jabatan');
+    const fungsi = document.getElementById('fungsi');
+
+    jabatan.addEventListener('change', function() {
+        if (jabatan.value == 'Ketua Tim') {
+            fungsi.style.display = 'block';
+        } else {
+            fungsi.style.display = 'none';
+            fungsi.value = '';
+        }
+    });
+</script>
 @endsection

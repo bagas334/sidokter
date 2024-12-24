@@ -22,7 +22,11 @@ class PenugasanPegawaiController extends Controller
 
     public function index()
     {
-        $kegiatan_pegawai = PenugasanPegawai::with(['pegawai', 'kegiatan'])->paginate(10);
+        if (auth()->check() && in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
+            $kegiatan_pegawai = PenugasanPegawai::with(['pegawai', 'kegiatan'])->paginate(10);
+        } else {
+            $kegiatan_pegawai = PenugasanPegawai::where('asal_fungsi', auth()->user()->fungsi_ketua_tim)->with(['pegawai', 'kegiatan'])->paginate(10);
+        }
         return view('penugasan-organik-all', compact('kegiatan_pegawai'));
     }
 
@@ -47,9 +51,6 @@ class PenugasanPegawaiController extends Controller
         // Kembalikan ke view dengan semua variabel yang dibutuhkan
         return view('penugasan-detail-organik', compact('pengajuan_pegawai', 'penugasan_pegawai_id', 'id', 'pegawai', 'nama_pegawai', 'nama_kegiatan', 'tugas_pegawai'));
     }
-
-
-
 
     public function create($id)
     {

@@ -6,7 +6,7 @@
 <div class="size-full flex flex-col items-center px-4 py-6">
     <div class="w-full bg-white shadow-lg rounded-lg p-6">
         <div class="w-full pb-6 flex">
-            <x-judul text="Tambah Pengumpulan Tugas" />
+            <x-judul text="Tambah Pengajuan Penambahan Beban Kerja" />
         </div>
 
         <form action="{{ route('pengumpulan-tugas-organik-save',['id'=>$penugasan_pegawai_id]) }}" method="POST">
@@ -22,11 +22,6 @@
                 :name="'dikerjakan'"
                 required></x-input.text-field>
 
-            <x-input.text-field
-                :label="'Bukti'"
-                :name="'bukti'"
-                required></x-input.text-field>
-
             <input type="text" value="diajukan" name="status" hidden>
             <x-input.text-area
                 :label="'Catatan'"
@@ -34,7 +29,7 @@
 
             <div class="w-full flex justify-end pt-4">
                 <x-submit-button>
-                    Buat Penugasan
+                    Buat Pengajuan
                 </x-submit-button>
             </div>
         </form>

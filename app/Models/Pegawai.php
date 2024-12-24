@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Pegawai extends Model
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class Pegawai extends Authenticatable
 {
     use HasFactory;
 
@@ -23,6 +26,11 @@ class Pegawai extends Model
         'jabatan',
         'fungsi_ketua_tim',
         'password'
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
     public function penugasanPegawai()

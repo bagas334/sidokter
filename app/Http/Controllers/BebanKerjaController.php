@@ -80,7 +80,11 @@ class BebanKerjaController extends Controller
     public function showAll()
     {
         // Ambil semua data kegiatan dengan paginasi 10 per halaman
-        $kegiatan = Kegiatan::paginate(10);
+        if (auth()->check() && in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
+            $kegiatan = Kegiatan::all()->paginate(10);
+        } else {
+            $kegiatan = Kegiatan::where('asal_fungsi', auth()->user()->fungsi_ketua_tim)->paginate(10);
+        }
 
         foreach ($kegiatan as $k) {
             // Update kolom 'terlaksana' berdasarkan penugasan_pegawai dan penugasan_mitra
