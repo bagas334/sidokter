@@ -81,7 +81,7 @@ class BebanKerjaController extends Controller
     {
         // Ambil semua data kegiatan dengan paginasi 10 per halaman
         if (auth()->check() && in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
-            $kegiatan = Kegiatan::all()->paginate(10);
+            $kegiatan = Kegiatan::paginate(10);
         } else {
             $kegiatan = Kegiatan::where('asal_fungsi', auth()->user()->fungsi_ketua_tim)->paginate(10);
         }
