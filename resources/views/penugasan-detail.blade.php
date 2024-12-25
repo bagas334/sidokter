@@ -9,7 +9,7 @@
     </div>
 
     {{-- Grid--}}
-    <div class="grid grid-cols-[5fr_3fr] grid-rows-auto size-full pt-6 gap-4">
+    <div class="grid grid-cols-[7fr_2.5fr] grid-rows-auto size-full pt-6 gap-4">
         <div>
             <div class="row-span-1 max-h-[75vh]">
                 <div class="size-full bg-gray-50 border border-gray-100 rounded-md p-4">
@@ -24,8 +24,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="w-8 text-center">No</th>
-                                        <th scope="col" class="w-56">Nama</th>
-                                        <th scope="col" class="w-56">Jabatan</th>
+                                        <th scope="col" class="w-13">Nama</th>
+                                        <th scope="col" class="w-8">Jabatan</th>
                                         <th scope="col" class="w-8 text-center">Target (Satuan)</th>
                                         <th scope="col" class="w-8 text-center">Terlaksana (Satuan)</th>
                                         <th scope="col" class="w-8 text-center">Aksi</th>
@@ -48,10 +48,10 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <x-remove-button />
-                                                <a href="{{route('penugasan-organik-edit',['id'=>$id,'petugas'=>$item->petugas])}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-md rounded-md">Edit</a>
                                             </form>
+                                            <a href="{{route('penugasan-organik-edit',['id'=>$id,'petugas'=>$item->petugas])}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-md rounded-md">Edit</a>
                                         </td>
-                                        <td>{{$item->catatan}}</td>
+                                        <td class="text-center">{{$item->catatan}}</td>
                                     </tr>
                                     @endforeach
                                     @else
@@ -154,10 +154,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="w-8 text-center">No</th>
-                                    <th scope="col" class="w-52">Nama</th>
-                                    <th scope="col" class="w-12 text-end">Pendapatan</th>
-                                    <th scope="col" class="w-12 text-center">Target(Satuan)</th>
-                                    <th scope="col" class="w-12 text-center">Terlaksana (Satuan)</th>
+                                    <th scope="col" class="w-13">Nama</th>
+                                    <th scope="col" class="w-8 text-end">Pendapatan</th>
+                                    <th scope="col" class="w-8 text-center">Target (Satuan)</th>
+                                    <th scope="col" class="w-8 text-center">Terlaksana (Satuan)</th>
                                     <th scope="col" class="w-8 text-center">Aksi</th>
                                     <th scope="col" class="w-8 text-center">Catatan</th>
                                 </tr>
