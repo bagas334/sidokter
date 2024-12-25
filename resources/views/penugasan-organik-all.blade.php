@@ -14,22 +14,21 @@
     {{-- Pencarian--}}
     <div class="w-full flex flex-row justify-between items-center pb-1">
         {{-- Search Input --}}
-        <div class="relative flex items-center w-64">
-
+        <div class="relative flex items-center w-80">
 
         </div>
     </div>
 
     {{-- Tabel--}}
-    <div class="flex flex-col justify-center overflow-x-auto max-w-[78vw]">
-        <div class="relative min-w-[100vw]">
+    <div class="flex flex-col justify-center overflow-x-auto max-w-[90vw]">
+        <div class="relative min-w-[1200px]">
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th scope="col" rowspan="1" class="w-8 text-center">No</th>
-                        <th scope="col" rowspan="1" class="w-8">NIP BPS</th>
-                        <th scope="col" rowspan="1" class="w-8 text-center">Pelaksana</th>
-                        <th scope="col" rowspan="1" class="w-8 text-center">Aksi</th>
+                        <th scope="col" rowspan="1" class="w-12 text-center">No</th>
+                        <th scope="col" rowspan="1" class="w-32">NIP BPS</th>
+                        <th scope="col" rowspan="1" class="w-48 text-center">Pelaksana</th>
+                        <th scope="col" rowspan="1" class="w-32 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +38,7 @@
                         <td>{{ $item->nip_bps }}</td>
                         <td>{{ $item->nama }}</td>
                         <td class="text-center">
-                            <div class="flex justify-between px-2">
+                            <div class="flex justify-center px-2">
                                 <x-detail-button-table :id="$item->id" :route="''" />
                             </div>
                         </td>
