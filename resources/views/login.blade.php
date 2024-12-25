@@ -10,7 +10,7 @@
 <body>
 
     <div>
-        <div class="">Login Page</div>
+        <div class="">Coba diubah</div>
         <form action="{{route('validateUser')}}" method="POST">
             @csrf
             <label for="nip_bps">NIP BPS</label>
