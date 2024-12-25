@@ -48,13 +48,56 @@ class BebanKerjaController extends Controller
         // Ambil data kegiatan
         $kegiatan = Kegiatan::find($id);
 
+        // Hitung progres
+        $totalTarget = $kegiatan->target;
+
+        // Hitung total ditugaskan (progres)
+        $totalDitugaskan = (
+            DB::table('penugasan_pegawai')
+                ->where('kegiatan_id', $id)
+                ->selectRaw('SUM(target - terlaksana) as total')
+                ->value('total')
+        ) + (
+            DB::table('penugasan_mitra')
+                ->where('kegiatan_id', $id)
+                ->selectRaw('SUM(target - terlaksana) as total')
+                ->value('total')
+        );
+
+        // Hitung total tugas selesai
+        $totalSelesai = (
+            DB::table('penugasan_pegawai')
+                ->where('kegiatan_id', $id)
+                ->sum('terlaksana')
+        ) + (
+            DB::table('penugasan_mitra')
+                ->where('kegiatan_id', $id)
+                ->sum('terlaksana')
+        );
+
+        /* (Database belum bisa dilakukan operasi ini)
+        // Hitung total pengajuan
+        $totalPengajuan = (
+            DB::table('penugasan_pegawai')
+                ->where('kegiatan_id', $id)
+                ->where('status', 'diajukan')  // Menyaring berdasarkan status "diajukan"
+                ->sum('target')
+        );*/  
+
+
+        // Hitung persentase progres
+        $progresDitugaskan = $totalTarget > 0 ? ($totalDitugaskan / $totalTarget) * 100 : 0;
+        $progresSelesai = $totalTarget > 0 ? ($totalSelesai / $totalTarget) * 100 : 0;
+
         return view('penugasan-detail', compact(
             'pegawai', // Mengirim koleksi nama pegawai
             'mitra',   // Mengirim koleksi nama mitra
             'kegiatan', // Mengirim data kegiatan
             'id', // Mengirim id kegiatan
             'penugasanPegawai', // Mengirim semua data penugasan pegawai
-            'penugasanMitra'    // Mengirim semua data penugasan mitra
+            'penugasanMitra', // Mengirim semua data penugasan mitra
+            'progresDitugaskan', 
+            'progresSelesai'
         ));
     }
 
@@ -81,7 +124,7 @@ class BebanKerjaController extends Controller
     {
         // Ambil semua data kegiatan dengan paginasi 10 per halaman
         if (auth()->check() && in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
-            $kegiatan = Kegiatan::all()->paginate(10);
+            $kegiatan = Kegiatan::paginate(10);
         } else {
             $kegiatan = Kegiatan::where('asal_fungsi', auth()->user()->fungsi_ketua_tim)->paginate(10);
         }
@@ -104,4 +147,5 @@ class BebanKerjaController extends Controller
         }
         return view('penugasan-all', compact('kegiatan'));
     }
+
 }

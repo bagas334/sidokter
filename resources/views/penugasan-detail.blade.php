@@ -38,7 +38,7 @@
                                     @foreach ($penugasanPegawai as $item)
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $item->pegawai->nama }}</td>>
+                                        <td>{{ $item->pegawai->nama }}</td>
                                         <td class="text-center">{{ $item->jabatan }}</td>
                                         <td class="text-center">{{ $item->target }}</td>
                                         <td class="text-center">{{ $item->terlaksana }}</td>
@@ -48,7 +48,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <x-remove-button />
-                                                <a href="{{route('penugasan-organik-edit',['id'=>$id,'petugas'=>$item->petugas])}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-md rounded-md"></a>
+                                                <a href="{{route('penugasan-organik-edit',['id'=>$id,'petugas'=>$item->petugas])}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-md rounded-md">Edit</a>
                                             </form>
                                         </td>
                                         <td>{{$item->catatan}}</td>
@@ -72,12 +72,38 @@
                     <span class="text-2xl text-teal-600 font-medium">Informasi Tim</span>
                 </div>
                 <div class="w-full pl-2 pb-2">
-                    <p class="text-md text-cyan-950 font-medium">Ditugaskan</p>
-                    <p class="text-sm text-gray-600 font-normal">100% (buat grafik frontend)</p>
-                </div>
-                <div class="w-full pl-2 pb-2">
-                    <p class="text-md text-cyan-950 font-medium">Selesai</p>
-                    <p class="text-sm text-gray-600 font-normal">100% (buat grafik frontend)</p>
+                    <p class="text-md text-cyan-950 font-medium">Status</p>
+                    <div class="w-full pl-2 pb-2">
+                        <!-- Progres Bar -->
+                        <div class="relative w-full h-5 bg-gray-200 rounded-full dark:bg-gray-700 overflow-hidden">
+                            <!-- Selesai -->
+                            <div class="absolute top-0 left-0 h-full bg-green-500" 
+                                style="width: {{ $progresSelesai }}%;">
+                            </div>
+                            <!-- Ditugaskan -->
+                            <div class="absolute top-0 left-0 h-full bg-yellow-400" 
+                                style="width: {{ $progresDitugaskan }}%; margin-left: {{ $progresSelesai }}%;">
+                            </div>
+                        </div>
+                        <!-- Keterangan -->
+                        <div class="flex items-center gap-4 mt-4">
+                            <!-- Selesai -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                <span class="text-xs text-gray-700">Selesai ({{ number_format($progresSelesai, 2) }}%)</span>
+                            </div>
+                            <!-- Ditugaskan -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+                                <span class="text-xs text-gray-700">Ditugaskan ({{ number_format($progresDitugaskan, 2) }}%)</span>
+                            </div>
+                            <!-- Sisanya -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-gray-400"></span>
+                                <span class="text-xs text-gray-700">Others ({{ number_format(100 - $progresSelesai - $progresDitugaskan, 2) }}%)</span>
+                            </div>
+                        </div>    
+                    </div>  
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Pengajuan</p>
@@ -85,15 +111,15 @@
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Fungsi: </p>
-                    <p class="text-sm text-gray-600 font-normal">null</p>
+                    <p class="text-sm text-gray-600 font-normal"><?php echo $kegiatan->asal_fungsi ?></p>
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Harga Satuan: </p>
-                    <p class="text-sm text-gray-600 font-normal">Rp10.000</p>
+                    <p class="text-sm text-gray-600 font-normal"><?php echo $kegiatan->harga_satuan ?></p>
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Ketua Tim: </p>
-                    <p class="text-sm text-gray-600 font-normal">null</p>
+                    <p class="text-sm text-gray-600 font-normal">nnn</p>
                 </div>
             </div>
         </div>
