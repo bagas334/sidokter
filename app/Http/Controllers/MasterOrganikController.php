@@ -25,6 +25,12 @@ class MasterOrganikController extends Controller
         return view('manajemen-user', compact('pegawai'));
     }
 
+    public function show($id)
+    {
+        $pegawai = Pegawai::where('id', $id);
+        return view('organik-detail', compact('pegawai'));
+    }
+
     public function create()
     {
         $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];

@@ -27,9 +27,9 @@
                 <thead>
                     <tr>
                         <th scope="col" rowspan="1" class="w-8 text-center">No</th>
-                        <th scope="col" rowspan="1" class="w-8">Kegiatan</th>
+                        <th scope="col" rowspan="1" class="w-8">NIP BPS</th>
                         <th scope="col" rowspan="1" class="w-8 text-center">Pelaksana</th>
-                        <th scope="col" rowspan="1" class="w-8 text-center">Pelaksana</th>
+                        <th scope="col" rowspan="1" class="w-8 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,7 @@
                         <td>{{ $item->nama }}</td>
                         <td class="text-center">
                             <div class="flex justify-between px-2">
-                                <x-detail-button-table :id="$item->id" :route="'beban-kerja-all'" />
+                                <x-detail-button-table :id="$item->id" :route="''" />
                             </div>
                         </td>
                     </tr>

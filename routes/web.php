@@ -111,6 +111,7 @@ Route::middleware('auth')->group(function () {
 
     });
 
+    Route::get('/organik/detail/{id}', [MasterOrganikController::class, 'show'])->name('detail-organik');
     Route::get('/manajemen-user-x', [MasterOrganikController::class, 'index'])
         ->name('master-organik');
     Route::get('/manajemen-user', [MasterOrganikController::class, 'index'])
