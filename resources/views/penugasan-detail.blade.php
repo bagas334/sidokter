@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="row-span-1 flex flex-col justify-between max-w-[75vw]">
-            <div class="size-full bg-gray-50 border border-gray-100 rounded-md rounded-md p-4">
+            <div class="size-full bg-gray-50 border border-gray-100 rounded-md rounded-md p-4 h-auto">
                 <div class="w-full pl-2 pb-6">
                     <span class="text-2xl text-teal-600 font-medium">Informasi Tim</span>
                 </div>
