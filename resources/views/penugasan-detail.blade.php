@@ -75,13 +75,13 @@
                     <p class="text-md text-cyan-950 font-medium">Status</p>
                     <div class="w-full pl-2 pb-2">
                         <!-- Progres Bar -->
-                        <div class="relative w-full h-5 bg-gray-200 rounded-full dark:bg-gray-700 overflow-hidden">
+                        <div class="relative w-full h-4 bg-gray-200 rounded-full dark:bg-gray-700 overflow-hidden">
                             <!-- Selesai -->
                             <div class="absolute top-0 left-0 h-full bg-green-500" 
                                 style="width: {{ $progresSelesai }}%;">
                             </div>
                             <!-- Ditugaskan -->
-                            <div class="absolute top-0 left-0 h-full bg-yellow-400" 
+                            <div class="absolute top-0 left-0 h-full bg-yellow-300" 
                                 style="width: {{ $progresDitugaskan }}%; margin-left: {{ $progresSelesai }}%;">
                             </div>
                         </div>
