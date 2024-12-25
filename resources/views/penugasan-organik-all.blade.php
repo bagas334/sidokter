@@ -5,17 +5,13 @@
 
 @section('content')
 <div class="size-full flex flex-col w-full items-center px-4">
-    {{-- Judul--}}
     <div class="w-full pb-6 ">
         <x-judul text="Penugasan Organik" />
         <p>Pilih petugas terlebih dahulu.</p>
     </div>
 
-    {{-- Pencarian--}}
     <div class="w-full flex flex-row justify-between items-center pb-1">
-        {{-- Search Input --}}
         <div class="relative flex items-center w-64">
-
 
         </div>
     </div>
