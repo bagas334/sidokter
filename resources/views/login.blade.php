@@ -8,7 +8,6 @@
 </head>
 
 <body>
-
     <div>
         <div class="">Login Page</div>
         <form action="{{route('validateUser')}}" method="POST">
