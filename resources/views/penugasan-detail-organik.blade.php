@@ -84,11 +84,11 @@
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Fungsi: </p>
-                    <p class="text-sm text-gray-600 font-normal">null</p>
+                    <p class="text-sm text-gray-600 font-normal"></p>
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Harga Satuan: </p>
-                    <p class="text-sm text-gray-600 font-normal">Rp10.000</p>
+                    <p class="text-sm text-gray-600 font-normal"></p>
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Catatan: </p>
