@@ -26,8 +26,6 @@ class PenugasanPegawaiController extends Controller
         return view('penugasan-organik-all', compact('pegawai'));
     }
 
-
-
     public function view($id, $pegawai)
     {
         $penugasan_pegawai_id = PenugasanPegawai::with(['pegawai', 'kegiatan']) // Pastikan relasi dimuat
@@ -47,9 +45,6 @@ class PenugasanPegawaiController extends Controller
         // Kembalikan ke view dengan semua variabel yang dibutuhkan
         return view('penugasan-detail-organik', compact('pengajuan_pegawai', 'penugasan_pegawai_id', 'id', 'pegawai', 'nama_pegawai', 'nama_kegiatan', 'tugas_pegawai'));
     }
-
-
-
 
     public function create($id)
     {
