@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
+use App\Models\PenugasanPegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -27,8 +28,14 @@ class MasterOrganikController extends Controller
 
     public function show($id)
     {
-        $pegawai = Pegawai::where('id', $id);
-        return view('organik-detail', compact('pegawai'));
+        $pegawai = Pegawai::where('id', $id)->first();
+        $penugasan_pegawai = PenugasanPegawai::where('petugas', $id);
+        $kegiatan = $penugasan_pegawai->with('kegiatan')->get();
+
+        $total = $penugasan_pegawai->sum('target');
+        $selesai = $penugasan_pegawai->sum('terlaksana');
+        $proses = $penugasan_pegawai->sum('target') - $selesai;
+        return view('organik-detail', compact('pegawai', 'kegiatan', 'total', 'selesai', 'proses'));
     }
 
     public function create()

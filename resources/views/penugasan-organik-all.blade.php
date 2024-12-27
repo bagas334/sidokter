@@ -35,8 +35,8 @@
                         <td>{{ $item->nip_bps }}</td>
                         <td>{{ $item->nama }}</td>
                         <td class="text-center">
-                            <div class="flex justify-between px-2">
-                                <x-detail-button-table :id="$item->id" :route="''" />
+                            <div class="flex justify-center px-2">
+                                <a class="px-2 py-1 rounded-md border border-gray-500" href="{{route('detail-organik',['id'=>$item->id])}}">Detail</a>
                             </div>
                         </td>
                     </tr>
