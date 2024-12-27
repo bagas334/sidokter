@@ -17,28 +17,16 @@ class Sampel extends Model
         'dibuat_oleh'
     ];
 
-    /**
-     * Relationship with Kegiatan model.
-     * A Sampel belongs to a Kegiatan.
-     */
     public function kegiatan()
     {
         return $this->belongsTo(Kegiatan::class, 'kegiatan_id');
     }
 
-    /**
-     * Relationship with Perusahaan model.
-     * A Sampel belongs to a Perusahaan.
-     */
     public function perusahaan()
     {
         return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
     }
 
-    /**
-     * Relationship with Pegawai model.
-     * A Sampel is created by a Pegawai.
-     */
     public function dibuatOleh()
     {
         return $this->belongsTo(Pegawai::class, 'dibuat_oleh');
@@ -58,5 +46,4 @@ class Sampel extends Model
             )
             ->get();
     }
-
 }

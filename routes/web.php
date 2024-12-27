@@ -15,6 +15,7 @@ use App\Http\Controllers\MasterPerusahaanController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PenugasanMitraController;
 use App\Http\Controllers\PenugasanPegawaiController;
+use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\TugasPegawaiController;
 use App\Models\PenugasanMitra;
 use App\Models\PenugasanPegawai;
@@ -100,15 +101,6 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/finalisasi/{id}', [ManajemenSampelController::class, 'finalisasi'])
             ->name('kegiatan-finalisasi');
-        //
-        //    Route::get('/assign/{id}', [ManajemenSampelController::class, 'assign'])
-        //        ->name('sampel-assign-view');
-        //    Route::post('/create', [ManajemenSampelController::class, 'store'])
-        //        ->name('sampel-create-save');
-
-        //    Route::delete('/delete/{id}', [ManajemenSampelController::class, 'delete'])
-        //        ->name('sampel-delete');
-
     });
 
     Route::get('/organik/detail/{id}', [MasterOrganikController::class, 'show'])->name('detail-organik');
@@ -140,27 +132,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/mitra/delete/{id}', [MasterMitraController::class, 'delete'])
         ->name('master-mitra-delete');
 
-
-    Route::resource('perusahaan', MasterPerusahaanController::class)
-        ->except(['show'])
-        ->names([
-            'index' => 'perusahaan-index',
-            'create' => 'perusahaan-create-view',
-            'store' => 'perusahaan-create-save',
-            'edit' => 'perusahaan-edit-view',
-            'update' => 'perusahaan-edit-save',
-            'destroy' => 'perusahaan-destroy',
-        ])->parameters([
-            'perusahaan' => 'id'
-        ]);
-    Route::post('/perusahaan/seeder', [MasterPerusahaanController::class, 'seeder'])
-        ->name('perusahaan-seeder');
-
-
-    Route::group(['prefix' => 'template'], function () {
-        Route::get('/seeder-sampel', [DownloadController::class, 'sampel'])
-            ->name('template-sampel');
-        Route::get('/seeder-perusahaan', [DownloadController::class, 'perusahaan'])
-            ->name('template-perusahaan');
-    });
+    Route::get('/perusahaan/all', [PerusahaanController::class, 'index'])
+        ->name('perusahaan-all');
 });
