@@ -5,16 +5,18 @@
 
 @section('content')
 <div class="size-full flex flex-col w-full items-center px-4">
-    {{-- Judul--}}
     <div class="w-full pb-6 ">
         <x-judul text="Penugasan Organik" />
         <p>Pilih petugas terlebih dahulu.</p>
     </div>
 
-    {{-- Pencarian--}}
     <div class="w-full flex flex-row justify-between items-center pb-1">
+<<<<<<< HEAD
         {{-- Search Input --}}
         <div class="relative flex items-center w-80">
+=======
+        <div class="relative flex items-center w-64">
+>>>>>>> 43d0cb70773b25578ec25a80eeb580df0e03d59c
 
         </div>
     </div>
@@ -39,7 +41,11 @@
                         <td>{{ $item->nama }}</td>
                         <td class="text-center">
                             <div class="flex justify-center px-2">
+<<<<<<< HEAD
                                 <x-detail-button-table :id="$item->id" :route="''" />
+=======
+                                <a class="px-2 py-1 rounded-md border border-gray-500" href="{{route('detail-organik',['id'=>$item->id])}}">Detail</a>
+>>>>>>> 43d0cb70773b25578ec25a80eeb580df0e03d59c
                             </div>
                         </td>
                     </tr>

@@ -38,11 +38,6 @@ class Perusahaan extends Model
 
     public $timestamps = false;
 
-    public function wilayah()
-    {
-        return $this->belongsTo(Wilayah::class, 'kode_wilayah', 'kode');
-    }
-
     public static function getTopSampledPerusahaan($banyak = 10)
     {
         return self::select('perusahaan.nama_usaha', 'perusahaan.kode_kbli', DB::raw('COUNT(kegiatan.id) as jumlah_kegiatan'))
@@ -60,17 +55,17 @@ class Perusahaan extends Model
         $perusahaanColumns = Schema::getColumnListing('perusahaan');
         $excludeColumns = ['kode_wilayah'];
         $selectedColumns = array_diff($perusahaanColumns, $excludeColumns);
-        $selectedColumns = array_map(function($column) {
+        $selectedColumns = array_map(function ($column) {
             return 'perusahaan.' . $column;
         }, $selectedColumns);
 
         $selectedColumns = array_merge($selectedColumns, [
-            'wilayah.kecamatan', 'wilayah.kelurahan'
+            'wilayah.kecamatan',
+            'wilayah.kelurahan'
         ]);
 
         return self::leftjoin('wilayah', 'perusahaan.kode_wilayah', '=', 'wilayah.kode')
             ->select($selectedColumns)
             ->paginate($paginate);
     }
-
 }

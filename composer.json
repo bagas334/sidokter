@@ -6,10 +6,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "*",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
