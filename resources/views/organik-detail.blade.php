@@ -6,130 +6,136 @@
 
 <?php ?>
 <div class="size-full flex flex-col w-full items-center px-4">
-    {{-- Judul--}}
-    <div class="w-full pb-6 ">
-        <div class="flex justify-beetween">
+    {{-- Judul --}}
+    <div class="w-full pb-6">
+        <div class="flex justify-between">
             <div>
                 <p>Beban Kerja / Organik / {{$pegawai->nama}}</p>
                 <p class="text-3xl">{{$pegawai->nama}}</p>
             </div>
         </div>
 
-        <div class="grid grid-cols-[4fr_1.5fr] grid-rows-auto my-5 flex">
-            <div class="rounded-md border border-gray-500 mr-1 p-2">
-                <p class="text-xl font-medium text-gray-900" style="margin-bottom: 5px;">Detail Penugasan</p>
-                <p >Pilih tanggal penugasan :</p>
+        <div class="grid grid-cols-[3fr_1fr] gap-4 pt-6">
+            <div class="flex flex-col space-y-4">
+                <div class="rounded-md border border-gray-500 mr-1 p-2 flex flex-col">
+                    <p class="text-xl font-medium text-gray-900" style="margin-bottom: 5px;">Detail Penugasan</p>
+                    <p>Pilih tanggal penugasan :</p>
 
-                <form action="">
-                    <div class="flex items-center space-x-4">
-                        <label for="all">Semua</label>
-                        <input type="radio" name="apt" id="all" value="all" checked>
-                        <label for="pilih">Pilih tanggal</label>
-                        <input type="radio" name="apt" id="pilih" value="pilih">
-                        <div class="hidden" id="selectTanggal" style="">
-                            <x-input.datepicker
-                                :name="'tanggal_mulai'"
-                                :label_size="'md'">
-                            </x-input.datepicker>
-                            <x-input.datepicker
-                                :name="'tanggal_akhir'"
-                                :label_size="'md'">
-                            </x-input.datepicker>
+                    <form action="">
+                        <div class="flex items-center space-x-4">
+                            <label for="all">Semua</label>
+                            <input type="radio" name="apt" id="all" value="all" checked>
+                            <label for="pilih">Pilih tanggal</label>
+                            <input type="radio" name="apt" id="pilih" value="pilih">
+                            <div class="hidden" id="selectTanggal" style="">
+                                <x-input.datepicker
+                                    :name="'tanggal_mulai'"
+                                    :label_size="'md'">
+                                </x-input.datepicker>
+                                <x-input.datepicker
+                                    :name="'tanggal_akhir'"
+                                    :label_size="'md'">
+                                </x-input.datepicker>
 
-                            <button class="m-auto rounded-md bg-blue-500 text-white px-4 py-1.5 text-sm hover:bg-blue-600 transition" type="submit">Cari</button>
+                                <button class="m-auto rounded-md bg-blue-500 text-white px-4 py-1.5 text-sm hover:bg-blue-600 transition" type="submit">Cari</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <p style="margin-top: 5px;">Ringkasan penugasan</p>
+
+                    {{-- Graph --}}
+                    <div class="mt-4">
+                        <div id="chart"></div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 mt-6">
+                        <!-- Total Penugasan -->
+                        <div class="flex flex-col px-6 py-4 overflow-hidden bg-white hover:bg-gradient-to-br hover:from-purple-400 hover:via-blue-400 hover:to-blue-500 rounded-xl shadow-lg duration-300 hover:shadow-2xl group">
+                            <div class="flex items-center justify-center text-2xl font-bold text-blue-500 group-hover:text-gray-200">
+                                {{$total}}
+                            </div>
+                            <div class="inline-flex items-center justify-center font-bold text-lg text-gray-600 group-hover:text-gray-200 sm:text-base text-center mt-2">Total Penugasan</div>
+                        </div>
+
+                        <!-- Penugasan dalam Proses -->
+                        <div class="flex flex-col px-6 py-4 overflow-hidden bg-white hover:bg-gradient-to-br hover:from-purple-400 hover:via-blue-400 hover:to-blue-500 rounded-xl shadow-lg duration-300 hover:shadow-2xl group">
+                            <div class="flex items-center justify-center text-2xl font-bold text-blue-500 group-hover:text-gray-200">
+                                {{$proses}}
+                            </div>
+                            <div class="inline-flex items-center justify-center font-bold text-lg text-gray-600 group-hover:text-gray-200 sm:text-base text-center mt-2">Penugasan dalam Proses</div>
+                        </div>
+
+                        <!-- Penugasan telah Dikerjakan -->
+                        <div class="flex flex-col px-6 py-4 overflow-hidden bg-white hover:bg-gradient-to-br hover:from-purple-400 hover:via-blue-400 hover:to-blue-500 rounded-xl shadow-lg duration-300 hover:shadow-2xl group">
+                            <div class="flex items-center justify-center text-2xl font-bold text-blue-500 group-hover:text-gray-200">
+                                {{$selesai}}
+                            </div>
+                            <div class="inline-flex items-center justify-center font-bold text-lg text-gray-600 group-hover:text-gray-200 sm:text-base text-center mt-2">Penugasan telah Dikerjakan</div>
                         </div>
                     </div>
-                </form>
 
-                <p style="margin-top: 5px;">Ringkasan penugasan</p>
-
-                {{-- Graph --}}
-                <div class="mt-4">
-                    <div id="chart"></div>
+                    <p class="rounded-md m-1 p-2 border border-gray-400" id="detailButton" style="margin-top: 20px;">Detail</p>
+                    <table class="table-custom" id="tabel">
+                        <thead>
+                            <tr>
+                                <th scope="col" rowspan="2" class="w-8 text-center">No</th>
+                                <th scope="col" rowspan="2" class="w-56">Kegiatan</th>
+                                <th scope="col" rowspan="2" class="w-24">Asal Fungsi</th>
+                                <th scope="col" colspan="2" class="text-center border-b-gray-200 border-b-[1px]">Tanggal</th>
+                                <th scope="col" rowspan="2" class="w-28 text-end">Target</th>
+                                <th scope="col" rowspan="2" class="w-28 text-end">Terlaksana</th>
+                                <th scope="col" rowspan="2" class="w-28 text-center">Aksi</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="w-28 text-center">Mulai</th>
+                                <th scope="col" class="w-28 text-center">Selesai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($kegiatan as $item)
+                            <tr>
+                                <td class="text-center">{{$loop->iteration}}</td>
+                                <td>{{$item->kegiatan->nama}}</td>
+                                <td>{{$item->kegiatan->asal_fungsi}}</td>
+                                <td class="text-center">{{$item->kegiatan->tanggal_mulai}}</td>
+                                <td class="text-center">{{$item->kegiatan->tanggal_akhir}}</td>
+                                <td class="text-end">{{$item->target}}</td>
+                                <td class="text-end">{{$item->terlaksana}}</td>
+                                <td class="text-center">
+                                    <div class="flex justify-between px-2">
+                                        <p class="flex justify-center border border-gray-500 rounded-md m-auto p-2">Detail</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-
-                <div class="grid grid-cols-3 gap-2 mt-6">
-                    <!-- Total Penugasan -->
-                    <div class="flex flex-col px-6 py-4 overflow-hidden bg-white hover:bg-gradient-to-br hover:from-purple-400 hover:via-blue-400 hover:to-blue-500 rounded-xl shadow-lg duration-300 hover:shadow-2xl group">
-                        <div class="flex items-center justify-center text-2xl font-bold text-blue-500 group-hover:text-gray-200">
-                            {{$total}}
-                        </div>
-                        <div class="inline-flex items-center justify-center font-bold text-lg text-gray-600 group-hover:text-gray-200 sm:text-base text-center mt-2">Total Penugasan</div>
-                    </div>
-
-                    <!-- Penugasan dalam Proses -->
-                    <div class="flex flex-col px-6 py-4 overflow-hidden bg-white hover:bg-gradient-to-br hover:from-purple-400 hover:via-blue-400 hover:to-blue-500 rounded-xl shadow-lg duration-300 hover:shadow-2xl group">
-                        <div class="flex items-center justify-center text-2xl font-bold text-blue-500 group-hover:text-gray-200">
-                            {{$proses}}
-                        </div>
-                        <div class="inline-flex items-center justify-center font-bold text-lg text-gray-600 group-hover:text-gray-200 sm:text-base text-center mt-2">Penugasan dalam Proses</div>
-                    </div>
-
-                    <!-- Penugasan telah Dikerjakan -->
-                    <div class="flex flex-col px-6 py-4 overflow-hidden bg-white hover:bg-gradient-to-br hover:from-purple-400 hover:via-blue-400 hover:to-blue-500 rounded-xl shadow-lg duration-300 hover:shadow-2xl group">
-                        <div class="flex items-center justify-center text-2xl font-bold text-blue-500 group-hover:text-gray-200">
-                            {{$selesai}}
-                        </div>
-                        <div class="inline-flex items-center justify-center font-bold text-lg text-gray-600 group-hover:text-gray-200 sm:text-base text-center mt-2">Penugasan telah Dikerjakan</div>
-                    </div>
-                </div>
-
-                <p class="rounded-md m-1 p-2 border border-gray-400" id="detailButton" style="margin-top: 20px;">Detail</p>
-                <table class="table-custom" id="tabel">
-                    <thead>
-                        <tr>
-                            <th scope="col" rowspan="2" class="w-8 text-center">No</th>
-                            <th scope="col" rowspan="2" class="w-56">Kegiatan</th>
-                            <th scope="col" rowspan="2" class="w-24">Asal Fungsi</th>
-                            <th scope="col" colspan="2" class="text-center border-b-gray-200 border-b-[1px]">Tanggal</th>
-                            <th scope="col" rowspan="2" class="w-28 text-end">Target</th>
-                            <th scope="col" rowspan="2" class="w-28 text-end">Terlaksana</th>
-                            <th scope="col" rowspan="2" class="w-28 text-center">Aksi</th>
-                        </tr>
-                        <tr>
-                            <th scope="col" class="w-28 text-center">Mulai</th>
-                            <th scope="col" class="w-28 text-center">Selesai</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($kegiatan as $item)
-                        <tr>
-                            <td class="text-center">{{$loop->iteration}}</td>
-                            <td>{{$item->kegiatan->nama}}</td>
-                            <td>{{$item->kegiatan->asal_fungsi}}</td>
-                            <td class="text-center">{{$item->kegiatan->tanggal_mulai}}</td>
-                            <td class="text-center">{{$item->kegiatan->tanggal_akhir}}</td>
-                            <td class="text-end">{{$item->target}}</td>
-                            <td class="text-end">{{$item->terlaksana}}</td>
-                            <td class="text-center">
-                                <div class="flex justify-between px-2">
-                                    <p class="flex justify-center border border-gray-500 rounded-md m-auto p-2">Detail</p>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
-            <div class="rounded-md border border-gray-500 ml-1 p-3">
-                <p class="font-bold text-xl">Informasi Organik</p>
-                <p class="font-bold">Nama :</p>
-                <p class="">{{$pegawai->nama}}</p>
-                <p class="font-bold">NIP :</p>
-                <p class="">{{$pegawai->nip}}</p>
-                <p class="font-bold">NIP BPS :</p>
-                <p class="">{{$pegawai->nip_bps}}</p>
-                <p class="font-bold">Alias :</p>
-                <p class="">{{$pegawai->alias}}</p>
-                <p class="font-bold">Jabatan :</p>
-                <p class="">{{$pegawai->jabatan}}
-                    <span>
-                        @if($pegawai->jabatan == 'Ketua Tim')
-                        {{$pegawai->fungsi_ketua_tim}}
-                        @endif
-                    </span>
-                </p>
+
+            <div class="row-span-1 flex flex-col justify-between max-w-[75vw]">
+                <div class="rounded-md border border-gray-500 ml-1 p-3 h-auto">
+                    <p class="font-bold text-xl">Informasi Organik</p>
+                    <p class="font-bold">Nama :</p>
+                    <p class="">{{$pegawai->nama}}</p>
+                    <p class="font-bold">NIP :</p>
+                    <p class="">{{$pegawai->nip}}</p>
+                    <p class="font-bold">NIP BPS :</p>
+                    <p class="">{{$pegawai->nip_bps}}</p>
+                    <p class="font-bold">Alias :</p>
+                    <p class="">{{$pegawai->alias}}</p>
+                    <p class="font-bold">Jabatan :</p>
+                    <p class="">{{$pegawai->jabatan}}
+                        <span>
+                            @if($pegawai->jabatan == 'Ketua Tim')
+                            {{$pegawai->fungsi_ketua_tim}}
+                            @endif
+                        </span>
+                    </p>
+                </div>    
             </div>
+            
         </div>
     </div>
 
@@ -235,6 +241,5 @@
             }
         });
     </script>
-
 
 @endsection
