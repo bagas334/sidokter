@@ -23,12 +23,15 @@
                 :label_size="'md'">
             </x-input.datepicker>
         </div>
+        @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
         <x-tambah-button :route="'/beban-kerja/add'" />
+        @endif
+
     </div>
 
-    {{-- Tabel--}}
     <div class="flex flex-col justify-center overflow-x-auto max-w-[78vw]">
         <div class="relative min-w-[100vw]">
+            @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
             <table class="table-custom">
                 <thead>
                     <tr>
@@ -87,11 +90,54 @@
                     @endforeach
                 </tbody>
             </table>
+            @endif
+            @if(auth()->user()->jabatan == 'Organik')
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th scope="col" rowspan="2" class="w-8 text-center">No</th>
+                        <th scope="col" rowspan="2" class="w-56">Nama Kegiatan</th>
+                        <th scope="col" rowspan="2" class="w-24">Asal Fungsi</th>
+                        <th scope="col" rowspan="2" class="w-24">Deadline</th>
+                        <th scope="col" rowspan="2" class="w-28 text-end">Target</th>
+                        <th scope="col" rowspan="2" class="w-28 text-end">Terlaksana</th>
+                        <th scope="col" rowspan="2" class="w-28 text-center">Satuan</th>
+                        <th scope="col" rowspan="2" class="w-28 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($kegiatan as $item)
+                    <tr>
+                        <td class="text-center">{{ $loop->iteration }}</td>
+                        <td>{{ $item->kegiatan->nama }}</td>
+                        <td>{{ $item->kegiatan->asal_fungsi }}</td>
+                        <td class="text-center">
+                            @if($item->kegiatan->tanggal_akhir)
+                            {{ Carbon::parse($item->kegiatan->tanggal_akhir)->format('d-m-Y') }}
+                            @else
+                            -
+                            @endif
+                        </td>
+
+                        <td class="text-end">{{ $item->target }}</td>
+                        <td class="text-end">{{ $item->terlaksana }}</td>
+                        <td class="text-center">{{ $item->kegiatan->satuan }}</td>
+                        <td class="text-center">
+                            <div class="flex justify-between px-2">
+                                <a class="button border border-gray-500 rounded-md p-1" href="{{ route('penugasan-organik-detail', ['id' => $item->kegiatan->id, 'petugas' => auth()->user()->id]) }}">Coba</a>
+
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @endif
         </div>
     </div>
 
     {{-- Pagination --}}
-    <x-paginator :paginator="$kegiatan" />
+    <x-paginator :paginator=" $kegiatan" />
 
 </div>
 @endsection

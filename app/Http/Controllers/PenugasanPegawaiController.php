@@ -26,6 +26,7 @@ class PenugasanPegawaiController extends Controller
         return view('penugasan-organik-all', compact('pegawai'));
     }
 
+
     public function view($id, $pegawai)
     {
         $penugasan_pegawai_id = PenugasanPegawai::with(['pegawai', 'kegiatan']) // Pastikan relasi dimuat
@@ -89,10 +90,10 @@ class PenugasanPegawaiController extends Controller
         return view('penugasan-organik-edit', compact('tugas_pegawai', 'id'));
     }
 
-    public function editTugas($tugasPegawai)
+    public function deleteTugas($id)
     {
-        $tugas_pegawai = TugasPegawai::where('id', $tugasPegawai)->first();
-        return view('pengumpulan-tugas-organik-edit', compact('tugas_pegawai', 'id'));
+        TugasPegawai::where('id', $id)->delete();
+        return redirect()->back();
     }
 
 
@@ -122,18 +123,6 @@ class PenugasanPegawaiController extends Controller
         $penugasanPegawai = TugasPegawai::create($request->except('_token', '_method', 'id', 'pegawai_id'));
         return redirect()->route('penugasan-organik-detail', ['id' => $id, 'petugas' => $pegawai]);
     }
-
-
-    // public function update(Request $request, $id)
-    // {
-    //     $tanggal_penugasan_converted = DateTime::createFromFormat('d-m-Y', $request->get('tanggal_penugasan'))->format('Y-m-d');
-    //     $request->merge([
-    //         'tanggal_penugasan' => $tanggal_penugasan_converted,
-    //     ]);
-    //     PenugasanPegawai::where('id', $id)->update($request->except('_token', '_method'));
-
-    //     return redirect()->route('penugasan-organik-detail', ['id' => $id]);
-    // }
 
     public function delete($penugasan, $id)
     {

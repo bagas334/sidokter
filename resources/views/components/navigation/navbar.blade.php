@@ -23,8 +23,12 @@
             <ul
                 tabindex="0"
                 class="menu menu-sm dropdown-content bg-teal-600 rounded-box z-[1] mt-3 w-44 p-2 shadow-xl text-gray-50">
-                <li><a>Profile</a></li>
-                <li><a>Logout</a></li>
+                <li>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>

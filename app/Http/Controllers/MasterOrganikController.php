@@ -90,4 +90,13 @@ class MasterOrganikController extends Controller
 
         return back()->with('loginError', 'NIP BPS atau Password salah');
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
+    }
 }

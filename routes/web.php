@@ -30,25 +30,25 @@ Route::post('/login', [MasterOrganikController::class, 'validateUser'])->name('v
 Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'beban-kerja'], function () {
         Route::get('/', [BebanKerjaController::class, 'showAll'])
-            ->name('beban-kerja-all')->middleware(RoleMiddleware::class . ':Ketua Tim,Admin Kabupaten');
+            ->name('beban-kerja-all'); // organik beda view 
         Route::get('/pengajuan/all', [TugasPegawaiController::class, 'showAll'])
-            ->name('pengajuan-all');
+            ->name('pengajuan-all'); // organik beda view
         Route::get('/add', [BebanKerjaController::class, 'create'])
-            ->name('beban-kerja-add');
+            ->name('beban-kerja-add')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::post('/add/save', [BebanKerjaController::class, 'store'])
-            ->name('beban-kerja-save');
+            ->name('beban-kerja-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::get('/{id}/penugasan', [BebanKerjaController::class, 'show'])
-            ->name('beban-kerja-tugas');
+            ->name('beban-kerja-tugas'); //organik beda view
         Route::delete('/{id}/penugasan/delete', [BebanKerjaController::class, 'delete'])
-            ->name('beban-kerja-delete');
+            ->name('beban-kerja-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::get('/{id}/tugas-organik/{petugas}', [PenugasanPegawaiController::class, 'view'])
-            ->name('penugasan-organik-detail');
+            ->name('penugasan-organik-detail'); // organik hanya bisa akses dirinya sendiri
         Route::post('/{id}/tugas-organik/{petugas}/approve/{tugasId}', [PenugasanPegawaiController::class, 'accPenugasan'])
-            ->name('penugasan-organik-approve');
+            ->name('penugasan-organik-approve')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::post('/{id}/tugas-organik/{petugas}/tugaskan/{tugasId}', [PenugasanPegawaiController::class, 'accPengajuan'])
-            ->name('pengajuan-organik-approve');
+            ->name('pengajuan-organik-approve')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::post('/pengajuan/acc/{tugasId}', [PenugasanPegawaiController::class, 'accPengajuanTabel'])
-            ->name('pengajuan-organik-approve-tabel');
+            ->name('pengajuan-organik-approve-tabel')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::get('/{id}/tugas-organik/{petugas}/create', [PenugasanPegawaiController::class, 'createTugas'])
             ->name('pengumpulan-tugas-organik-create');
         Route::get('{id}/tugas-organik/{petugas}/edit', [PenugasanPegawaiController::class, 'edit'])
@@ -58,32 +58,34 @@ Route::middleware('auth')->group(function () {
         Route::post('/save-tugas-organik', [PenugasanPegawaiController::class, 'storeTugas'])
             ->name('pengumpulan-tugas-organik-save');
         Route::get('/{id}/tambah-organik', [PenugasanPegawaiController::class, 'create'])
-            ->name('penugasan-organik-create');
+            ->name('penugasan-organik-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::post('{id}/tambah-organik/save', [PenugasanPegawaiController::class, 'store'])
-            ->name('penugasan-organik-create-save');
+            ->name('penugasan-organik-create-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::put('{id}/penugasan/{pegawai}/update', [PenugasanPegawaiController::class, 'update'])
-            ->name('penugasan-organik-update');
+            ->name('penugasan-organik-update')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::put('/tugas-organik/edit/{id}', [PenugasanPegawaiController::class, 'update'])
-            ->name('penugasan-organik-edit-save');
+            ->name('penugasan-organik-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::delete('{penugasan}/penugasan/organik/delete/{id}', [PenugasanPegawaiController::class, 'delete'])
             ->name('penugasan-organik-delete');
-        Route::delete('{penugasan}/penugasan/mitra/delete/{id}', [PenugasanMitraController::class, 'delete'])
-            ->name('penugasan-mitra-delete');
+        Route::delete('tugas-organik/delete/{id}', [PenugasanPegawaiController::class, 'deleteTugas'])->name('pengumpulan-tugas-delete');
 
+        Route::delete('{penugasan}/penugasan/mitra/delete/{id}', [PenugasanMitraController::class, 'delete'])
+            ->name('penugasan-mitra-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::get('/tugas-mitra/show/{id}', [PenugasanMitraController::class, 'show'])
-            ->name('penugasan-mitra-detail');
+            ->name('penugasan-mitra-detail')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::get('/{id}/tambah-mitra', [PenugasanMitraController::class, 'create'])
-            ->name('penugasan-mitra-create');
+            ->name('penugasan-mitra-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::post('/{id}/tambah-mitra/save', [PenugasanMitraController::class, 'store'])
-            ->name('penugasan-mitra-create-save');
+            ->name('penugasan-mitra-create-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::get('/tugas-mitra/edit/{id}', [PenugasanMitraController::class, 'edit'])
-            ->name('penugasan-mitra-edit-view');
+            ->name('penugasan-mitra-edit-view')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::put('/tugas-mitra/edit/{id}', [PenugasanMitraController::class, 'update'])
-            ->name('penugasan-mitra-edit-save');
+            ->name('penugasan-mitra-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::get('/organik', [PenugasanPegawaiController::class, 'index'])
             ->name('beban-kerja-organik');
         Route::get('/mitra', [PenugasanMitraController::class, 'index'])
             ->name('beban-kerja-mitra');
+        Route::post('/logout', [MasterOrganikController::class, 'logout'])->name('logout');
     });
 
     Route::group(['prefix' => 'manajemen-sampel'], function () {
@@ -107,7 +109,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/manajemen-user-x', [MasterOrganikController::class, 'index'])
         ->name('master-organik');
     Route::get('/manajemen-user', [MasterOrganikController::class, 'index'])
-        ->name('manajemen-user')->middleware(RoleMiddleware::class . ":Admin Kabupaten");
+        ->name('manajemen-user')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
     Route::get('/manajemen-user/create', [MasterOrganikController::class, 'create'])
         ->name('manajemen-user-create');
     Route::post('/manajemen-user/create', [MasterOrganikController::class, 'store'])

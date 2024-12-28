@@ -6,15 +6,15 @@
 <div class="size-full flex flex-col items-center px-4 py-6">
     <div class="w-full bg-white shadow-lg rounded-lg p-6">
         <div class="w-full pb-6 flex">
-            <x-judul text="Tambah Pengumpulan Tugas" />
+            <x-judul text="Edit Pengumpulan Tugas" />
         </div>
 
-        <form action="{{ route('pengumpulan-tugas-organik-save',['id'=>$penugasan_pegawai_id]) }}" method="POST">
+        <form action="{{ route('pengumpulan-tugas-organik-save',['id'=>$tugas_pegawai->penugasan_pegawai_id]) }}" method="POST">
             @csrf
             @method('POST')
 
-            <input type="text" name="penugasan_pegawai" value="{{$penugasan_pegawai_id}}" hidden>
-            <input type="text" name="kegiatan_id" value="{{$id}}" hidden>
+            <input type="text" name="penugasan_pegawai" value="{{$tugas_pegawai->penugasan_pegawai_id}}" hidden>
+            <input type="text" name="kegiatan_id" value="{{$tugas_pegawai->penugasan_pegawai->kegiatan}}" hidden>
             <input type="text" name="pegawai_id" value="{{$pegawai}}" hidden>
 
             <x-input.text-field

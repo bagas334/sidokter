@@ -54,35 +54,26 @@ class BebanKerjaController extends Controller
         // Hitung total ditugaskan (progres)
         $totalDitugaskan = (
             DB::table('penugasan_pegawai')
-                ->where('kegiatan_id', $id)
-                ->selectRaw('SUM(target - terlaksana) as total')
-                ->value('total')
+            ->where('kegiatan_id', $id)
+            ->selectRaw('SUM(target - terlaksana) as total')
+            ->value('total')
         ) + (
             DB::table('penugasan_mitra')
-                ->where('kegiatan_id', $id)
-                ->selectRaw('SUM(target - terlaksana) as total')
-                ->value('total')
+            ->where('kegiatan_id', $id)
+            ->selectRaw('SUM(target - terlaksana) as total')
+            ->value('total')
         );
 
         // Hitung total tugas selesai
         $totalSelesai = (
             DB::table('penugasan_pegawai')
-                ->where('kegiatan_id', $id)
-                ->sum('terlaksana')
+            ->where('kegiatan_id', $id)
+            ->sum('terlaksana')
         ) + (
             DB::table('penugasan_mitra')
-                ->where('kegiatan_id', $id)
-                ->sum('terlaksana')
+            ->where('kegiatan_id', $id)
+            ->sum('terlaksana')
         );
-
-        /* (Database belum bisa dilakukan operasi ini)
-        // Hitung total pengajuan
-        $totalPengajuan = (
-            DB::table('penugasan_pegawai')
-                ->where('kegiatan_id', $id)
-                ->where('status', 'diajukan')  // Menyaring berdasarkan status "diajukan"
-                ->sum('target')
-        );*/  
 
 
         // Hitung persentase progres
@@ -96,7 +87,7 @@ class BebanKerjaController extends Controller
             'id', // Mengirim id kegiatan
             'penugasanPegawai', // Mengirim semua data penugasan pegawai
             'penugasanMitra', // Mengirim semua data penugasan mitra
-            'progresDitugaskan', 
+            'progresDitugaskan',
             'progresSelesai'
         ));
     }
@@ -125,9 +116,15 @@ class BebanKerjaController extends Controller
         // Ambil semua data kegiatan dengan paginasi 10 per halaman
         if (auth()->check() && in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
             $kegiatan = Kegiatan::paginate(10);
+        } else if (auth()->check() && auth()->user()->jabatan == 'Organik') {
+            $kegiatan = PenugasanPegawai::where('petugas', auth()->user()->id)
+                ->with('kegiatan') // Memuat relasi
+                ->paginate(10);
         } else {
             $kegiatan = Kegiatan::where('asal_fungsi', auth()->user()->fungsi_ketua_tim)->paginate(10);
         }
+
+
 
         foreach ($kegiatan as $k) {
             // Update kolom 'terlaksana' berdasarkan penugasan_pegawai dan penugasan_mitra
@@ -147,5 +144,4 @@ class BebanKerjaController extends Controller
         }
         return view('penugasan-all', compact('kegiatan'));
     }
-
 }
