@@ -27,8 +27,8 @@
                 :name="'bukti'"
                 required></x-input.text-field>
 
-            @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
             <input type="text" value="proses" name="status" hidden>
+            @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
             <x-input.text-area
                 :label="'Catatan'"
                 :name="'catatan'"></x-input.text-area>

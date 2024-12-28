@@ -133,7 +133,12 @@ class PenugasanPegawaiController extends Controller
     public function accPenugasan($id, $petugas, $tugasId)
     {
         $tugas = TugasPegawai::where('id', $tugasId)->first();
-        $tugas->status = 'selesai';
+        if ($tugas->status == 'selesai') {
+            $tugas->status = 'proses';
+        } else {
+            $tugas->status = 'selesai';
+        }
+
         $tugas->save();
 
         DB::table('penugasan_pegawai')
