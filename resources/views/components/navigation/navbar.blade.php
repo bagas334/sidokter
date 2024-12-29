@@ -1,6 +1,6 @@
 <div class="navbar bg-gray-50 px-12">
     <div class="flex-1">
-        <a class="text-3xl font-bold text-teal-600">SIDOKTER</a>
+        <a class="text-3xl font-bold text-teal-600">SiDokter</a>
     </div>
     <div class="flex-none">
         <div class="dropdown dropdown-bottom flex flex-row">

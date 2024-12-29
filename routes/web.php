@@ -7,7 +7,7 @@ use App\Http\Controllers\CapaianAgregatController;
 use App\Http\Controllers\CapaianOrganikController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadController;
-use App\Http\Controllers\ManajemenSampelController;
+use App\Http\Controllers\SampelController;
 use App\Http\Controllers\MasterKegiatanController;
 use App\Http\Controllers\MasterMitraController;
 use App\Http\Controllers\MasterOrganikController;
@@ -93,20 +93,14 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['prefix' => 'manajemen-sampel'], function () {
-        Route::get('/', [ManajemenSampelController::class, 'index'])
-            ->name('sampel-index');
-        Route::get('/details/{id}', [ManajemenSampelController::class, 'show'])
-            ->name('sampel-show');
-
-        Route::get('/edit/{id}', [ManajemenSampelController::class, 'edit'])
-            ->name('sampel-edit-view');
-        Route::put('/edit/{id}', [ManajemenSampelController::class, 'update'])
-            ->name('sampel-edit-save');
-        Route::post('/seeder/{id}', [ManajemenSampelController::class, 'seeder'])
-            ->name('sampel-seeder');
-
-        Route::get('/finalisasi/{id}', [ManajemenSampelController::class, 'finalisasi'])
-            ->name('kegiatan-finalisasi');
+        Route::get('/', [SampelController::class, 'index'])
+            ->name('sampel-all');
+        Route::get('/create', [SampelController::class, 'create'])
+            ->name('sampel-create');
+        Route::post('/generate', [SampelController::class, 'generate'])
+            ->name('sampel-generate');
+        Route::get('/detail/{id}', [SampelController::class, 'show'])
+            ->name('sampel-detail');
     });
 
     Route::get('/organik/detail/{id}', [MasterOrganikController::class, 'show'])->name('detail-organik');

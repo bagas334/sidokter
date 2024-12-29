@@ -38,34 +38,8 @@ class Perusahaan extends Model
 
     public $timestamps = false;
 
-    public static function getTopSampledPerusahaan($banyak = 10)
+    public function sampel()
     {
-        return self::select('perusahaan.nama_usaha', 'perusahaan.kode_kbli', DB::raw('COUNT(kegiatan.id) as jumlah_kegiatan'))
-            ->join('sampel', 'perusahaan.id', '=', 'sampel.perusahaan_id')
-            ->join('kegiatan', 'kegiatan.id', '=', 'sampel.kegiatan_id')
-            ->groupBy('perusahaan.id', 'perusahaan.nama_usaha', 'perusahaan.kode_kbli')
-            ->orderByDesc('jumlah_kegiatan')
-            ->take($banyak)
-            ->get()
-            ->map(fn($item, $index) => $item->setAttribute('rank', $index + 1));
-    }
-
-    public static function getAllWithWilayah($paginate = 25)
-    {
-        $perusahaanColumns = Schema::getColumnListing('perusahaan');
-        $excludeColumns = ['kode_wilayah'];
-        $selectedColumns = array_diff($perusahaanColumns, $excludeColumns);
-        $selectedColumns = array_map(function ($column) {
-            return 'perusahaan.' . $column;
-        }, $selectedColumns);
-
-        $selectedColumns = array_merge($selectedColumns, [
-            'wilayah.kecamatan',
-            'wilayah.kelurahan'
-        ]);
-
-        return self::leftjoin('wilayah', 'perusahaan.kode_wilayah', '=', 'wilayah.kode')
-            ->select($selectedColumns)
-            ->paginate($paginate);
+        return $this->belongsToMany(Sampel::class, 'perusahaan_sampel', 'perusahaan_id', 'sampel_id');
     }
 }
