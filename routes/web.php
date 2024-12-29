@@ -52,11 +52,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/tugas-organik/{petugas}/create', [PenugasanPegawaiController::class, 'createTugas'])
             ->name('pengumpulan-tugas-organik-create');
         Route::get('{id}/tugas-organik/{petugas}/edit', [PenugasanPegawaiController::class, 'edit'])
-            ->name('penugasan-organik-edit');
+            ->name('penugasan-organik-edit')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+        Route::get('pengumpulan/{tugas}/edit', [PenugasanPegawaiController::class, 'editTugas'])
+            ->name('pengumpulan-tugas-organik-edit');
         Route::get('/{id}/tugas-organik/{petugas}/createpengajuan', [PenugasanPegawaiController::class, 'createPengajuan'])
             ->name('pengajuan-tugas-organik-create');
         Route::post('/save-tugas-organik', [PenugasanPegawaiController::class, 'storeTugas'])
             ->name('pengumpulan-tugas-organik-save');
+        Route::put('/edit-tugas-organik', [PenugasanPegawaiController::class, 'updateTugas'])
+            ->name('pengumpulan-tugas-organik-update');
         Route::get('/{id}/tambah-organik', [PenugasanPegawaiController::class, 'create'])
             ->name('penugasan-organik-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
         Route::post('{id}/tambah-organik/save', [PenugasanPegawaiController::class, 'store'])

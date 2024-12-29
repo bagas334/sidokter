@@ -64,7 +64,7 @@
                                                 @endif
                                             </form>
                                             @endif
-                                            <a href="{{ route('penugasan-organik-edit', ['id' => $id, 'petugas' => $pegawai]) }}" class="button px-2 py-1 rounded-md bg-blue-600 text-white">Tinjau</a>
+                                            <a href="{{ route('pengumpulan-tugas-organik-edit', ['tugas' => $item->id]) }}" class="button px-2 py-1 rounded-md bg-blue-600 text-white">Tinjau</a>
                                             <form action="{{ route('pengumpulan-tugas-delete', ['id' => $item->id]) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -74,7 +74,9 @@
                                             </form>
 
                                         </td>
-                                        <td class="text-center">{{$item->catatan}}</td>
+                                        <td class="text-center">
+                                            <p>{{$item->catatan}}</p>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -150,7 +152,7 @@
                                             <x-acc-button />
                                         </form>
                                         @endif
-                                        <a href="" class="rounded md p-1 m-auto border border-gray-500">Edit</a>
+                                        <a href="{{ route('pengumpulan-tugas-organik-edit', ['tugas' => $item->id]) }}" class="rounded md p-1 m-auto border border-gray-500">Edit</a>
                                         <form action="{{ route('pengumpulan-tugas-delete', ['id' => $item->id]) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')

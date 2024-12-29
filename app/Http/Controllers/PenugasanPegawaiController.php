@@ -41,9 +41,6 @@ class PenugasanPegawaiController extends Controller
             ->get();
 
         $pengajuan_pegawai = TugasPegawai::where(['penugasan_pegawai' => $penugasan_pegawai_id, 'status' => 'diajukan'])->get();
-
-
-        // Kembalikan ke view dengan semua variabel yang dibutuhkan
         return view('penugasan-detail-organik', compact('pengajuan_pegawai', 'penugasan_pegawai_id', 'id', 'pegawai', 'nama_pegawai', 'nama_kegiatan', 'tugas_pegawai'));
     }
 
@@ -64,11 +61,6 @@ class PenugasanPegawaiController extends Controller
             'tanggal_penugasan' => $tanggal_penugasan,
         ]);
         $penugasanPegawai = PenugasanPegawai::create($request->except('_token', '_method'));
-
-        // TugasPegawai::create([
-        //     'penugasan_pegawai' => $penugasanPegawai->id,
-        //     'status' => 'proses'
-        // ]);
         return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
 
@@ -96,23 +88,24 @@ class PenugasanPegawaiController extends Controller
         return redirect()->back();
     }
 
-
     public function createTugas($id, $pegawai)
     {
-
         $penugasan = PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
         $penugasan_pegawai_id = $penugasan->id;
-
         return view('pengumpulan-tugas-organik-create', compact('penugasan_pegawai_id', 'id', 'pegawai'));
     }
 
     public function createPengajuan($id, $pegawai)
     {
-
         $penugasan = PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
         $penugasan_pegawai_id = $penugasan->id;
-
         return view('pengajuan-tugas-organik-create', compact('penugasan_pegawai_id', 'id', 'pegawai'));
+    }
+
+    public function editTugas($tugas)
+    {
+        $tugas_pegawai = TugasPegawai::where('id', $tugas)->with('penugasanPegawai')->first();
+        return view('pengumpulan-tugas-organik-edit', compact('tugas', 'tugas_pegawai'));
     }
 
 
@@ -121,6 +114,14 @@ class PenugasanPegawaiController extends Controller
         $id = $request->kegiatan_id;
         $pegawai = $request->pegawai_id;
         $penugasanPegawai = TugasPegawai::create($request->except('_token', '_method', 'id', 'pegawai_id'));
+        return redirect()->route('penugasan-organik-detail', ['id' => $id, 'petugas' => $pegawai]);
+    }
+
+    public function updateTugas(Request $request)
+    {
+        $id = $request->kegiatan_id;
+        $pegawai = $request->pegawai_id;
+        TugasPegawai::where('id', $request->id)->first()->update($request->except('_token', '_method', 'id', 'pegawai_id'));
         return redirect()->route('penugasan-organik-detail', ['id' => $id, 'petugas' => $pegawai]);
     }
 
