@@ -18,12 +18,12 @@ class BebanKerjaController extends Controller
 
         $penugasanPegawai = PenugasanPegawai::with('pegawai') // Memuat relasi 'pegawai'
             ->where('kegiatan_id', $id)
-            ->get();
+            ->paginate(10);
 
         // Ambil data PenugasanMitra dan gunakan eager loading untuk relasi mitra
         $penugasanMitra = PenugasanMitra::with('mitra')
             ->where('kegiatan_id', $id)
-            ->get();
+            ->paginate(10);
 
         // Periksa jika data PenugasanPegawai tidak kosong
         if ($penugasanPegawai->isNotEmpty()) {
