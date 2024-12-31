@@ -1,6 +1,6 @@
 <div class="navbar bg-gray-50 px-12">
     <div class="flex-1">
-        <a class="text-3xl font-bold text-teal-600">SIDOKTER</a>
+        <a class="text-3xl font-bold text-teal-600">SiDokter</a>
     </div>
     <div class="flex-none">
         <div class="dropdown dropdown-bottom flex flex-row">
@@ -23,8 +23,12 @@
             <ul
                 tabindex="0"
                 class="menu menu-sm dropdown-content bg-teal-600 rounded-box z-[1] mt-3 w-44 p-2 shadow-xl text-gray-50">
-                <li><a>Profile</a></li>
-                <li><a>Logout</a></li>
+                <li>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>
