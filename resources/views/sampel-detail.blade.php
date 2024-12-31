@@ -3,10 +3,18 @@
 @section('title', 'Buat Kegiatan')
 
 @section('content')
-<div class="text-black">
-    <p>Detail Sampel</p>
-    <p>{{$sampel->nama}}</p>
-    <p>Daftar Perusahaan</p>
+<?php
+?>
+<div class="size-full flex flex-col w-full items-center px-4">
+    {{-- Judul--}}
+    <div class="w-full pb-6 ">
+        <div class="flex  justify-beetween">
+            <div>
+                <p class="text-sm">Detail Sampel / {{$sampel->nama}}</p>
+                <p class="text-3xl font-bold">Daftar Perusahaan</p>
+            </div>
+        </div>
+    </div>
 
     <div class="flex flex-col justify-center overflow-x-auto max-w-[78vw]">
         <div class="relative min-w-[100vw]">
