@@ -8,6 +8,7 @@ use App\Models\PenugasanMitra;
 use App\Models\PenugasanPegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class BebanKerjaController extends Controller
@@ -18,12 +19,12 @@ class BebanKerjaController extends Controller
 
         $penugasanPegawai = PenugasanPegawai::with('pegawai') // Memuat relasi 'pegawai'
             ->where('kegiatan_id', $id)
-            ->get();
+            ->paginate(10);
 
         // Ambil data PenugasanMitra dan gunakan eager loading untuk relasi mitra
         $penugasanMitra = PenugasanMitra::with('mitra')
             ->where('kegiatan_id', $id)
-            ->get();
+            ->paginate(10);
 
         // Periksa jika data PenugasanPegawai tidak kosong
         if ($penugasanPegawai->isNotEmpty()) {
@@ -111,37 +112,66 @@ class BebanKerjaController extends Controller
         return redirect()->route('beban-kerja-all');
     }
 
-    public function showAll()
+    public function showAll(Request $request)
     {
-        // Ambil semua data kegiatan dengan paginasi 10 per halaman
-        if (auth()->check() && in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
-            $kegiatan = Kegiatan::paginate(10);
-        } else if (auth()->check() && auth()->user()->jabatan == 'Organik') {
-            $kegiatan = PenugasanPegawai::where('petugas', auth()->user()->id)
-                ->with('kegiatan') // Memuat relasi
-                ->paginate(10);
+        $user = auth()->user();
+
+        // Query default berdasarkan jabatan
+        if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
+            $query = Kegiatan::query();
+        } elseif ($user && $user->jabatan == 'Organik') {
+            $query = PenugasanPegawai::where('petugas', $user->id)
+                ->with('kegiatan');
         } else {
-            $kegiatan = Kegiatan::where('asal_fungsi', auth()->user()->fungsi_ketua_tim)->paginate(10);
+            $query = Kegiatan::where('asal_fungsi', $user->fungsi_ketua_tim);
         }
 
+        // Filter berdasarkan parameter tanggal_mulai dan tanggal_akhir
+        if ($request->filled('tanggal_mulai') && $request->filled('tanggal_akhir')) {
+            // Validasi dan konversi tanggal ke format database
+            $tanggalMulai = Carbon::parse($request->tanggal_mulai)->startOfDay();
+            $tanggalAkhir = Carbon::parse($request->tanggal_akhir)->endOfDay();
 
-
-        foreach ($kegiatan as $k) {
-            // Update kolom 'terlaksana' berdasarkan penugasan_pegawai dan penugasan_mitra
-            DB::table('kegiatan')
-                ->where('id', $k->id)
-                ->update([
-                    'terlaksana' => DB::raw('(
-                        SELECT COALESCE(SUM(p.terlaksana), 0) 
-                        FROM penugasan_pegawai p
-                        WHERE p.kegiatan_id = kegiatan.id
-                    ) + (
-                        SELECT COALESCE(SUM(m.terlaksana), 0)
-                        FROM penugasan_mitra m
-                        WHERE m.kegiatan_id = kegiatan.id
-                    )')
-                ]);
+            $query->whereBetween('tanggal_mulai', [$tanggalMulai, $tanggalAkhir]);
+        } elseif ($request->filled('tanggal_mulai')) {
+            // Jika hanya tanggal mulai yang diisi
+            $tanggalMulai = Carbon::parse($request->tanggal_mulai)->startOfDay();
+            $query->where('tanggal_mulai', '>=', $tanggalMulai);
+        } elseif ($request->filled('tanggal_akhir')) {
+            // Jika hanya tanggal akhir yang diisi
+            $tanggalAkhir = Carbon::parse($request->tanggal_akhir)->endOfDay();
+            $query->where('tanggal_mulai', '<=', $tanggalAkhir);
         }
-        return view('penugasan-all', compact('kegiatan'));
+
+        // Filter berdasarkan bulan (jika ada)
+        if ($request->filled('bulan')) {
+            $query->whereMonth('tanggal_mulai', $request->bulan);
+        }
+
+        // Sorting berdasarkan parameter (sort dan order)
+        $sort = $request->get('sort', 'tanggal_mulai'); // Default sort by 'tanggal_mulai'
+        $order = $request->get('order', 'asc'); // Default order is ascending
+        $query->orderBy($sort, $order);
+
+        // Perbarui kolom 'terlaksana' secara batch
+        Kegiatan::query()->update([
+            'terlaksana' => DB::raw('(
+        SELECT COALESCE(SUM(p.terlaksana), 0) 
+        FROM penugasan_pegawai p
+        WHERE p.kegiatan_id = kegiatan.id
+    ) + (
+        SELECT COALESCE(SUM(m.terlaksana), 0)
+        FROM penugasan_mitra m
+        WHERE m.kegiatan_id = kegiatan.id
+    )')
+        ]);
+
+        // Eksekusi query dengan paginasi
+        $kegiatan = $query->paginate(10);
+
+        // Data tambahan untuk view
+        $filterParams = $request->only('tanggal_mulai', 'tanggal_akhir', 'bulan', 'sort', 'order');
+
+        return view('penugasan-all', compact('kegiatan', 'filterParams', 'sort', 'order'));
     }
 }
