@@ -17,7 +17,7 @@
         <option value="">-- Pilih Opsi --</option>
         @foreach ($options as $option)
         <option value="{{ $option->id }}" {{ $selected == $option->nama ? 'selected' : '' }}>
-            {{ $option->id.' '.$option->nama.' ('.$option->pendapatan.')' }}
+            {{ $option->nama.' ('.$option->pendapatan.')' }}
         </option>
         @endforeach
     </select>

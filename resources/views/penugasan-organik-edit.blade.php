@@ -47,4 +47,85 @@
         </form>
     </div>
 </div>
+
+<script>
+    let form = document.getElementById('form');
+    form.addEventListener('submit', (e) => {
+        let errors = [];
+        let validNamaRegex = /^[a-zA-Z0-9 ]+$/;
+        let validNumberRegex = /^[0-9]+$/;
+
+        let catatanField = document.getElementById('catatan');
+        let catatanError = document.getElementById('catatanError');
+
+        if (catatanField.value.trim()) {
+            if (!validNamaRegex.test(catatanField.value.trim())) {
+                errors.push('Catatan mengandung karakter tidak valid');
+                catatanError.textContent = 'Field catatan mengandung karakter tidak valid.';
+                catatanError.classList.remove('hidden');
+                catatanError.classList.add('text-red-500');
+            } else {
+                catatanError.classList.add('hidden');
+                catatanError.textContent = '';
+            }
+        }
+
+        // Validasi Target Field
+        let targetField = document.getElementById('target');
+        let targetError = document.getElementById('targetError');
+
+        if (!targetField.value.trim()) {
+            errors.push('Jumlah satuan harus diisi.');
+            targetError.textContent = 'Jumlah satuan harus diisi.';
+            targetError.classList.remove('hidden');
+            targetError.classList.add('text-red-500');
+        } else if (!validNumberRegex.test(targetField.value.trim())) {
+            errors.push('Jumlah satuan harus berupa angka.');
+            targetError.textContent = 'Jumlah satuan harus berupa angka.';
+            targetError.classList.remove('hidden');
+            targetError.classList.add('text-red-500');
+        } else {
+            targetError.classList.add('hidden');
+            targetError.textContent = '';
+        }
+
+        let jabatanField = document.getElementById('jabatan');
+        let jabatanError = document.getElementById('jabatanError');
+        if (!jabatanField.value.trim()) {
+            errors.push('Jabatan harus diisi.');
+            jabatanError.textContent = 'Jabatan harus diisi.';
+            jabatanError.classList.remove('hidden');
+            jabatanError.classList.add('text-red-500');
+        } else if (!validNamaRegex.test(jabatanField.value.trim())) {
+            errors.push('Jabatan mengandung karakter tidak valid.');
+            jabatanError.textContent = 'Jabatan mengandung karakter tidak valid.';
+            jabatanError.classList.remove('hidden');
+            jabatanError.classList.add('text-red-500');
+        } else {
+            jabatanError.classList.add('hidden');
+            jabatanError.textContent = '';
+        }
+
+        let petugasField = document.getElementById('petugas');
+        let petugasError = document.getElementById('petugasError');
+        if (!petugasField.value.trim()) {
+            errors.push('petugas harus diisi.');
+            petugasError.textContent = 'petugas harus diisi.';
+            petugasError.classList.remove('hidden');
+            petugasError.classList.add('text-red-500');
+        } else if (!validNamaRegex.test(petugasField.value.trim())) {
+            errors.push('petugas mengandung karakter tidak valid.');
+            petugasError.textContent = 'petugas mengandung karakter tidak valid.';
+            petugasError.classList.remove('hidden');
+            petugasError.classList.add('text-red-500');
+        } else {
+            petugasError.classList.add('hidden');
+            petugasError.textContent = '';
+        }
+
+        if (errors.length > 0) {
+            e.preventDefault();
+        }
+    });
+</script>
 @endsection

@@ -10,7 +10,7 @@
             <x-judul text="Buat Penugasan Mitra" />
         </div>
 
-        <form action="{{ route('penugasan-mitra-create-save', ['id' => $id]) }}" method="POST">
+        <form id="form" action="{{ route('penugasan-mitra-create-save', ['id' => $id]) }}" method="POST">
             @csrf
             @method('POST')
 
@@ -21,8 +21,6 @@
                 :options="$mitra"
                 :name="'petugas'"
                 required></x-input.dropdown-mitra>
-
-
 
             <x-input.double-input-layout
                 :label="'Kuantitas'"
@@ -52,6 +50,8 @@
 
 <script>
     // Get the PHP variable and ensure it's passed as a number
+    let mitraField = document.getElementById('petugas');
+
 
     const pendapatan = <?php echo json_encode((float) $kegiatan->harga_satuan); ?>;
     const pendapatan_awal = <?php echo json_encode((float) $kegiatan->harga_satuan); ?>;
@@ -72,6 +72,13 @@
             submitButton.style.display = 'block';
         }
     });
+
+    let form = document.getElementById('form');
+    form.addEventListener('submit', (e) => {
+        let mitraSelected = mitraField.value;
+        const targetValue = parseFloat(target.value) || 0; // Get the value as a number or default to 0
+
+    })
 </script>
 
 @endsection
