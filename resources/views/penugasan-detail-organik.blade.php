@@ -10,7 +10,7 @@
     <div class="w-full pb-6 ">
         <div class="flex  justify-beetween">
             <div>
-                <p class="text-sm"><?php echo $nama_kegiatan ?> / Penugasan</p>
+                <p class="text-sm"><?php echo $nama_kegiatan ?> / akbarn</p>
                 <p class="text-3xl font-bold"><?php echo $nama_pegawai ?></p>
             </div>
         </div>

@@ -25,7 +25,7 @@ class Sampel extends Model
 
     public function kegiatan()
     {
-        return $this->belongsTo(Kegiatan::class, 'kegiatan', 'id');
+        return $this->belongsTo(Kegiatan::class); // pastikan Kegiatan adalah nama model yang benar
     }
 
     public function perusahaan()
