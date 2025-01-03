@@ -40,10 +40,17 @@ class PenugasanMitraController extends Controller
         $request->merge([
             'tanggal_penugasan' => $tanggal_penugasan,
         ]);
+        $harga = Kegiatan::where('id', $request->kegiatan_id)->first()->harga_satuan;
+        $mitra = Mitra::where('id', $request->petugas)->first();
+        $pendapatanAwal = $mitra->pendapatan;
+        $pendapatanAkhir = $pendapatanAwal + $harga * $request->target;
+        if ($pendapatanAkhir > 100000) {
+            return redirect()->back();
+        }
 
-
+        $mitra->pendapatan = $pendapatanAkhir;
+        $mitra->save();
         PenugasanMitra::create($request->except('_token', '_method'));
-
         return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
 
@@ -71,7 +78,12 @@ class PenugasanMitraController extends Controller
 
     public function delete($penugasan, $id)
     {
-        PenugasanMitra::where('id', $id)->delete();
+        $tugas = PenugasanMitra::where('id', $id)->first();
+        $mitra = Mitra::where('id', $tugas->petugas)->first();
+        $kegiatan = Kegiatan::where('id', $tugas->kegiatan_id)->first();
+        $mitra->pendapatan = $mitra->pendapatan - $kegiatan->harga_satuan * $tugas->target;
+        $mitra->save();
+        $tugas->delete();
         return redirect()->route('beban-kerja-tugas', ['id' => $penugasan]);
     }
 }
