@@ -55,6 +55,28 @@ class DashboardController extends Controller
         // Eksekusi query
         $kegiatan = $query->get(); // Anda bisa mengganti get() dengan paginate() jika ingin paginasi
 
-        return view('dashboard', compact('kegiatan'));
+        // Query default berdasarkan jabatan
+        if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
+            $query = Kegiatan::query();
+        } elseif ($user && $user->jabatan == 'Organik') {
+            $query = Kegiatan::where('petugas', $user->id);
+        } else {
+            $query = Kegiatan::where('asal_fungsi', $user->fungsi_ketua_tim);
+        }
+
+        // Hitung total kegiatan
+        $totalKegiatan = $query->count();
+
+        // Hitung distribusi kegiatan berdasarkan asal_fungsi
+        $distribusiKegiatan = $query->selectRaw('asal_fungsi, COUNT(*) as jumlah, (COUNT(*) * 100.0 / ?) as persentase', [$totalKegiatan])
+            ->groupBy('asal_fungsi')
+            ->get();
+
+        $penugasanPegawai = PenugasanPegawai::selectRaw('petugas, COUNT(*) as jumlah_kegiatan, SUM(target) as jumlah_satuan')
+            ->groupBy('petugas')->with('pegawai')
+            ->get();
+
+
+        return view('dashboard', compact('kegiatan', 'distribusiKegiatan', 'penugasanPegawai'));
     }
 }

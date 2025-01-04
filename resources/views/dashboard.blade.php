@@ -84,30 +84,12 @@
                     <th>Asal fungsi</th>
                     <th>Persentase</th>
                 </tr>
+                @foreach ($distribusiKegiatan as $item)
                 <tr>
-                    <td>Statistik Produksi</td>
-                    <td>Teks</td>
+                    <td>{{ $item->asal_fungsi }}</td>
+                    <td>{{ number_format($item->persentase, 2) }}%</td>
                 </tr>
-                <tr>
-                    <td>Statistik Sosial</td>
-                    <td>Teks</td>
-                </tr>
-                <tr>
-                    <td>Statistik Distribusi</td>
-                    <td>Teks</td>
-                </tr>
-                <tr>
-                    <td>Nerwilis</td>
-                    <td>Teks</td>
-                </tr>
-                <tr>
-                    <td>IPDS</td>
-                    <td>Teks</td>
-                </tr>
-                <tr>
-                    <td>Umum</td>
-                    <td>Teks</td>
-                </tr>
+                @endforeach
             </table>
         </div>
     </div>
@@ -115,7 +97,20 @@
     <div class="border border-black p-1 my-2">
         <p class="text-black font-bold text-2xl">Beban Kerja Organik</p>
         <p>GRAFIKKK</p>
-        <div class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam dolor animi repellendus, qui similique voluptatibus consequatur nemo repellat ea debitis exercitationem voluptatem saepe, numquam veritatis eos soluta! Illo, mollitia optio!</div>
+        <table>
+            <tr>
+                <th>Nama organik</th>
+                <th>Jumlah kegiatan terlibat</th>
+                <th>Jumlah satuan terlibat</th>
+            </tr>
+            @foreach ($penugasanPegawai as $item)
+            <tr>
+                <td>{{$item->pegawai->nama}}</td>
+                <td>{{$item->jumlah_kegiatan}}</td>
+                <td>{{$item->jumlah_satuan}}</td>
+            </tr>
+            @endforeach
+        </table>
     </div>
 </div>
 
