@@ -1,6 +1,6 @@
 <div class="navbar bg-gray-50 px-12">
     <div class="flex-1">
-        <a class="text-3xl font-bold text-teal-600">SiDokter</a>
+        <a class="text-3xl font-bold text-teal-600">SiDokter <span class="text-sm">0.8.1 Dev</span></a>
     </div>
     <div class="flex-none">
         <div class="dropdown dropdown-bottom relative flex items-center">
