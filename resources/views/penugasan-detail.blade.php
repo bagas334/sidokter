@@ -4,8 +4,9 @@
 
 <div class="size-full flex flex-col w-full items-center px-4">
     <div class="w-full pb-6">
+        <a class="text-blue py-1 px-2 bg-blue-200 text-blue-500 font-bold hover:bg-blue-400 hover:text-blue-700 rounded-xl" href="{{route('beban-kerja-all')}}">Kembali</a>
         <p class="text-sm"><?php echo $kegiatan->nama ?> / Penugasan</p>
-        <p class="text-3xl font-bold"><?php echo $kegiatan->nama ?></p>
+        <p class="text-3xl text-teal-600 font-bold"><?php echo $kegiatan->nama ?></p>
     </div>
 
     {{-- Grid --}}
@@ -69,7 +70,7 @@
         <div class="row-span-1 flex flex-col justify-between max-w-[75vw]">
             <div class="size-full bg-gray-50 border border-gray-100 rounded-md rounded-md p-4 h-auto">
                 <div class="w-full pl-2 pb-6">
-                    <span class="text-2xl text-teal-600 font-medium">Informasi Tim</span>
+                    <span class="text-xl text-teal-600 font-bold">Informasi Penugasan</span>
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium" style="margin-bottom: 5px;">Status</p>
@@ -77,11 +78,11 @@
                         <!-- Progres Bar -->
                         <div class="relative w-full h-3 bg-gray-200 rounded-full dark:bg-gray-700 overflow-hidden">
                             <!-- Selesai -->
-                            <div class="absolute top-0 left-0 h-full bg-green-500" 
+                            <div class="absolute top-0 left-0 h-full bg-green-500"
                                 style="width: {{ $progresSelesai }}%;">
                             </div>
                             <!-- Ditugaskan -->
-                            <div class="absolute top-0 left-0 h-full bg-yellow-300" 
+                            <div class="absolute top-0 left-0 h-full bg-yellow-300"
                                 style="width: {{ $progresDitugaskan }}%; margin-left: {{ $progresSelesai }}%;">
                             </div>
                         </div>
@@ -100,14 +101,10 @@
                             <!-- Sisanya -->
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-gray-400"></span>
-                                <span class="text-xs text-gray-700">Others ({{ number_format(100 - $progresSelesai - $progresDitugaskan, 2) }}%)</span>
+                                <span class="text-xs text-gray-700">Belum dialokasikan ({{ number_format(100 - $progresSelesai - $progresDitugaskan, 2) }}%)</span>
                             </div>
-                        </div>    
-                    </div>  
-                </div>
-                <div class="w-full pl-2 pb-2">
-                    <p class="text-md text-cyan-950 font-medium">Pengajuan</p>
-                    <p class="text-sm text-gray-600 font-normal">100% (buat grafik frontend)</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Fungsi: </p>
@@ -126,24 +123,10 @@
 
         <div class="size-full pt-6">
             <div class="size-full bg-gray-50 border border-gray-100 rounded-md rounded-md p-4">
-                <div class="w-full pl-2 pb-6 flex flex-row justify-between">
-                    <span class="text-2xl text-teal-600 font-medium">Daftar Tugas Mitra</span>
-                </div>
 
                 <div class="w-full flex flex-row justify-between items-center pb-1">
-                    {{-- Pencarian --}}
-                    <div class="relative flex items-center w-64">
-                        <input type="text"
-                            class="input pl-10 m-2 ml-0 w-full bg-gray-50 border border-gray-300 rounded-md input-sm focus:outline-none focus:ring-1 focus:ring-teal-600 focus:border-teal-600 peer"
-                            placeholder="Cari kegiatan" />
-
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="absolute left-4 w-5 h-5 text-gray-500 transition duration-200 ease-in-out peer-focus:text-teal-600">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                        </svg>
+                    <div class="w-full pl-2 pb-6 flex flex-row justify-between">
+                        <span class="text-2xl text-teal-600 font-medium">Daftar Tugas Mitra</span>
                     </div>
                     <x-tambah-button :route="route('penugasan-mitra-create', ['id' => $id])" />
                 </div>
@@ -173,7 +156,10 @@
                                     <td class="text-end">{{ $item->terlaksana}}</td>
                                     <td class="text-center w-8">
                                         <div class="justify-center space-x-2 px-2 flex">
-                                            <x-view-button :id="$item->id" :route="'penugasan-mitra-detail'" />
+                                            <x-edit
+                                                :route="'penugasan-mitra-edit'"
+                                                :parameters="['id' => $id, 'petugas' => $item->petugas]" />
+
                                             <form action="{{ route('penugasan-mitra-delete', ['id'=>$item->id, 'penugasan'=>$id]) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
@@ -181,7 +167,13 @@
                                             </form>
                                         </div>
                                     </td>
-                                    <td class="text-center">Tidak ada</td>
+                                    <td class="text-center">
+                                        @if($item->catatan)
+                                        {{$item->catatan}}
+                                        @else
+                                        Tidak ada
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                                 @else

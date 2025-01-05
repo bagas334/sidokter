@@ -47,7 +47,7 @@
                                     <tr>
                                         <td class="text-center">{{$loop->iteration}}</td>
                                         <td>{{$item->dikerjakan}}</td>
-                                        <td class="text-center">{{$item->created_at}}</td>
+                                        <td class="text-center">{{$item->updated_at}}</td>
                                         <td class="text-center">{{$item->status}}</td>
                                         <td class="text-center">
                                             <a href="{{$item->bukti}}" class="button px-2 py-1 rounded-md bg-blue-600 text-white">Lihat</a>

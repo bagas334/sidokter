@@ -108,6 +108,16 @@ class BebanKerjaController extends Controller
 
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'nama' => 'required|max:100',
+            'target' => 'required|numeric|min:1',
+            'asal_fungsi' => 'required',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_akhir' => 'required|date',
+            'satuan' => 'required',
+            'harga_satuan' => 'required'
+        ]);
+
         Kegiatan::create($request->except('_token', '_method'));
         return redirect()->route('beban-kerja-all');
     }
@@ -120,8 +130,7 @@ class BebanKerjaController extends Controller
         if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
             $query = Kegiatan::query();
         } elseif ($user && $user->jabatan == 'Organik') {
-            $query = PenugasanPegawai::where('petugas', $user->id)
-                ->with('kegiatan');
+            $query = PenugasanPegawai::where('petugas', $user->id)->with('kegiatan');
         } else {
             $query = Kegiatan::where('asal_fungsi', $user->fungsi_ketua_tim);
         }
@@ -149,10 +158,11 @@ class BebanKerjaController extends Controller
         }
 
         // Sorting berdasarkan parameter (sort dan order)
-        $sort = $request->get('sort', 'tanggal_mulai'); // Default sort by 'tanggal_mulai'
-        $order = $request->get('order', 'asc'); // Default order is ascending
-        $query->orderBy($sort, $order);
-
+        if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
+            $sort = $request->get('sort', 'tanggal_mulai'); // Default sort by 'tanggal_mulai'
+            $order = $request->get('order', 'asc'); // Default order is ascending
+            $query->orderBy($sort, $order);
+        }
         // Perbarui kolom 'terlaksana' secara batch
         Kegiatan::query()->update([
             'terlaksana' => DB::raw('(
@@ -166,12 +176,15 @@ class BebanKerjaController extends Controller
     )')
         ]);
 
-        // Eksekusi query dengan paginasi
-        $kegiatan = $query->paginate(10);
-
         // Data tambahan untuk view
         $filterParams = $request->only('tanggal_mulai', 'tanggal_akhir', 'bulan', 'sort', 'order');
 
-        return view('penugasan-all', compact('kegiatan', 'filterParams', 'sort', 'order'));
+        if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
+            $kegiatan = $query->paginate(10);
+            return view('penugasan-all', compact('kegiatan', 'filterParams', 'sort', 'order'));
+        } else {
+            $kegiatan = $query->paginate(10);
+            return view('penugasan-all', compact('kegiatan'));
+        }
     }
 }

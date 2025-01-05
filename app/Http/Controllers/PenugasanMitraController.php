@@ -54,26 +54,17 @@ class PenugasanMitraController extends Controller
         return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
 
-    public function edit($id): View
+    public function edit($id, $petugas)
     {
-        $detail_tugas = PenugasanMitra::getById($id);
-        $pilihan_pelaksana = Mitra::all(['id', 'nama']);
-        $pilihan_pemberi_tugas = Pegawai::all(['id', 'nama']);
-        $pilihan_status = self::getStatusKegiatan();
-
-        return view('penugasan-mitra-edit', compact('detail_tugas', 'pilihan_pelaksana', 'pilihan_pemberi_tugas', 'pilihan_status'));
+        $awal = PenugasanMitra::where(['kegiatan_id' => $id, 'petugas' => $petugas])->with('kegiatan', 'mitra')->first();
+        $mitra = Mitra::all();
+        return view('penugasan-mitra-edit', compact('id', 'petugas', 'mitra', 'awal'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $pegawai)
     {
-        $tanggal_penugasan_converted = DateTime::createFromFormat('d-m-Y', $request->get('tanggal_penugasan'))->format('Y-m-d');
-        $request->merge([
-            'tanggal_penugasan' => $tanggal_penugasan_converted,
-        ]);
-
-        PenugasanMitra::where('id', $id)->update($request->except('_token', '_method'));
-
-        return redirect()->route('penugasan-mitra-detail', ['id' => $id]);
+        PenugasanMitra::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first()->update($request->except('_token', '_method'));
+        return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
 
     public function delete($penugasan, $id)

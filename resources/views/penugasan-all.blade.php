@@ -42,6 +42,44 @@
 
 <div class="flex flex-col justify-center overflow-x-auto max-w-[78vw]">
     <div class="relative min-w-[100vw]">
+        @if(auth()->user()->jabatan == 'Organik')
+        <table class="table-custom" id="tabel">
+            <thead>
+                <tr>
+                    <th scope="col" rowspan="2" class="w-8 text-center">No</th>
+                    <th scope="col" rowspan="2" class="w-56">Kegiatan</th>
+                    <th scope="col" rowspan="2" class="w-24">Asal Fungsi</th>
+                    <th scope="col" colspan="2" class="text-center border-b-gray-200 border-b-[1px]">Tanggal</th>
+                    <th scope="col" rowspan="2" class="w-28 text-end">Target</th>
+                    <th scope="col" rowspan="2" class="w-28 text-end">Terlaksana</th>
+                    <th scope="col" rowspan="2" class="w-28 text-center">Aksi</th>
+                </tr>
+                <tr>
+                    <th scope="col" class="w-28 text-center">Mulai</th>
+                    <th scope="col" class="w-28 text-center">Selesai</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($kegiatan as $item)
+                <tr>
+                    <td class="text-center">{{$loop->iteration}}</td>
+                    <td>{{$item->kegiatan->nama}}</td>
+                    <td>{{$item->kegiatan->asal_fungsi}}</td>
+                    <td class="text-center">{{$item->kegiatan->tanggal_mulai}}</td>
+                    <td class="text-center">{{$item->kegiatan->tanggal_akhir}}</td>
+                    <td class="text-end">{{$item->target}}</td>
+                    <td class="text-end">{{$item->terlaksana}}</td>
+                    <td class="text-center">
+                        <div class="flex justify-between px-2">
+                            <x-detail-button-table :id="$item->id" :route="'beban-kerja-all'" />
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        @endif
+
         @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
         <table class="table-custom">
             <thead>
