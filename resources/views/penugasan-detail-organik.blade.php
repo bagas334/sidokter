@@ -6,12 +6,16 @@
 <?php
 ?>
 <div class="size-full flex flex-col w-full items-center px-4">
-    {{-- Judul--}}
     <div class="w-full pb-6 ">
         <div class="flex  justify-beetween">
             <div>
-                <p class="text-sm"><?php echo $nama_kegiatan ?> / akbarn</p>
-                <p class="text-3xl font-bold"><?php echo $nama_pegawai ?></p>
+                @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
+                <p class="text-3xl font-bold text-teal-600"><?php echo $nama_kegiatan ?></p>
+                <p class="text-xl font-bold text-teal-600">Pegawai : <?php echo $nama_pegawai ?></p>
+                @elseif(auth()->user()->jabatan == 'Organik')
+                <p class="text-3xl font-bold text-teal-600"><?php echo $nama_kegiatan ?></p>
+                <p>Tinjau pekerjaan anda.</p>
+                @endif
             </div>
         </div>
     </div>

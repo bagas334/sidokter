@@ -59,7 +59,7 @@ class DashboardController extends Controller
         if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
             $query = Kegiatan::query();
         } elseif ($user && $user->jabatan == 'Organik') {
-            $query = Kegiatan::where('petugas', $user->id);
+            $query = PenugasanPegawai::where('petugas', $user->id)->with('kegiatan')->get();
         } else {
             $query = Kegiatan::where('asal_fungsi', $user->fungsi_ketua_tim);
         }

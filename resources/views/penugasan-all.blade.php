@@ -71,7 +71,8 @@
                     <td class="text-end">{{$item->terlaksana}}</td>
                     <td class="text-center">
                         <div class="flex justify-between px-2">
-                            <x-detail-button-table :id="$item->id" :route="'beban-kerja-all'" />
+                            <a href="/beban-kerja/{{$item->kegiatan_id}}/tugas-organik/{{auth()->user()->id}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-medium rounded-md">Tugas anda</a>
+                            <a href="/beban-kerja/{{$item->kegiatan_id}}/penugasan" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-medium rounded-md">Detail</a>
                         </div>
                     </td>
                 </tr>

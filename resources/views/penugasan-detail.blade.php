@@ -3,19 +3,22 @@
 @section('content')
 
 <div class="size-full flex flex-col w-full items-center px-4">
-    <div class="w-full pb-6">
-        <a class="text-blue py-1 px-2 bg-blue-200 text-blue-500 font-bold hover:bg-blue-400 hover:text-blue-700 rounded-xl" href="{{route('beban-kerja-all')}}">Kembali</a>
-        <p class="text-sm"><?php echo $kegiatan->nama ?> / Penugasan</p>
-        <p class="text-3xl text-teal-600 font-bold"><?php echo $kegiatan->nama ?></p>
+    <div class="w-full pb-6 flex justify-between">
+        <div>
+            <a class="text-blue py-1 px-2 bg-blue-200 text-blue-500 font-bold hover:bg-blue-400 hover:text-blue-700 rounded-xl" href="{{route('beban-kerja-all')}}">Kembali</a>
+            <p class="mt-2 text-3xl text-teal-600 font-bold"><?php echo $kegiatan->nama ?></p>
+        </div>
+        <a href="/beban-kerja/{{$kegiatan->id}}/tugas-organik/{{auth()->user()->id}}" class="p-auto mx-1 button bg-blue-500 py-1 px-2 text-white font-medium rounded-md">Lihat tugas anda</a>
     </div>
 
-    {{-- Grid --}}
     <div class="grid grid-cols-[7fr_2.5fr] grid-rows-auto size-full pt-6 gap-4">
         <div class="flex flex-col space-y-4">
             <div class="size-full bg-gray-50 border border-gray-100 rounded-md p-4">
                 <div class="w-full pl-2 pb-6 flex justify-between">
                     <span class="text-2xl text-teal-600 font-medium">Daftar Organik</span>
+                    @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
                     <x-tambah-button :route="route('penugasan-organik-create', ['id' => $id])" />
+                    @endif
                 </div>
 
                 <div class="flex flex-col justify-center overflow-x-auto max-w-[70vw]">
@@ -28,7 +31,9 @@
                                     <th scope="col" class="w-8">Jabatan</th>
                                     <th scope="col" class="w-8 text-center">Target (Satuan)</th>
                                     <th scope="col" class="w-8 text-center">Terlaksana (Satuan)</th>
+                                    @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
                                     <th scope="col" class="w-8 text-center">Aksi</th>
+                                    @endif
                                     <th scope="col" class="w-8 text-center">Catatan</th>
                                 </tr>
                             </thead>
@@ -41,6 +46,7 @@
                                     <td class="text-center">{{ $item->jabatan }}</td>
                                     <td class="text-center">{{ $item->target }}</td>
                                     <td class="text-center">{{ $item->terlaksana }}</td>
+                                    @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
                                     <td class="text-center flex">
                                         <a href="/beban-kerja/{{$id}}/tugas-organik/{{$item->pegawai->id}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-md rounded-md">Detail</a>
                                         <form action="{{ route('penugasan-organik-delete', ['id'=>$item->id, 'penugasan'=>$id]) }}" method="POST" style="display:inline;">
@@ -49,6 +55,7 @@
                                             <x-remove-button />
                                         </form>
                                         <a href="{{route('penugasan-organik-edit',['id'=>$id,'petugas'=>$item->petugas])}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-md rounded-md">Edit</a>
+                                        @endif
                                     </td>
                                     <td class="text-center">{{$item->catatan}}</td>
                                 </tr>
