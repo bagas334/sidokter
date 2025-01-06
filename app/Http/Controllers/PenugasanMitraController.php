@@ -29,8 +29,7 @@ class PenugasanMitraController extends Controller
     public function create($id)
     {
         $kegiatan = Kegiatan::where('id', $id)->first();
-        $mitra = Mitra::all();
-
+        $mitra = Mitra::orderBy('pendapatan', 'asc')->get();
         return view('penugasan-mitra-create', compact('id', 'kegiatan', 'mitra'));
     }
 
@@ -41,38 +40,41 @@ class PenugasanMitraController extends Controller
         $request->merge([
             'tanggal_penugasan' => $tanggal_penugasan,
         ]);
+        $harga = Kegiatan::where('id', $request->kegiatan_id)->first()->harga_satuan;
+        $mitra = Mitra::where('id', $request->petugas)->first();
+        $pendapatanAwal = $mitra->pendapatan;
+        $pendapatanAkhir = $pendapatanAwal + $harga * $request->target;
+        if ($pendapatanAkhir > 100000) {
+            return redirect()->back();
+        }
 
-
+        $mitra->pendapatan = $pendapatanAkhir;
+        $mitra->save();
         PenugasanMitra::create($request->except('_token', '_method'));
-
         return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
 
-    public function edit($id): View
+    public function edit($id, $petugas)
     {
-        $detail_tugas = PenugasanMitra::getById($id);
-        $pilihan_pelaksana = Mitra::all(['id', 'nama']);
-        $pilihan_pemberi_tugas = Pegawai::all(['id', 'nama']);
-        $pilihan_status = self::getStatusKegiatan();
-
-        return view('penugasan-mitra-edit', compact('detail_tugas', 'pilihan_pelaksana', 'pilihan_pemberi_tugas', 'pilihan_status'));
+        $awal = PenugasanMitra::where(['kegiatan_id' => $id, 'petugas' => $petugas])->with('kegiatan', 'mitra')->first();
+        $mitra = Mitra::all();
+        return view('penugasan-mitra-edit', compact('id', 'petugas', 'mitra', 'awal'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $pegawai)
     {
-        $tanggal_penugasan_converted = DateTime::createFromFormat('d-m-Y', $request->get('tanggal_penugasan'))->format('Y-m-d');
-        $request->merge([
-            'tanggal_penugasan' => $tanggal_penugasan_converted,
-        ]);
-
-        PenugasanMitra::where('id', $id)->update($request->except('_token', '_method'));
-
-        return redirect()->route('penugasan-mitra-detail', ['id' => $id]);
+        PenugasanMitra::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first()->update($request->except('_token', '_method'));
+        return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
 
     public function delete($penugasan, $id)
     {
-        PenugasanMitra::where('id', $id)->delete();
+        $tugas = PenugasanMitra::where('id', $id)->first();
+        $mitra = Mitra::where('id', $tugas->petugas)->first();
+        $kegiatan = Kegiatan::where('id', $tugas->kegiatan_id)->first();
+        $mitra->pendapatan = $mitra->pendapatan - $kegiatan->harga_satuan * $tugas->target;
+        $mitra->save();
+        $tugas->delete();
         return redirect()->route('beban-kerja-tugas', ['id' => $penugasan]);
     }
 }

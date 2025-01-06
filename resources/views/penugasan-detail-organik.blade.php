@@ -6,12 +6,16 @@
 <?php
 ?>
 <div class="size-full flex flex-col w-full items-center px-4">
-    {{-- Judul--}}
     <div class="w-full pb-6 ">
         <div class="flex  justify-beetween">
             <div>
-                <p class="text-sm"><?php echo $nama_kegiatan ?> / Penugasan</p>
-                <p class="text-3xl font-bold"><?php echo $nama_pegawai ?></p>
+                @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
+                <p class="text-3xl font-bold text-teal-600"><?php echo $nama_kegiatan ?></p>
+                <p class="text-xl font-bold text-teal-600">Pegawai : <?php echo $nama_pegawai ?></p>
+                @elseif(auth()->user()->jabatan == 'Organik')
+                <p class="text-3xl font-bold text-teal-600"><?php echo $nama_kegiatan ?></p>
+                <p>Tinjau pekerjaan anda.</p>
+                @endif
             </div>
         </div>
     </div>
@@ -47,12 +51,13 @@
                                     <tr>
                                         <td class="text-center">{{$loop->iteration}}</td>
                                         <td>{{$item->dikerjakan}}</td>
-                                        <td class="text-center">{{$item->created_at}}</td>
+                                        <td class="text-center">{{$item->updated_at}}</td>
                                         <td class="text-center">{{$item->status}}</td>
                                         <td class="text-center">
                                             <a href="{{$item->bukti}}" class="button px-2 py-1 rounded-md bg-blue-600 text-white">Lihat</a>
                                         </td>
-                                        <td class="text-center flex">
+                                        <td class="text-center flex justify-between">
+                                            @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
                                             <form action="{{ route('penugasan-organik-approve', ['id' => $id, 'petugas' => $pegawai, 'tugasId' => $item->id]) }}" method="POST" style="display:inline;">
                                                 @if($item->status=='proses')
                                                 @csrf
@@ -62,8 +67,20 @@
                                                 <x-batalkan-button />
                                                 @endif
                                             </form>
+                                            @endif
+                                            <a href="{{ route('pengumpulan-tugas-organik-edit', ['tugas' => $item->id]) }}" class="button px-2 py-1 rounded-md bg-blue-600 text-white">Tinjau</a>
+                                            <form action="{{ route('pengumpulan-tugas-delete', ['id' => $item->id]) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="rounded-md p-1 m-auto border border-gray-500 bg-red-500 text-white hover:bg-red-600">
+                                                    Hapus
+                                                </button>
+                                            </form>
+
                                         </td>
-                                        <td class="text-center">{{$item->catatan}}</td>
+                                        <td class="text-center">
+                                            <p>{{$item->catatan}}</p>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -117,7 +134,6 @@
                                 <tr>
                                     <th scope="col" class="w-8 text-center">No</th>
                                     <th scope="col" class="w-8">Jumlah (Satuan)</th>
-                                    <th scope="col" class="w-8 text-center">Potensi Sisa (Satuan)</th>
                                     <th scope="col" class="w-8 text-center">Tanggal Pengajuan</th>
                                     <th scope="col" class="w-8 text-center">Status</th>
                                     <th scope="col" class="w-8 text-center">Aksi</th>
@@ -130,15 +146,25 @@
                                 <tr>
                                     <td class="text-center">{{$loop->iteration}}</td>
                                     <td>{{$item->dikerjakan}}</td>
-                                    <td class="text-center">0</td>
                                     <td class="text-center">{{$item->created_at}}</td>
                                     <td class="text-center">{{$item->status}}</td>
-                                    <td class="text-center">
+                                    <td class="text-center flex">
+                                        @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
                                         <form action="{{ route('pengajuan-organik-approve', ['id' => $id, 'petugas' => $pegawai, 'tugasId' => $item->id]) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('POST')
                                             <x-acc-button />
                                         </form>
+                                        @endif
+                                        <a href="{{ route('pengumpulan-tugas-organik-edit', ['tugas' => $item->id]) }}" class="rounded md p-1 m-auto border border-gray-500">Edit</a>
+                                        <form action="{{ route('pengumpulan-tugas-delete', ['id' => $item->id]) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="rounded-md p-1 m-auto border border-gray-500 bg-red-500 text-white hover:bg-red-600">
+                                                Hapus
+                                            </button>
+                                        </form>
+
                                     </td>
                                     <td class="text-center">{{$item->catatan}}</td>
                                 </tr>

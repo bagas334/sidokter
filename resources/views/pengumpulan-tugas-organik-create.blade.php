@@ -23,14 +23,16 @@
                 required></x-input.text-field>
 
             <x-input.text-field
-                :label="'Bukti'"
+                :label="'Link Bukti'"
                 :name="'bukti'"
                 required></x-input.text-field>
 
             <input type="text" value="proses" name="status" hidden>
+            @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
             <x-input.text-area
                 :label="'Catatan'"
                 :name="'catatan'"></x-input.text-area>
+            @endif
 
             <div class="w-full flex justify-end pt-4">
                 <x-submit-button>
