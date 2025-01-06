@@ -137,7 +137,6 @@ class BebanKerjaController extends Controller
 
         // Filter berdasarkan parameter tanggal_mulai dan tanggal_akhir
         if ($request->filled('tanggal_mulai') && $request->filled('tanggal_akhir')) {
-            // Validasi dan konversi tanggal ke format database
             $tanggalMulai = Carbon::parse($request->tanggal_mulai)->startOfDay();
             $tanggalAkhir = Carbon::parse($request->tanggal_akhir)->endOfDay();
 

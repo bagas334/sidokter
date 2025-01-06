@@ -42,22 +42,22 @@
         </form>
 
     </div>
-    <div class="grid grid-cols-4 gap-2 my-2">
-        <div class="border border-black p-2">
-            <div class="border border-black p-2">Jumlah kegiatan periode ini</div>
-            <div class="border border-black p-2">{{$kegiatan->count()}}</div>
+    <div class="grid grid-cols-4 gap-3 my-2">
+        <div class="">
+            <div class="border border-black p-2 text-center bg-teal-600 text-white font-bold">Jumlah kegiatan periode ini</div>
+            <div class="border border-black p-2 font-medium text-5xl bg-white text-black text-center">{{$kegiatan->count()}}</div>
         </div>
-        <div class="border border-black p-2">
-            <div class="border border-black p-2">Jumlah satuan tugas periode ini</div>
-            <div class="border border-black p-2">{{$kegiatan->sum('target')}}</div>
+        <div class="">
+            <div class="border border-black p-2 text-center bg-teal-600 text-white font-bold">Jumlah satuan tugas periode ini</div>
+            <div class="border border-black p-2 font-medium text-5xl bg-white text-black text-center">{{$kegiatan->sum('target')}}</div>
         </div>
-        <div class="border border-black p-2">
-            <div class="border border-black p-2">Jumlah satuan tugas selesai periode ini</div>
-            <div class="border border-black p-2">{{$kegiatan->sum('terlaksana')}}</div>
+        <div class="">
+            <div class="border border-black p-2 text-center bg-teal-600 text-white font-bold">Jumlah satuan tugas selesai periode ini</div>
+            <div class="border border-black p-2 font-medium text-5xl bg-white text-black text-center">{{$kegiatan->sum('terlaksana')}}</div>
         </div>
-        <div class="border border-black p-2">
-            <div class="border border-black p-2">Jumlah kegiatan belum selesai periode ini</div>
-            <div class="border border-black p-2">{{$kegiatan->sum('target')-$kegiatan->sum('terlaksana')}}</div>
+        <div class="">
+            <div class="border border-black p-2 text-center bg-teal-600 text-white font-bold">Jumlah kegiatan belum selesai periode ini</div>
+            <div class="border border-black p-2 font-medium text-5xl bg-white text-black text-center">{{$kegiatan->sum('target')-$kegiatan->sum('terlaksana')}}</div>
         </div>
     </div>
 
