@@ -11,13 +11,11 @@
     </div>
 
     <div class="w-full flex flex-row justify-between items-center pb-1">
-        {{-- Search Input --}}
         <div class="relative flex items-center w-80">
             <div class="relative flex items-center w-64">
             </div>
         </div>
 
-        {{-- Tabel--}}
         <div class="flex flex-col justify-center overflow-x-auto max-w-[90vw]">
             <div class="relative min-w-[1200px]">
                 <table class="table-custom">
@@ -37,7 +35,7 @@
                             <td>{{ $item->nama }}</td>
                             <td class="text-center">
                                 <div class="flex justify-center px-2">
-                                    <x-detail-button-table :id="$item->id" :route="''" />
+                                    <a class="px-2 py-1 rounded-md border border-gray-500" href="{{route('detail-organik',['id'=>$item->id])}}">Detail</a>
                                 </div>
                             </td>
                         </tr>
@@ -45,10 +43,10 @@
                     </tbody>
                 </table>
             </div>
+
+            {{-- Pagination --}}
+            <x-paginator :paginator="$pegawai" />
+
         </div>
-
-        {{-- Pagination --}}
-        <x-paginator :paginator="$pegawai" />
-
     </div>
     @endsection

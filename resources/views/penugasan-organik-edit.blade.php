@@ -21,18 +21,23 @@
                 :name="'jabatan'"
                 :value="$tugas_pegawai->jabatan"
                 required></x-input.text-field>
+            @error('jabatan')
+            <div class="text-sm text-red-500" id="namaKegiatanError">{{$message}}</div>
+            @enderror
 
             <input type="text" value="Ditugaskan" name="status" hidden>
-
-            <x-input.double-input-layout
-                :label="'Kuantitas'"
-                :name="'kuantitas'">
-                <x-input.number-field
-                    :label="'Jumlah satuan'"
-                    :name="'target'"
-                    :value="$tugas_pegawai->target"
-                    :label_size="'md'"></x-input.number-field>
-            </x-input.double-input-layout>
+            @error('status')
+            <div class="text-sm text-red-500" id="namaKegiatanError">{{$message}}</div>
+            @enderror
+            <x-input.number-field
+                :label="'Jumlah satuan'"
+                :name="'target'"
+                :value="$tugas_pegawai->target"
+                :label_size="'md'">
+            </x-input.number-field>
+            @error('target')
+            <div class="text-sm text-red-500" id="namaKegiatanError">{{$message}}</div>
+            @enderror
 
             <x-input.text-area
                 :label="'Catatan'"
@@ -47,4 +52,5 @@
         </form>
     </div>
 </div>
+
 @endsection

@@ -4,7 +4,6 @@
 
 <?php ?>
 <div class="size-full flex flex-col w-full items-center px-4">
-    {{-- Judul --}}
     <div class="w-full pb-6">
         <div class="flex justify-between">
             <div>
@@ -18,7 +17,6 @@
                 <div class="rounded-md border border-gray-500 mr-1 p-2 flex flex-col">
                     <p class="text-xl font-medium text-gray-900" style="margin-bottom: 5px;">Detail Penugasan</p>
                     <p>Pilih tanggal penugasan :</p>
-
                     <form action="">
                         <div class="flex items-center space-x-4">
                             <label for="all">Semua</label>
@@ -41,8 +39,6 @@
                     </form>
 
                     <p style="margin-top: 5px;">Ringkasan penugasan</p>
-
-                    {{-- Graph --}}
                     <div class="mt-4">
                         <div id="chart"></div>
                     </div>
@@ -131,17 +127,21 @@
                             @endif
                         </span>
                     </p>
-                </div>    
+                </div>
             </div>
-            
+
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         // Data dari backend
-        const labels = {!! json_encode($labels) !!}; // Bulan berdasarkan tanggal_mulai dan tanggal_akhir
-        const dataJumlahTugas = {!! json_encode($dataTarget) !!}; // Total tugas dari rentang tanggal kegiatan
+        const labels = {
+            !!json_encode($labels) !!
+        }; // Bulan berdasarkan tanggal_mulai dan tanggal_akhir
+        const dataJumlahTugas = {
+            !!json_encode($dataTarget) !!
+        }; // Total tugas dari rentang tanggal kegiatan
 
         // Konfigurasi ApexCharts
         const options = {
@@ -150,22 +150,20 @@
                 height: 350,
                 fontFamily: 'Inter, sans-serif', // Konsistensi font
             },
-            series: [
-                {
-                    name: 'Jumlah Tugas',
-                    data: dataJumlahTugas,
-                },
-            ],
+            series: [{
+                name: 'Jumlah Tugas',
+                data: dataJumlahTugas,
+            }, ],
             xaxis: {
-                categories: labels, 
+                categories: labels,
                 title: {
                     text: 'Bulan',
                 },
                 axisBorder: {
-                    show: false, 
+                    show: false,
                 },
                 axisTicks: {
-                    show: false, 
+                    show: false,
                 },
             },
             yaxis: {
@@ -173,7 +171,7 @@
                     text: 'Jumlah Tugas',
                 },
                 min: 0,
-                show: true, 
+                show: true,
             },
             stroke: {
                 curve: 'smooth',
@@ -184,16 +182,16 @@
                 colors: ['#1A56DB'],
                 strokeWidth: 2,
             },
-            colors: ['#1C64F2'], 
+            colors: ['#1C64F2'],
             fill: {
                 type: 'gradient',
                 gradient: {
                     shade: 'light',
-                    type: 'vertical', 
+                    type: 'vertical',
                     shadeIntensity: 0.5,
-                    gradientToColors: ['#1C64F2'], 
-                    opacityFrom: 0.65, 
-                    opacityTo: 0.2, 
+                    gradientToColors: ['#1C64F2'],
+                    opacityFrom: 0.65,
+                    opacityTo: 0.2,
                     stops: [0, 100],
                 },
             },
@@ -204,7 +202,7 @@
                 },
             },
             grid: {
-                show: false, 
+                show: false,
                 padding: {
                     left: 10,
                     right: 10,
@@ -240,4 +238,4 @@
         });
     </script>
 
-@endsection
+    @endsection

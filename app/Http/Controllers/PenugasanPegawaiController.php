@@ -55,17 +55,26 @@ class PenugasanPegawaiController extends Controller
 
     public function store(Request $request, $id)
     {
-        $tanggal_penugasan = Carbon::now()->format('Y-m-d');
-
-        $request->merge([
-            'tanggal_penugasan' => $tanggal_penugasan,
+        $validatedData = $request->validate([
+            'jabatan' => 'required|max:30',
+            'petugas' => 'required',
+            'target' => 'required|numeric|min:1',
+            'status' => 'required|string|in:Ditugaskan'
         ]);
-        $penugasanPegawai = PenugasanPegawai::create($request->except('_token', '_method'));
+
+        PenugasanPegawai::create($request->except('_token', '_method'));
         return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
 
     public function update(Request $request, $id, $pegawai)
     {
+        $validatedData = $request->validate([
+            'jabatan' => 'required|max:30',
+            'petugas' => 'required',
+            'target' => 'required|numeric|min:1',
+            'status' => 'required|string|in:Ditugaskan'
+        ]);
+
         $tanggal_penugasan = Carbon::now()->format('Y-m-d');
 
         $request->merge([
