@@ -8,14 +8,14 @@
         <div class="flex justify-between">
             <div>
                 <p>Beban Kerja / Organik / {{$pegawai->nama}}</p>
-                <p class="text-3xl">{{$pegawai->nama}}</p>
+                <p class="mt-2 text-3xl text-teal-600 font-bold">{{$pegawai->nama}}</p>
             </div>
         </div>
 
         <div class="grid grid-cols-[3fr_1fr] gap-4 pt-6">
             <div class="flex flex-col space-y-4">
-                <div class="rounded-md border border-gray-500 mr-1 p-2 flex flex-col">
-                    <p class="text-xl font-medium text-gray-900" style="margin-bottom: 5px;">Detail Penugasan</p>
+                <div class="rounded-md border bg-white mr-1 p-2 flex flex-col">
+                    <span class="text-2xl text-teal-600 font-medium">Detail Penugasan</span><br>
                     <p>Pilih tanggal penugasan :</p>
                     <form action="">
                         <div class="flex items-center space-x-4">
@@ -69,7 +69,8 @@
                         </div>
                     </div>
 
-                    <p class="rounded-md m-1 p-2 border border-gray-400" id="detailButton" style="margin-top: 20px;">Detail</p>
+                    <br>
+
                     <table class="table-custom" id="tabel">
                         <thead>
                             <tr>
@@ -97,8 +98,8 @@
                                 <td class="text-end">{{$item->target}}</td>
                                 <td class="text-end">{{$item->terlaksana}}</td>
                                 <td class="text-center">
-                                    <div class="flex justify-between px-2">
-                                        <p class="flex justify-center border border-gray-500 rounded-md m-auto p-2">Detail</p>
+                                    <div class="flex justify-center px-2">
+                                        <a class="px-2 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600" href="{{route('detail-organik',['id'=>$item->id])}}">Detail</a>
                                     </div>
                                 </td>
                             </tr>
@@ -109,24 +110,36 @@
             </div>
 
             <div class="row-span-1 flex flex-col justify-between max-w-[75vw]">
-                <div class="rounded-md border border-gray-500 ml-1 p-3 h-auto">
-                    <p class="font-bold text-xl">Informasi Organik</p>
-                    <p class="font-bold">Nama :</p>
-                    <p class="">{{$pegawai->nama}}</p>
-                    <p class="font-bold">NIP :</p>
-                    <p class="">{{$pegawai->nip}}</p>
-                    <p class="font-bold">NIP BPS :</p>
-                    <p class="">{{$pegawai->nip_bps}}</p>
-                    <p class="font-bold">Alias :</p>
-                    <p class="">{{$pegawai->alias}}</p>
-                    <p class="font-bold">Jabatan :</p>
-                    <p class="">{{$pegawai->jabatan}}
-                        <span>
-                            @if($pegawai->jabatan == 'Ketua Tim')
-                            {{$pegawai->fungsi_ketua_tim}}
-                            @endif
-                        </span>
-                    </p>
+                <div class="size-full bg-gray-50 border border-gray-100 rounded-md rounded-md p-4 h-auto">
+                    <div class="w-full pl-2 pb-6">
+                        <span class="text-xl text-teal-600 font-bold">Informasi Organik</span>
+                    </div>
+                    <div class="w-full pl-2 pb-2">
+                        <p class="text-md text-cyan-950 font-medium">Nama : </p>
+                        <p class="text-sm text-gray-600 font-normal">{{$pegawai->nama}}</p>
+                    </div>
+                    <div class="w-full pl-2 pb-2">
+                        <p class="text-md text-cyan-950 font-medium">NIP : </p>
+                        <p class="text-sm text-gray-600 font-normal">{{$pegawai->nip}}</p>
+                    </div>
+                    <div class="w-full pl-2 pb-2">
+                        <p class="text-md text-cyan-950 font-medium">NIP BPS : </p>
+                        <p class="text-sm text-gray-600 font-normal">{{$pegawai->nip_bps}}</p>
+                    </div>
+                    <div class="w-full pl-2 pb-2">
+                        <p class="text-md text-cyan-950 font-medium">Alias : </p>
+                        <p class="text-sm text-gray-600 font-normal">{{$pegawai->alias}}</p>
+                    </div>
+                    <div class="w-full pl-2 pb-2">
+                        <p class="text-md text-cyan-950 font-medium">Jabatan : </p>
+                        <p class="text-sm text-gray-600 font-normal">{{$pegawai->jabatan}}
+                            <span>
+                                @if($pegawai->jabatan == 'Ketua Tim')
+                                {{$pegawai->fungsi_ketua_tim}}
+                                @endif
+                            </span>
+                        </p>
+                    </div>
                 </div>
             </div>
 
