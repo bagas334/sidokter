@@ -40,7 +40,9 @@
                         <th scope="col" class="w-56">Nama</th>
                         <th scope="col" class="w-16 text-center">Alias</th>
                         <th scope="col" class="w-14 text-center">Jabatan</th>
+                        @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan']))
                         <th scope="col" class="w-16 text-center">Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -52,6 +54,7 @@
                         <td>{{ $item->nama }}</td>
                         <td class="text-center">{{ $item->alias }}</td>
                         <td class="text-center">{{ $item->jabatan }}</td>
+                        @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan']))
                         <td class="text-center">
                             <div class="flex justify-center space-x-2 px-2">
                                 <x-edit-button-table :id="$item->id" :route="'master-organik-edit-view'" />
@@ -63,6 +66,7 @@
                                 </form>
                             </div>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
