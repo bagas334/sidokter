@@ -17,11 +17,10 @@ class BebanKerjaController extends Controller
     public function show($id)
     {
 
-        $penugasanPegawai = PenugasanPegawai::with('pegawai') // Memuat relasi 'pegawai'
+        $penugasanPegawai = PenugasanPegawai::with('pegawai')
             ->where('kegiatan_id', $id)
             ->paginate(10);
 
-        // Ambil data PenugasanMitra dan gunakan eager loading untuk relasi mitra
         $penugasanMitra = PenugasanMitra::with('mitra')
             ->where('kegiatan_id', $id)
             ->paginate(10);
@@ -126,7 +125,6 @@ class BebanKerjaController extends Controller
     {
         $user = auth()->user();
 
-        // Query default berdasarkan jabatan
         if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
             $query = Kegiatan::query();
         } elseif ($user && $user->jabatan == 'Organik') {
@@ -157,7 +155,7 @@ class BebanKerjaController extends Controller
         }
 
         // Sorting berdasarkan parameter (sort dan order)
-        if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
+        if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim'])) {
             $sort = $request->get('sort', 'tanggal_mulai'); // Default sort by 'tanggal_mulai'
             $order = $request->get('order', 'asc'); // Default order is ascending
             $query->orderBy($sort, $order);
@@ -178,7 +176,7 @@ class BebanKerjaController extends Controller
         // Data tambahan untuk view
         $filterParams = $request->only('tanggal_mulai', 'tanggal_akhir', 'bulan', 'sort', 'order');
 
-        if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
+        if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim'])) {
             $kegiatan = $query->paginate(10);
             return view('penugasan-all', compact('kegiatan', 'filterParams', 'sort', 'order'));
         } else {

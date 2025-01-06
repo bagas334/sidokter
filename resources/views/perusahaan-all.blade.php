@@ -7,6 +7,7 @@
     {{-- Judul --}}
     <div class="w-full pb-6 text-center">
         <x-judul text="Semua Perusahaan" />
+        <p>kasih fitur CRUD!!!</p>
     </div>
 
     <div class="flex flex-col justify-center overflow-x-hidden max-w-full"> <!-- Ubah overflow-x-auto menjadi overflow-x-hidden -->

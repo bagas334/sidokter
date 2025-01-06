@@ -1,10 +1,6 @@
 <?php
 
 use App\Http\Controllers\BebanKerjaController;
-use App\Http\Controllers\BebanKerjaMitraController;
-use App\Http\Controllers\BebanKerjaOrganikController;
-use App\Http\Controllers\CapaianAgregatController;
-use App\Http\Controllers\CapaianOrganikController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\SampelController;
@@ -106,20 +102,18 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/organik/detail/{id}', [MasterOrganikController::class, 'show'])->name('detail-organik');
-    Route::get('/manajemen-user-x', [MasterOrganikController::class, 'index'])
-        ->name('master-organik');
     Route::get('/manajemen-user', [MasterOrganikController::class, 'index'])
-        ->name('manajemen-user')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
+        ->name('manajemen-user')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
     Route::get('/manajemen-user/create', [MasterOrganikController::class, 'create'])
-        ->name('manajemen-user-create');
+        ->name('manajemen-user-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");;
     Route::post('/manajemen-user/create', [MasterOrganikController::class, 'store'])
-        ->name('manajemen-user-save');
+        ->name('manajemen-user-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
     Route::get('/manajemen-user/edit/{id}', [MasterOrganikController::class, 'edit'])
-        ->name('master-organik-edit-view');
+        ->name('master-organik-edit-view')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
     Route::put('/manajemen-user/edit/{id}', [MasterOrganikController::class, 'update'])
-        ->name('master-organik-edit-save');
+        ->name('master-organik-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
     Route::delete('/manajemen-user/delete/{id}', [MasterOrganikController::class, 'delete'])
-        ->name('master-organik-delete');
+        ->name('master-organik-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
 
     Route::get('/mitra', [MasterMitraController::class, 'index'])
         ->name('master-mitra');
