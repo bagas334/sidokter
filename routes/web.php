@@ -1,10 +1,6 @@
 <?php
 
 use App\Http\Controllers\BebanKerjaController;
-use App\Http\Controllers\BebanKerjaMitraController;
-use App\Http\Controllers\BebanKerjaOrganikController;
-use App\Http\Controllers\CapaianAgregatController;
-use App\Http\Controllers\CapaianOrganikController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\SampelController;
@@ -106,8 +102,6 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/organik/detail/{id}', [MasterOrganikController::class, 'show'])->name('detail-organik');
-    Route::get('/manajemen-user-x', [MasterOrganikController::class, 'index'])
-        ->name('master-organik');
     Route::get('/manajemen-user', [MasterOrganikController::class, 'index'])
         ->name('manajemen-user')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
     Route::get('/manajemen-user/create', [MasterOrganikController::class, 'create'])
