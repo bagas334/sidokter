@@ -3,76 +3,149 @@
 @section('title', 'Master Organik')
 
 @section('content')
-    <div class="container mx-auto px-4 py-6">
+    <div class="size-full flex flex-col w-full items-center px-4">
+        {{-- Breadcrumb --}}
+        <nav class="w-full mb-4 text-sm text-gray-500">
+            <ol class="inline-flex space-x-1">
+                <li>
+                    <a href="{{ route('dashboard') }}" class="text-teal-600 hover:underline">Dashboard</a>
+                </li>
+                <li>
+                    <span class="text-gray-400">/</span>
+                </li>
+                <li class="text-gray-400">Master Organik</li>
+            </ol>
+        </nav>
+
+        {{-- Flash Messages --}}
+        @if (session('success'))
+            <div class="w-full p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="w-full p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+
         {{-- Judul --}}
-        <div class="pb-6">
+        <div class="w-full pb-6">
             <x-judul text="Daftar Organik" />
         </div>
 
-        {{-- Pencarian --}}
-        <div class="flex flex-col md:flex-row justify-between items-center pb-4 gap-4">
+        {{-- Pencarian dan Tombol Tambah --}}
+        <div class="w-full flex flex-col md:flex-row justify-between items-center pb-4 gap-4">
             {{-- Search Input --}}
-            <div class="relative flex items-center w-full md:w-1/2">
-                <input type="text"
-                       class="input pl-10 w-full bg-gray-50 border border-gray-300 rounded-lg input-sm focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600"
-                       placeholder="Cari kegiatan" />
-
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                     stroke="currentColor"
+            <form action="{{ route('master-organik.index') }}" method="GET" class="relative flex items-center w-full md:w-64">
+                <input type="text" name="search" value="{{ request()->get('search') }}"
+                       class="input pl-10 w-full bg-gray-50 border border-gray-300 rounded-md input-sm focus:outline-none focus:ring-1 focus:ring-teal-600 focus:border-teal-600 peer"
+                       placeholder="Cari pegawai..." />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                      class="absolute left-4 w-5 h-5 text-gray-500 transition duration-200 ease-in-out peer-focus:text-teal-600">
                     <path stroke-linecap="round" stroke-linejoin="round"
                           d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
-            </div>
-            <x-tambah-button :route="'master-organik-create-view'" />
-        </div>
+            </form>
+
+          {{-- Tombol Tambah --}}
+<a href="{{ route('manajemen-user-create-view') }}"
+class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-700">Tambah
+</a>
+
+</div>
 
         {{-- Tabel --}}
-        <div class="relative bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-            <table class="table-auto w-full text-sm text-left">
-                <thead class="bg-gradient-to-r from-teal-500 to-teal-600 text-white">
-                    <tr>
-                        <th class="py-3 px-2 text-center w-[5%]">No</th>
-                        <th class="py-3 px-2 text-center w-[10%]">NIP</th>
-                        <th class="py-3 px-2 text-center w-[10%]">NIP BPS</th>
-                        <th class="py-3 px-2 w-[20%]">Nama</th>
-                        <th class="py-3 px-2 text-center w-[10%]">Alias</th>
-                        <th class="py-3 px-2 w-[20%]">Jabatan</th>
-                        <th class="py-3 px-2 text-center w-[8%]">Golongan</th>
-                        <th class="py-3 px-2 text-center w-[8%]">Status</th>
-                        <th class="py-3 px-2 text-center w-[9%]">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    @foreach ($pegawai as $item)
-                        <tr class="hover:bg-gray-50">
-                            <td class="py-3 px-2 text-center">{{ $loop->iteration }}</td>
-                            <td class="py-3 px-2 text-center">{{ $item->nip }}</td>
-                            <td class="py-3 px-2 text-center">{{ $item->nip_bps }}</td>
-                            <td class="py-3 px-2">{{ $item->nama }}</td>
-                            <td class="py-3 px-2 text-center">{{ $item->alias }}</td>
-                            <td class="py-3 px-2">{{ $item->jabatan }}</td>
-                            <td class="py-3 px-2 text-center">{{ $item->golongan }}</td>
-                            <td class="py-3 px-2 text-center">{{ $item->status }}</td>
-                            <td class="py-3 px-2 text-center">
-                                <div class="flex justify-center space-x-2">
-                                    <x-edit-button-table :id="$item->id" :route="'master-organik-edit-view'" />
-                                    <form action="{{ route('master-organik-delete', $item->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-remove-button />
-                                    </form>
-                                </div>
-                            </td>
+        <div class="flex flex-col w-full overflow-x-auto">
+            <div class="relative">
+                <table class="table-custom w-full text-sm border border-gray-200 rounded-md">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th scope="col" class="text-center p-2">No</th>
+                            <th scope="col" class="text-center p-2">NIP</th>
+                            <th scope="col" class="text-center p-2">NIP BPS</th>
+                            <th scope="col" class="p-2">Nama</th>
+                            <th scope="col" class="text-center p-2">Alias</th>
+                            <th scope="col" class="p-2">Jabatan</th>
+                            <th scope="col" class="text-center p-2">Status</th>
+                            <th scope="col" class="text-center p-2">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @forelse ($pegawai as $item)
+                            <tr class="hover:bg-gray-50">
+                                <td class="text-center p-2">{{ $pegawai->firstItem() + $loop->index }}</td>
+                                <td class="text-center p-2">{{ $item->nip }}</td>
+                                <td class="text-center p-2">{{ $item->nip_bps }}</td>
+                                <td class="p-2">{{ $item->nama }}</td>
+                                <td class="text-center p-2">{{ $item->alias }}</td>
+                                <td class="p-2">{{ $item->jabatan }}</td>
+                                <td class="text-center p-2">{{ $item->status }}</td>
+                                <td class="text-center p-2">
+                                    <div class="flex justify-center space-x-2">
+                                        <x-edit-button-table :id="$item->id" :route="'master-organik-edit-view'" />
+                                        <form action="{{ route('master-organik-delete', $item->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-remove-button />
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center text-gray-500 p-4">
+                                    Tidak ada data yang sesuai dengan pencarian "{{ request()->get('search') }}".
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         {{-- Pagination --}}
-        <div class="mt-6 flex justify-center">
-            <x-paginator :paginator="$pegawai" />
+        <div class="w-full flex justify-end mt-4">
+            <div class="inline-flex items-center space-x-2">
+                @if ($pegawai->onFirstPage())
+                    <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-400 bg-gray-200 rounded-md cursor-not-allowed">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             class="w-4 h-4 mr-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                        Prev
+                    </button>
+                @else
+                    <a href="{{ $pegawai->previousPageUrl() }}"
+                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             class="w-4 h-4 mr-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                        Prev
+                    </a>
+                @endif
+
+                @if ($pegawai->hasMorePages())
+                    <a href="{{ $pegawai->nextPageUrl() }}"
+                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-700">
+                        Next
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             class="w-4 h-4 ml-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                @else
+                    <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-400 bg-gray-200 rounded-md cursor-not-allowed">
+                        Next
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             class="w-4 h-4 ml-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                @endif
+            </div>
         </div>
     </div>
 @endsection
