@@ -67,9 +67,13 @@
                             </div>
                             <div class="inline-flex items-center justify-center font-bold text-lg text-gray-600 group-hover:text-gray-200 sm:text-base text-center mt-2">Penugasan telah Dikerjakan</div>
                         </div>
-                    </div>
+                    </div><br>
 
-                    <br>
+                    <div class="flex flex-col px-4 py-2 overflow-hidden bg-white hover:bg-gradient-to-br hover:from-purple-400 hover:via-blue-400 hover:to-blue-500 rounded-xl shadow-lg duration-300 hover:shadow-2xl group">
+                        <div class="flex items-center justify-center text-1xl font-bold text-blue-500 group-hover:text-gray-200">
+                            DETAIL
+                        </div>
+                    </div><br>
 
                     <table class="table-custom" id="tabel">
                         <thead>
