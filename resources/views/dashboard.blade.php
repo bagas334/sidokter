@@ -5,7 +5,7 @@
 @section('content')
 <div>
     <div>
-        <p class="text-2xl font-bold">Selamat Datang {{auth()->user()->nama}}!</p>
+        <p class="text-2xl font-bold">SSSS Selamat Datang {{auth()->user()->nama}}!</p>
     </div>
     <div>
         <p>Pilih periode :</p>
