@@ -4,6 +4,7 @@
 
 <?php ?>
 <div class="size-full flex flex-col w-full items-center px-4">
+    {{-- Judul --}}
     <div class="w-full pb-6">
         <div class="flex justify-between">
             <div>
@@ -17,6 +18,7 @@
                 <div class="rounded-md border bg-white mr-1 p-2 flex flex-col">
                     <span class="text-2xl text-teal-600 font-medium">Detail Penugasan</span><br>
                     <p>Pilih tanggal penugasan :</p>
+
                     <form action="">
                         <div class="flex items-center space-x-4">
                             <label for="all">Semua</label>
@@ -39,6 +41,8 @@
                     </form>
 
                     <p style="margin-top: 5px;">Ringkasan penugasan</p>
+
+                    {{-- Graph --}}
                     <div class="mt-4">
                         <div id="chart"></div>
                     </div>
@@ -148,13 +152,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
-        // Data dari backend
-        const labels = {
-            !!json_encode($labels) !!
-        }; // Bulan berdasarkan tanggal_mulai dan tanggal_akhir
-        const dataJumlahTugas = {
-            !!json_encode($dataTarget) !!
-        }; // Total tugas dari rentang tanggal kegiatan
+        /// Data dari backend
+        const labels = {!! json_encode($labels) !!}; // Bulan berdasarkan tanggal_mulai dan tanggal_akhir
+        const dataJumlahTugas = {!! json_encode($dataTarget) !!}; // Total tugas dari rentang tanggal kegiatan
 
         // Konfigurasi ApexCharts
         const options = {

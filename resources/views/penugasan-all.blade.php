@@ -9,10 +9,9 @@
         <x-judul text="Semua Penugasan" />
     </div>
 
-    <div class="flex flex-col space-y-4 pb-4">
-
+    <div class="flex justify-between items-center w-full pb-4">
         <!-- Form Filter -->
-        <form action="{{ route('beban-kerja-all') }}" method="GET" class="items-center space-x-4">
+        <form action="{{ route('beban-kerja-all') }}" method="GET" class="flex items-center space-x-4">
             <x-input.datepicker
                 :name="'tanggal_mulai'"
                 :value="$filterParams['tanggal_mulai'] ?? ''"
@@ -25,15 +24,13 @@
                 :label_size="'sm'"
                 :placeholder="'Tanggal akhir'" />
 
-            <button type="submit" class="rounded-md bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition">
+            <button type="submit" class="rounded-md bg-blue-500 text-white px-4 py-1 hover:bg-blue-600 transition">
                 Filter
             </button>
 
+            <a href="{{route('beban-kerja-all')}}" id="resetButton" value="Reset" class="rounded-md bg-gray-500 text-white px-4 py-1 hover:bg-gray-600 transition">Reset</a>
         </form>
-        <a href="{{route('beban-kerja-all')}}" id="resetButton" value="Reset" class="rounded-md bg-gray-500 text-white px-4 py-2 hover:bg-gray-600 transition">Reset</a>
-    </div>
 
-    <div class="flex justify-end">
         @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
         <x-tambah-button :route="'/beban-kerja/add'" />
         @endif
