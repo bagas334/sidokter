@@ -1,6 +1,6 @@
 <div class="navbar bg-gray-50 px-12">
     <div class="flex-1">
-        <a class="text-3xl font-bold text-teal-600">SiDokter <span class="text-sm py-1 px-2 bg-green-200 rounded-xl">0.8.10 IMA!</span></a>
+        <a class="text-3xl font-bold text-teal-600">SiDokter <span class="text-sm py-1 px-2 bg-green-200 rounded-xl">0.8.11</span><span class="text-sm py-1 px-2 bg-green-200 rounded-xl mx-2">WIJAYAKUSUMA!</span></a>
     </div>
     <div class="flex-none">
         <div class="dropdown dropdown-bottom relative flex items-center">

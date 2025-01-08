@@ -26,7 +26,6 @@
                     d="M21 21L15.803 15.803M15.803 15.803A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607z" />
             </svg>
         </div>
-        <x-tambah-button href="{{ route('penugasan-mitra-create')}}" />
     </div>
 
     {{-- Tabel --}}
@@ -43,7 +42,6 @@
                         <th scope="col" rowspan="2" class="w-28 text-center">Satuan</th>
                         <th scope="col" class="w-28 text-center">Mulai</th>
                         <th scope="col" class="w-28 text-center">Selesai</th>
-                        <th scope="col" rowspan="2" class="w-28 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,19 +52,10 @@
                         <td class="text-center">{{ $item->mitra->nama }}</td>
                         <td class="text-center">{{ $item->target }}</td>
                         <td class="text-center">{{ $item->terlaksana }}</td>
-                        <td class="text-center">{{ $item->kegiatan->satuan }}</td>
-                        <td class="text-center">{{ $item->kegiatan->tanggal_mulai }}</td>
-                        <td class="text-center">{{ $item->kegiatan->tanggal_akhir }}</td>
-                        <td class="text-center">
-                            <div class="flex justify-center space-x-2 px-1">
-                                <x-detail-button-table :id="$item->id" :route="'beban-kerja-all'" />
-                                <form action="{{ route('beban-kerja-delete', $item->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-remove-button />
-                                </form>
-                            </div>
-                        </td>
+
+                        <td class="text-center">{{$item->kegiatan->satuan }}</td>
+                        <td class="text-center">{{$item->kegiatan->tanggal_mulai }}</td>
+                        <td class="text-center">{{$item->kegiatan->tanggal_akhir }}</td>
                     </tr>
                     @endforeach
                 </tbody>

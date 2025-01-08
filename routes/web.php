@@ -22,7 +22,15 @@ use App\Models\TugasPegawai;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
 
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Tambahan untuk periode dan distribusi kegiatan (jika diperlukan)
+Route::get('/dashboard/distribusi-kegiatan', [DashboardController::class, 'distribusiKegiatan'])->name('dashboard.distribusi-kegiatan');
+Route::get('/dashboard/beban-kerja-organik', [DashboardController::class, 'bebanKerjaOrganik'])->name('dashboard.beban-kerja-organik');
+
+// AJAX route untuk detail beban kerja organik (jika menggunakan AJAX untuk menampilkan detail)
+Route::get('/dashboard/beban-kerja-organik/detail/{id}', [DashboardController::class, 'bebanKerjaDetail'])->name('dashboard.beban-kerja-organik.detail');
 Route::get('/login', [MasterOrganikController::class, 'login'])->name('login');
 Route::post('/login', [MasterOrganikController::class, 'validateUser'])->name('validateUser');
 
@@ -119,6 +127,7 @@ Route::middleware('auth')->group(function () {
         ->name('master-organik-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
     Route::delete('/manajemen-user/delete/{id}', [MasterOrganikController::class, 'delete'])
         ->name('master-organik-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
+        Route::get('/master-organik', [MasterOrganikController::class, 'index'])->name('master-organik');
 
     Route::get('/mitra', [MasterMitraController::class, 'index'])
         ->name('master-mitra');
@@ -133,6 +142,40 @@ Route::middleware('auth')->group(function () {
     Route::delete('/mitra/delete/{id}', [MasterMitraController::class, 'delete'])
         ->name('master-mitra-delete');
 
+
+Route::get('/master-mitra', [MasterMitraController::class, 'index'])->name('master-mitra');
+Route::get('/master-mitra/create', [MasterMitraController::class, 'create'])->name('master-mitra-create-view');
+Route::post('/master-mitra/store', [MasterMitraController::class, 'store'])->name('master-mitra-store');
+Route::get('/master-mitra/edit/{id}', [MasterMitraController::class, 'edit'])->name('master-mitra-edit-view');
+Route::post('/master-mitra/update/{id}', [MasterMitraController::class, 'update'])->name('master-mitra-update');
+Route::delete('/master-mitra/delete/{id}', [MasterMitraController::class, 'delete'])->name('master-mitra-delete');
+Route::get('/master-mitra/tambahfile', [MasterMitraController::class, 'showUploadForm'])->name('master-mitra-tambahfile');
+Route::post('/master-mitra/import', [MasterMitraController::class, 'import'])->name('master-mitra-import');
+// Rute untuk menampilkan form upload file
+Route::get('/master-mitra/tambahfile', [MasterMitraController::class, 'showUploadForm'])->name('master-mitra-tambahfile');
+
+// Rute untuk memproses file Excel yang diupload
+Route::post('/master-mitra/import', [MasterMitraController::class, 'import'])->name('import-mitra');
+
+// Rute untuk menghapus mitra
+Route::delete('/master-mitra/delete/{id}', [MasterMitraController::class, 'delete'])->name('master-mitra-delete');
+
     Route::get('/perusahaan/all', [PerusahaanController::class, 'index'])
         ->name('perusahaan-all');
+        Route::get('/perusahaan', [PerusahaanController::class, 'index'])->name('perusahaan.index');
+        Route::get('/perusahaan/create', [PerusahaanController::class, 'create'])->name('perusahaan.create');
+        Route::post('/perusahaan', [PerusahaanController::class, 'store'])->name('perusahaan.store');
+        Route::get('/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
+        Route::put('/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
+        Route::delete('/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
+
+        
+       
+
+// Rute Dashboard
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
+        
 });
