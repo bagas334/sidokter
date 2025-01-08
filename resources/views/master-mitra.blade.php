@@ -45,7 +45,7 @@
     </div>
 
     {{-- Tabel --}}
-    <div class="w-full bg-white shadow-md rounded-lg overflow-x-auto">
+    <div class="w-full bg-white shadow-md rounded-lg overflow-x-auto text-sm">
         <table class="table-auto w-full border-collapse">
             <thead class="bg-teal-600 text-white">
                 <tr>
