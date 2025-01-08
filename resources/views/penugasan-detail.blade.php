@@ -8,7 +8,7 @@
             <a class="text-blue py-1 px-2 bg-blue-200 text-blue-500 font-bold hover:bg-blue-400 hover:text-blue-700 rounded-xl" href="{{route('beban-kerja-all')}}">Kembali</a>
             <p class="mt-2 text-3xl text-teal-600 font-bold"><?php echo $kegiatan->nama ?></p>
         </div>
-        <a href="/beban-kerja/{{$kegiatan->id}}/tugas-organik/{{auth()->user()->id}}" class="p-auto mx-1 button bg-blue-500 py-1 px-2 text-white font-medium rounded-md">Lihat tugas anda</a>
+        <a href="/beban-kerja/{{$kegiatan->id}}/tugas-organik/{{auth()->user()->id}}" class="self-center mx-1 button bg-blue-500 py-1.5 px-2 text-white font-medium rounded-lg hover:bg-blue-600 transition">Lihat tugas anda</a>
     </div>
 
     <div class="grid grid-cols-[7fr_2.5fr] grid-rows-auto size-full pt-6 gap-4">

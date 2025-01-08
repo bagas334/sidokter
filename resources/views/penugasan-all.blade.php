@@ -4,36 +4,44 @@
 @section('title', 'Semua Penugasan')
 
 @section('content')
-<div class="size-full flex flex-col w-full items-center px-4">
+<div class="size-full flex flex-col w-full px-4">
     <div class="w-full pb-6 ">
         <x-judul text="Semua Penugasan" />
     </div>
 
-    <div class="flex flex-col space-y-4 pb-4">
-
+    <div class="flex flex-col space-y-4 items-start">
         <!-- Form Filter -->
-        <form action="{{ route('beban-kerja-all') }}" method="GET" class="items-center space-x-4">
-            <x-input.datepicker
-                :name="'tanggal_mulai'"
-                :value="$filterParams['tanggal_mulai'] ?? ''"
-                :label_size="'sm'"
-                :placeholder="'Tanggal mulai'" />
+        <form action="{{ route('beban-kerja-all') }}" method="GET" class="flex flex-col space-y-4">
+            <div class="flex items-center space-x-4">
+                <!-- Tanggal Mulai -->
+                <x-input.datepicker
+                    :name="'tanggal_mulai'"
+                    :value="$filterParams['tanggal_mulai'] ?? ''"
+                    :label_size="'sm'"
+                    :placeholder="'Tanggal mulai'" />
 
-            <x-input.datepicker
-                :name="'tanggal_akhir'"
-                :value="$filterParams['tanggal_akhir'] ?? ''"
-                :label_size="'sm'"
-                :placeholder="'Tanggal akhir'" />
+                <!-- Tanggal Akhir -->
+                <x-input.datepicker
+                    :name="'tanggal_akhir'"
+                    :value="$filterParams['tanggal_akhir'] ?? ''"
+                    :label_size="'sm'"
+                    :placeholder="'Tanggal akhir'" />
+            </div>
 
-            <button type="submit" class="rounded-md bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition">
-                Filter
-            </button>
-
+            <!-- Tombol Filter -->
+            <div class="flex space-x-4">
+                <button type="submit" class="rounded-md bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition">
+                    Filter
+                </button>
+                <a href="{{route('beban-kerja-all')}}" id="resetButton" value="Reset" class="rounded-md bg-gray-500 text-white px-4 py-2 hover:bg-gray-600 transition">
+                    Reset
+                </a>
+            </div>
         </form>
-        <a href="{{route('beban-kerja-all')}}" id="resetButton" value="Reset" class="rounded-md bg-gray-500 text-white px-4 py-2 hover:bg-gray-600 transition">Reset</a>
     </div>
 
-    <div class="flex justify-end">
+
+    <div class="flex justify-end mb-3">
         @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
         <x-tambah-button :route="'/beban-kerja/add'" />
         @endif
