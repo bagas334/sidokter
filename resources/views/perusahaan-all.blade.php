@@ -10,9 +10,9 @@
         <p>kasih fitur CRUD!!!</p>
     </div>
 
-    <div class="flex flex-col justify-center overflow-x-hidden max-w-full"> <!-- Ubah overflow-x-auto menjadi overflow-x-hidden -->
+    <div class="flex flex-col justify-center overflow-x-hidden max-w-full"> 
         <div class="relative text-center">
-            <table class="table-custom border-collapse border border-gray-300 w-full"> <!-- Menambahkan w-full untuk memastikan lebar tabel sesuai dengan container -->
+            <table class="table-custom border-collapse border border-gray-300 w-full"> 
                 <thead class="bg-gray-200">
                     <tr>
                         <th scope="col" rowspan="2" class="text-center border border-gray-300 px-2 py-1">No</th>

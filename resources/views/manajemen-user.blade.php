@@ -30,14 +30,14 @@
 
     {{-- Tabel--}}
     <div class="flex flex-col justify-center overflow-x-scroll max-w-[78vw]">
-        <div class="relative w-[90vw]">
+        <div class="relative w-[78vw]">
             <table class="table-custom">
                 <thead>
                     <tr>
                         <th scope="col" class="w-4 text-center">No</th>
                         <th scope="col" class="w-20 text-center">NIP</th>
                         <th scope="col" class="w-20 text-center">NIP BPS</th>
-                        <th scope="col" class="w-56">Nama</th>
+                        <th scope="col" class="w-56 text center">Nama</th>
                         <th scope="col" class="w-16 text-center">Alias</th>
                         <th scope="col" class="w-14 text-center">Jabatan</th>
                         @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan']))
@@ -48,7 +48,7 @@
                 <tbody>
                     @foreach ($pegawai as $item)
                     <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
+                        <td class="text-center">{{ $loop->iteration + ($pegawai->currentPage() - 1) * $pegawai->perPage() }}</td>
                         <td class="text-center">{{ $item->nip }}</td>
                         <td class="text-center">{{ $item->nip_bps }}</td>
                         <td>{{ $item->nama }}</td>
@@ -76,6 +76,46 @@
 
     {{-- Pagination --}}
     <x-paginator :paginator="$pegawai" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('input[placeholder="Cari pengguna"]');
+            searchInput.addEventListener('input', function() {
+                const query = this.value;
+                fetch(`{{ route('search-pegawai') }}?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.querySelector('tbody');
+                        tbody.innerHTML = '';
+                        data.forEach((item, index) => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td class="text-center">${index + 1}</td>
+                                <td class="text-center">${item.nip}</td>
+                                <td class="text-center">${item.nip_bps}</td>
+                                <td>${item.nama}</td>
+                                <td class="text-center">${item.alias}</td>
+                                <td class="text-center">${item.jabatan}</td>
+                                @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan']))
+                                <td class="text-center">
+                                    <div class="flex justify-center space-x-2 px-2">
+                                        <x-edit-button-table :id="$item->id" :route="'master-organik-edit-view'" />
+
+                                        <form action="{{ route('master-organik-delete', $item->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-remove-button />
+                                        </form>
+                                    </div>
+                                </td>
+                                @endif
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    });
+            });
+        });
+    </script>
 
 </div>
 @endsection
