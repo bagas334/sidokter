@@ -120,8 +120,8 @@ class MasterOrganikController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required|max:100',
             'alias' => 'required|max:20',
-            'nip' => 'required|numeric',
-            'nip_bps' => 'required|numeric',
+            'nip' => 'required|numeric|unique:pegawai,nip',
+            'nip_bps' => 'required|numeric|unique:pegawai,nip_bps',
             'password' => 'required',
             'jabatan' => 'required'
         ]);
@@ -155,8 +155,8 @@ class MasterOrganikController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required|max:100',
             'alias' => 'required|max:20',
-            'nip' => 'required|numeric',
-            'nip_bps' => 'required|numeric',
+            'nip' => 'required|numeric|unique:pegawai,nip',
+            'nip_bps' => 'required|numeric|unique:pegawai,nip_bps',
             'password' => 'required',
             'jabatan' => 'required'
         ]);

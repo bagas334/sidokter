@@ -50,6 +50,7 @@
                 </thead>
                 <tbody class="text-sm text-gray-700">
                     @foreach ($pegawai as $item)
+
                     <tr class="border-b hover:bg-gray-100">
                         <td class="text-center px-4 py-3">{{ $loop->iteration }}</td>
                         <td class="text-center px-4 py-3">{{ $item->nip }}</td>
@@ -78,5 +79,46 @@
 
     {{-- Pagination --}}
     <x-paginator :paginator="$pegawai" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('input[placeholder="Cari pengguna"]');
+            searchInput.addEventListener('input', function() {
+                const query = this.value;
+                fetch(`{{ route('search-pegawai') }}?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.querySelector('tbody');
+                        tbody.innerHTML = '';
+                        data.forEach((item, index) => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td class="text-center">${index + 1}</td>
+                                <td class="text-center">${item.nip}</td>
+                                <td class="text-center">${item.nip_bps}</td>
+                                <td>${item.nama}</td>
+                                <td class="text-center">${item.alias}</td>
+                                <td class="text-center">${item.jabatan}</td>
+                                @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan']))
+                                <td class="text-center">
+                                    <div class="flex justify-center space-x-2 px-2">
+                                        <x-edit-button-table :id="$item->id" :route="'master-organik-edit-view'" />
+
+                                        <form action="{{ route('master-organik-delete', $item->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-remove-button />
+                                        </form>
+                                    </div>
+                                </td>
+                                @endif
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    });
+            });
+        });
+    </script>
+
 </div>
 @endsection
