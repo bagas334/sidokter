@@ -95,7 +95,7 @@ class MasterOrganikController extends Controller
         $data['password'] = Hash::make($request->password);
         Pegawai::create($data);
 
-        return redirect()->route('master-organik');
+        return redirect()->route('manajemen-user');
     }
 
     public function edit($id)
@@ -118,13 +118,13 @@ class MasterOrganikController extends Controller
         ]);
 
         Pegawai::where('id', $id)->update($request->except('_token', '_method'));
-        return redirect()->route('master-organik');
+        return redirect()->route('manajemen-user');
     }
 
     public function delete($id)
     {
         Pegawai::where('id', $id)->delete();
-        return redirect()->route('master-organik');
+        return redirect()->route('manajemen-user');
     }
 
     public function validateUser(Request $request)
