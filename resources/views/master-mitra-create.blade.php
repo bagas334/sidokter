@@ -37,8 +37,8 @@
                     <select id="jenis_kelamin" name="jenis_kelamin"
                             class="text-gray-600 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
                         <option value="">-- Pilih Opsi --</option>
-                        <option value="laki-laki">Laki-laki</option>
-                        <option value="perempuan">Perempuan</option>
+                        <option value="L">L</option>
+                        <option value="P">P</option>
                     </select>
                 </div>
 
