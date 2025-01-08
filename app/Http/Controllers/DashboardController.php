@@ -78,5 +78,6 @@ class DashboardController extends Controller
 
 
         return view('dashboard', compact('kegiatan', 'distribusiKegiatan', 'penugasanPegawai'));
+        
     }
 }

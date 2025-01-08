@@ -5,33 +5,33 @@
 
 @section('content')
 <div class="size-full flex flex-col w-full items-center px-4">
-    {{-- Judul--}}
-    <div class="w-full pb-6 ">
+    {{-- Judul --}}
+    <div class="w-full pb-6">
         <x-judul text="Penugasan Mitra" />
     </div>
 
-    {{-- Pencarian--}}
+    {{-- Pencarian --}}
     <div class="w-full flex flex-row justify-between items-center pb-1">
         {{-- Search Input --}}
         <div class="relative flex items-center w-64">
             <input type="text"
                 class="input pl-10 m-2 ml-0 w-full bg-gray-50 border border-gray-300 rounded-md input-sm focus:outline-none focus:ring-1 focus:ring-teal-600 focus:border-teal-600 peer"
-                placeholder="Cari kegiatan" />
+                placeholder="Cari Kegiatan" />
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
                 class="absolute left-4 w-5 h-5 text-gray-500 transition duration-200 ease-in-out peer-focus:text-teal-600">
                 <path stroke-linecap="round" stroke-linejoin="round"
-                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    d="M21 21L15.803 15.803M15.803 15.803A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607z" />
             </svg>
         </div>
-        <x-tambah-button :route="'/beban-kerja/add'" />
+        <x-tambah-button href="{{ route('penugasan-mitra-create')}}" />
     </div>
 
-    {{-- Tabel--}}
+    {{-- Tabel --}}
     <div class="flex flex-col justify-center overflow-x-auto max-w-[78vw]">
-        <div class="relative min-w-[100vw]">
+        <div class="relative min-w-[78vw]">
             <table class="table-custom">
                 <thead>
                     <tr>
@@ -50,17 +50,16 @@
                     @foreach ($kegiatan_mitra as $item)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $item->kegiatan->nama }}</td>
-                        <td>{{ $item->mitra->nama }}</td>
+                        <td class="text-center">{{ $item->kegiatan->nama }}</td>
+                        <td class="text-center">{{ $item->mitra->nama }}</td>
                         <td class="text-center">{{ $item->target }}</td>
                         <td class="text-center">{{ $item->terlaksana }}</td>
-                        <td class="text-center">{{$item->kegiatan->satuan }}</td>
-                        <td class="text-center">{{$item->kegiatan->tanggal_mulai }}</td>
-                        <td class="text-center">{{$item->kegiatan->tanggal_akhir }}</td>
+                        <td class="text-center">{{ $item->kegiatan->satuan }}</td>
+                        <td class="text-center">{{ $item->kegiatan->tanggal_mulai }}</td>
+                        <td class="text-center">{{ $item->kegiatan->tanggal_akhir }}</td>
                         <td class="text-center">
-                            <div class="flex justify-between px-2">
+                            <div class="flex justify-center space-x-2 px-1">
                                 <x-detail-button-table :id="$item->id" :route="'beban-kerja-all'" />
-
                                 <form action="{{ route('beban-kerja-delete', $item->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
@@ -78,5 +77,34 @@
     {{-- Pagination --}}
     <x-paginator :paginator="$kegiatan_mitra" />
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('input[placeholder="Cari Kegiatan"]');
+            searchInput.addEventListener('input', function() {
+                const query = this.value;
+                fetch(`{{ route('search-mitra') }}?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.querySelector('tbody');
+                        tbody.innerHTML = '';
+                        data.forEach((item, index) => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td class="text-center">${index + 1}</td>
+                                <td>${item.id}</td>
+                                <td>${item.asal_fungsi}</td>
+                                <td class="text-center">${item.tanggal_mulai}</td>
+                                <td class="text-center">${item.tanggal_akhir}</td>
+                                <td class="text-center">${item.target}</td>
+                                <td class="text-center">${item.terlaksana}</td>
+                                <td class="text-center">${item.satuan}</td>
+                                <td class="text-center">${item.harga_satuan}</td>`;
+                            tbody.appendChild(row);
+                        });
+                    })
+
+            });
+        });
+    </script>
 </div>
 @endsection

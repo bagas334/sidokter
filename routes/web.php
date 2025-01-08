@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BebanKerjaController;
+use App\Http\Controllers\SearchUser;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\SampelController;
@@ -12,6 +13,8 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PenugasanMitraController;
 use App\Http\Controllers\PenugasanPegawaiController;
 use App\Http\Controllers\PerusahaanController;
+use App\Http\Controllers\SearchKegiatan;
+use App\Http\Controllers\SearchMitra;
 use App\Http\Controllers\TugasPegawaiController;
 use App\Models\PenugasanMitra;
 use App\Models\PenugasanPegawai;
@@ -88,6 +91,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/mitra', [PenugasanMitraController::class, 'index'])
             ->name('beban-kerja-mitra');
         Route::post('/logout', [MasterOrganikController::class, 'logout'])->name('logout');
+        Route::get('/search/pegawai', [SearchUser::class, 'search'])->name("search-pegawai");
+        Route::get('/search/mitra', [SearchMitra::class, 'search'])->name("search-mitra");
     });
 
     Route::group(['prefix' => 'manajemen-sampel'], function () {
