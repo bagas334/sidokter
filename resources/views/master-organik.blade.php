@@ -3,6 +3,7 @@
 @section('title', 'Master Organik')
 
 @section('content')
+
     <div class="size-full flex flex-col w-full items-center px-4">
         {{-- Breadcrumb --}}
         <nav class="w-full mb-4 text-sm text-gray-500">
@@ -104,6 +105,7 @@ class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-teal
                 </table>
             </div>
         </div>
+    </div>
 
         {{-- Pagination --}}
         <div class="w-full flex justify-end mt-4">
