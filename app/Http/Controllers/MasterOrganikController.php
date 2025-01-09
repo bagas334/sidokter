@@ -38,10 +38,10 @@ class MasterOrganikController extends Controller
 
         // Jika ada pencarian, filter berdasarkan NIP BPS, NIP, atau Nama
         if ($search) {
-            $pegawai = $pegawai->where(function($query) use ($search) {
+            $pegawai = $pegawai->where(function ($query) use ($search) {
                 $query->where('nip_bps', 'like', '%' . $search . '%')
-                      ->orWhere('nip', 'like', '%' . $search . '%')
-                      ->orWhere('nama', 'like', '%' . $search . '%');
+                    ->orWhere('nip', 'like', '%' . $search . '%')
+                    ->orWhere('nama', 'like', '%' . $search . '%');
             });
         }
 
@@ -49,7 +49,7 @@ class MasterOrganikController extends Controller
         $pegawai = $pegawai->paginate(10);
 
         // Mengembalikan data ke view dengan data pegawai dan query pencarian
-        return view('manajemen-user', compact('pegawai', 'search'));
+        return view('master-organik-view', compact('pegawai', 'search'));
     }
 
     /**
@@ -108,7 +108,7 @@ class MasterOrganikController extends Controller
         $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];
         $options = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
 
-        return view('manajemen-user-create', compact('options', 'fungsi_ketua_tim'));
+        return view('master-organik-create', compact('options', 'fungsi_ketua_tim'));
     }
 
     /**
@@ -131,8 +131,7 @@ class MasterOrganikController extends Controller
 
         // Menyimpan data pegawai baru
         Pegawai::create($data);
-        return redirect()->route('manajemen-user');
-
+        return redirect()->route('master-organik-view');
     }
 
     /**
@@ -144,7 +143,6 @@ class MasterOrganikController extends Controller
         $options = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
         $pegawai = $this->model->find($id);
         return view('master-organik-edit', compact('pegawai', 'fungsi_ketua_tim', 'options'));
-
     }
 
     /**
@@ -162,32 +160,26 @@ class MasterOrganikController extends Controller
         ]);
 
         Pegawai::where('id', $id)->update($request->except('_token', '_method'));
-        return redirect()->route('manajemen-user');
+        return redirect()->route('master-organik-view');
     }
 
-    /**
-     * Menghapus data pegawai
-     */
     public function delete($id)
     {
-        // Hapus data pegawai berdasarkan ID
         Pegawai::where('id', $id)->delete();
 
-        return redirect()->route('manajemen-user');
+        return redirect()->route('master-organik-view');
     }
 
-    /**
-     * Validasi login pengguna
-     */
+
     public function validateUser(Request $request)
     {
-        // Validasi input untuk login
+
         $credentials = $request->validate([
             'nip_bps' => 'required',
             'password' => 'required'
         ]);
 
-        // Proses autentikasi user
+
         if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->route('beban-kerja-all');
@@ -196,9 +188,7 @@ class MasterOrganikController extends Controller
         return back()->with('loginError', 'NIP BPS atau Password salah');
     }
 
-    /**
-     * Logout pengguna
-     */
+
     public function logout(Request $request)
     {
         // Logout dan invalidate session
