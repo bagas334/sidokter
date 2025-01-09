@@ -14,11 +14,11 @@
         {{-- Search Input --}}
         <form action="{{ route('master-organik') }}" method="GET" class="w-full flex items-center">
             <div class="relative flex items-center w-full sm:w-64 mb-4 sm:mb-0">
-                <input type="text" name="search"
-                    value="{{ request()->input('search') }}" {{-- Menyertakan nilai pencarian --}}
+                <input type="text"
                     class="input pl-10 m-2 ml-0 w-full bg-gray-50 border border-gray-300 rounded-md input-sm focus:outline-none focus:ring-1 focus:ring-teal-600 focus:border-teal-600 peer"
-                    placeholder="Cari berdasarkan NIP, NIP BPS, atau Nama..." />
-                
+                    placeholder="Cari pengguna" />
+
+
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="absolute left-4 w-5 h-5 text-gray-500 transition duration-200 ease-in-out peer-focus:text-teal-600">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -119,6 +119,5 @@
             });
         });
     </script>
-
 </div>
 @endsection
