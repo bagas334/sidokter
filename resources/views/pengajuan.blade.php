@@ -43,8 +43,7 @@
                         <td class="text-end">{{ $item->dikerjakan }}</td>
                         <td class="text-center">{{$item->penugasanPegawai->kegiatan->satuan }}</td>
                         <td class="text-center">
-                            <div class="flex justify-between">
-                                <x-detail-button-table :id="$item->id" :route="'master-kegiatan-edit-view'" />
+                            <div class="flex justify-center">
                                 <form action="{{ route('pengajuan-organik-approve-tabel', ['tugasId' => $item->id]) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('POST')

@@ -29,12 +29,27 @@ class PenugasanPegawaiController extends Controller
 
     public function view($id, $pegawai)
     {
+        if (auth()->user()->jabatan == 'Organik') {
+            if (auth()->user()->id != $pegawai) {
+                return redirect()->back();
+            }
+        }
+
+
         $penugasan_pegawai_id = PenugasanPegawai::with(['pegawai', 'kegiatan']) // Pastikan relasi dimuat
             ->where(['kegiatan_id' => $id, 'petugas' => $pegawai])
             ->first()->id;
 
-        $nama_kegiatan = Kegiatan::where('id', $id)->first()->nama;
+        $kegiatan = Kegiatan::where('id', $id)->first();
+
+        $nama_kegiatan = $kegiatan->nama;
         $nama_pegawai = Pegawai::where('id', $pegawai)->first()->nama;
+
+        if (auth()->user()->jabatan == 'Ketua Tim') {
+            if (auth()->user()->fungsi_ketua_tim != $kegiatan->asal_fungsi) {
+                return redirect()->back();
+            }
+        }
 
         $tugas_pegawai = TugasPegawai::where('penugasan_pegawai', $penugasan_pegawai_id)
             ->whereIn('status', ['proses', 'selesai'])
