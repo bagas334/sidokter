@@ -93,7 +93,7 @@
         <div class="row-span-1 flex flex-col justify-between max-w-[75vw]">
             <div class="size-full bg-gray-50 border border-gray-100 rounded-md rounded-md p-4">
                 <div class="w-full pl-2 pb-6">
-                    <span class="text-2xl text-teal-600 font-medium">Informasi Penugasan</span>
+                    <span class="text-xl text-teal-600 font-bold">Informasi Penugasan</span>
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Ditugaskan</p>

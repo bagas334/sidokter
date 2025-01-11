@@ -80,6 +80,10 @@
                     <span class="text-xl text-teal-600 font-bold">Informasi Penugasan</span>
                 </div>
                 <div class="w-full pl-2 pb-2">
+                    <p class="text-md text-cyan-950 font-medium">Jumlah Satuan: </p>
+                    <p class="text-sm text-gray-600 font-normal">{{$kegiatan->target}}</p>
+                </div>
+                <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium" style="margin-bottom: 5px;">Status</p>
                     <div class="w-full pl-2 pb-2">
                         <!-- Progres Bar -->
@@ -123,7 +127,7 @@
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Ketua Tim: </p>
-                    <p class="text-sm text-gray-600 font-normal">nnn</p>
+                    <p class="text-sm text-gray-600 font-normal"></p>
                 </div>
             </div>
         </div>

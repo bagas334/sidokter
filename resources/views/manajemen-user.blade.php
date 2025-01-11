@@ -93,26 +93,26 @@
                         data.forEach((item, index) => {
                             const row = document.createElement('tr');
                             row.innerHTML = `
-                                <td class="text-center">${index + 1}</td>
-                                <td class="text-center">${item.nip}</td>
-                                <td class="text-center">${item.nip_bps}</td>
-                                <td>${item.nama}</td>
-                                <td class="text-center">${item.alias}</td>
-                                <td class="text-center">${item.jabatan}</td>
-                                @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan']))
-                                <td class="text-center">
-                                    <div class="flex justify-center space-x-2 px-2">
-                                        <x-edit-button-table :id="$item->id" :route="'master-organik-edit-view'" />
+    <td class="text-center py-2 px-4">${index + 1}</td>
+    <td class="text-center py-2 px-4">${item.nip}</td>
+    <td class="text-center py-2 px-4">${item.nip_bps}</td>
+    <td class="py-2 px-4">${item.nama}</td>
+    <td class="text-center py-2 px-4">${item.alias}</td>
+    <td class="text-center py-2 px-4">${item.jabatan}</td>
+    @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan']))
+    <td class="text-center py-2 px-4">
+        <div class="flex justify-center space-x-2 px-2">
+            <x-edit-button-table :id="$item->id" :route="'master-organik-edit-view'" />
+            <form action="{{ route('master-organik-delete', $item->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <x-remove-button />
+            </form>
+        </div>
+    </td>
+    @endif
+`;
 
-                                        <form action="{{ route('master-organik-delete', $item->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-remove-button />
-                                        </form>
-                                    </div>
-                                </td>
-                                @endif
-                            `;
                             tbody.appendChild(row);
                         });
                     });
