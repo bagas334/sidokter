@@ -33,8 +33,8 @@
 
             <div class="w-full pb-2">
                 <label class="text-lg text-cyan-950 font-medium">NIP</label>
-                <input type="text" id="nip" name="nip" value="{{ $pegawai->nip }}"
-                    class="text-gray-600 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
+                <input type="text" id="nip" name="nip" value="{{ $pegawai->nip }}" readonly
+                    class="text-gray-600 bg-gray-200 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none sm:text-sm cursor-not-allowed">
                 @error('nip')
                 <div class="text-sm text-red-500" id="namaKegiatanError">{{$message}}</div>
                 @enderror
@@ -42,8 +42,8 @@
 
             <div class="w-full pb-2">
                 <label class="text-lg text-cyan-950 font-medium">NIP BPS</label>
-                <input type="text" id="nip_bps" name="nip_bps" value="{{ $pegawai->nip_bps }}"
-                    class="text-gray-600 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
+                <input type="text" id="nip_bps" name="nip_bps" value="{{ $pegawai->nip_bps }}" readonly
+                    class="text-gray-600 bg-gray-200 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none sm:text-sm cursor-not-allowed">
                 @error('nip_bps')
                 <div class="text-sm text-red-500" id="namaKegiatanError">{{$message}}</div>
                 @enderror

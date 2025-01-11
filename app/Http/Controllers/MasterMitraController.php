@@ -18,7 +18,7 @@ class MasterMitraController extends Controller
         $mitra = Mitra::query();
         if ($search) {
             $mitra->where('sobat_id', 'like', '%' . $search . '%')
-                  ->orWhere('nama', 'like', '%' . $search . '%');
+                ->orWhere('nama', 'like', '%' . $search . '%');
         }
 
         $mitra = $mitra->paginate(10); // Pagination
@@ -48,7 +48,7 @@ class MasterMitraController extends Controller
         }
 
         Mitra::create($data);
-        return redirect()->route('master-mitra')->with('success', 'Data mitra berhasil ditambahkan.');
+        return redirect()->route('master-mitra.index')->with('success', 'Data mitra berhasil ditambahkan.');;
     }
 
     public function edit($id)
@@ -79,14 +79,14 @@ class MasterMitraController extends Controller
         }
 
         Mitra::findOrFail($id)->update($data);
-        return redirect()->route('master-mitra')->with('success', 'Data mitra berhasil diperbarui.');
+        return redirect()->route('master-mitra.index')->with('success', 'Data mitra berhasil diperbaharui.');
     }
 
     public function delete($id)
     {
         $mitra = Mitra::findOrFail($id);
         $mitra->delete();
-        return redirect()->route('master-mitra')->with('success', 'Data mitra berhasil dihapus.');
+        return redirect()->route('master-mitra.index')->with('success', 'Data mitra berhasil dihapus.');
     }
 
     public function showUploadForm()
@@ -103,7 +103,7 @@ class MasterMitraController extends Controller
 
         try {
             Excel::import(new MitraImport, $request->file('file'));
-            return redirect()->route('master-mitra')->with('success', 'File berhasil diimport.');
+            return redirect()->route('master-mitra.index')->with('success', 'Data mitra berhasil diimport.');
         } catch (\Exception $e) {
             return back()->with('error', 'Terjadi kesalahan saat mengimpor file: ' . $e->getMessage());
         }

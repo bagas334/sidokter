@@ -41,7 +41,7 @@
                                 @if($pegawai && $pegawai->isNotEmpty())
                                 @foreach ($penugasanPegawai as $item)
                                 <tr>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{$loop->iteration + ($penugasanPegawai->currentPage() - 1) * $penugasanPegawai->perPage() }}</td>
                                     <td>{{ $item->pegawai->nama }}</td>
                                     <td class="text-center">{{ $item->jabatan }}</td>
                                     <td class="text-center">{{ $item->target }}</td>
@@ -68,14 +68,14 @@
                             </tbody>
                         </table>
                         {{-- Pagination --}}
-                        <x-paginator :paginator="$penugasanPegawai" />
+                        <x-paginator :paginator="$penugasanPegawai" :url="request()->fullUrlWithQuery([])" />
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="row-span-1 flex flex-col justify-between max-w-[75vw]">
-            <div class="size-full bg-gray-50 border border-gray-100 rounded-md rounded-md p-4 h-auto">
+            <div class="size-full bg-gray-50 border border-gray-100 rounded-md p-4 h-auto">
                 <div class="w-full pl-2 pb-6">
                     <span class="text-xl text-teal-600 font-bold">Informasi Penugasan</span>
                 </div>
@@ -133,7 +133,7 @@
         </div>
 
         <div class="size-full pt-6">
-            <div class="size-full bg-gray-50 border border-gray-100 rounded-md rounded-md p-4">
+            <div class="size-full bg-gray-50 border border-gray-100 rounded-md p-4">
 
                 <div class="w-full flex flex-row justify-between items-center pb-1">
                     <div class="w-full pl-2 pb-6 flex flex-row justify-between">
@@ -160,7 +160,7 @@
                                 @if($mitra && $mitra->count() > 0)
                                 @foreach ($penugasanMitra as $item)
                                 <tr>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{$loop->iteration + ($penugasanMitra->currentPage() - 1) * $penugasanMitra->perPage() }}</td>
                                     <td>{{ $item->mitra->nama }}</td>
                                     <td class="text-end">{{ $item->mitra->pendapatan }}</td>
                                     <td class="text-end">{{ $item->target }}</td>
@@ -196,7 +196,7 @@
                             </tbody>
                         </table>
                         {{-- Pagination --}}
-                        <x-paginator :paginator="$penugasanMitra" />
+                        <x-paginator :paginator="$penugasanMitra" :url="request()->fullUrlWithQuery([])" />
                     </div>
                 </div>
             </div>

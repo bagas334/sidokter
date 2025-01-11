@@ -3,33 +3,30 @@
 @section('title', 'Master Organik')
 
 @section('content')
+
 <div class="size-full flex flex-col w-full items-center px-4">
     {{-- Judul --}}
     <div class="w-full pb-6">
-        <x-judul text="Daftar Pengguna" />
+        <x-judul text="Daftar Organik" />
     </div>
 
-    {{-- Pencarian --}}
-    <div class="w-full flex flex-col sm:flex-row justify-between items-center pb-4">
-        {{-- Search Input --}}
-        <form action="{{ route('master-organik') }}" method="GET" class="w-full flex items-center">
-            <div class="relative flex items-center w-full sm:w-64 mb-4 sm:mb-0">
-                <input type="text"
-                    class="input pl-10 m-2 ml-0 w-full bg-gray-50 border border-gray-300 rounded-md input-sm focus:outline-none focus:ring-1 focus:ring-teal-600 focus:border-teal-600 peer"
-                    placeholder="Cari pengguna" />
+    {{-- Pencarian dan Tombol Tambah --}}
+    <div class="w-full flex flex-col md:flex-row justify-between items-center pb-4 gap-4">
+        {{-- Search Input Component --}}
+        <x-search-bar
+            :action="route('master-organik.index')"
+            :search="request()->get('search')"
+            placeholder="Cari Pengguna"
+            formId="search-form-organik"
+            inputId="search-input-organik" />
 
-
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor" class="absolute left-4 w-5 h-5 text-gray-500 transition duration-200 ease-in-out peer-focus:text-teal-600">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                </svg>
-            </div>
-        </form>
 
         {{-- Tombol Tambah --}}
-        <x-tambah-button :route="route('manajemen-user-create')" />
+        <a href="{{ route('manajemen-user-create-view') }}"
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-700">Tambah
+        </a>
     </div>
+<<<<<<< HEAD
 
     {{-- Tabel --}}
     <div class="overflow-x-auto w-full">
@@ -119,5 +116,58 @@
             });
         });
     </script>
+=======
+>>>>>>> 5f71af731b1b86261d9abc362a55411b4eb7b591
 </div>
+
+{{-- Tabel --}}
+<div class="flex flex-col w-full overflow-x-auto">
+    <div class="relative">
+        <table class="table-custom w-full text-sm border border-gray-200 overflow-hidden rounded-lg">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th scope="col" class="text-center p-2 rounded-tl-lg">No</th>
+                    <th scope="col" class="text-center p-2">NIP</th>
+                    <th scope="col" class="text-center p-2">NIP BPS</th>
+                    <th scope="col" class="text-center p-2">Nama</th>
+                    <th scope="col" class="text-center p-2">Alias</th>
+                    <th scope="col" class="text-center p-2">Jabatan</th>
+                    <th scope="col" class="text-center p-2">Status</th>
+                    <th scope="col" class="text-center p-2 rounded-tr-lg">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($pegawai as $item)
+                <tr class="hover:bg-gray-50">
+                    <td class="text-center p-2 rounded-bl-lg">{{ $loop->iteration + ($pegawai->currentPage() - 1) * $pegawai->perPage() }}</td>
+                    <td class="text-center p-2">{{ $item->nip }}</td>
+                    <td class="text-center p-2">{{ $item->nip_bps }}</td>
+                    <td class="p-2 text-center">{{ $item->nama }}</td>
+                    <td class="text-center p-2">{{ $item->alias }}</td>
+                    <td class="p-2 text-center">{{ $item->jabatan }}</td>
+                    <td class="text-center p-2">{{ $item->status }}</td>
+                    <td class="text-center p-2 rounded-br-lg">
+                        <div class="flex justify-center space-x-2">
+                            <x-edit-button-table :id="$item->id" :route="'master-organik-edit-view'" />
+                            <form action="{{ route('master-organik-delete', $item->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <x-remove-button />
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="12" class="text-center text-gray-500 p-4">
+                        Tidak ada data yang sesuai dengan pencarian "{{ request()->get('search') }}".
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+    <x-paginator :paginator="$pegawai" :url="request()->fullUrlWithQuery(['search' => request()->get('search'), 'page' => $pegawai->currentPage()])" />
+</div>
+
 @endsection
