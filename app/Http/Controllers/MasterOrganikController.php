@@ -30,27 +30,25 @@ class MasterOrganikController extends Controller
      */
     public function index(Request $request)
     {
-        // Ambil query pencarian dari input (default kosong jika tidak ada input)
         $search = $request->input('search', '');
 
-        // Menggunakan $this->model yang sudah dideklarasikan
         $pegawai = Pegawai::query();
 
-        // Jika ada pencarian, filter berdasarkan NIP BPS, NIP, atau Nama
         if ($search) {
-            $pegawai = $pegawai->where(function($query) use ($search) {
+            $pegawai = $pegawai->where(function ($query) use ($search) {
                 $query->where('nip_bps', 'like', '%' . $search . '%')
-                      ->orWhere('nip', 'like', '%' . $search . '%')
-                      ->orWhere('nama', 'like', '%' . $search . '%');
+                    ->orWhere('nip', 'like', '%' . $search . '%')
+                    ->orWhere('nama', 'like', '%' . $search . '%')
+                    ->orWhere('alias', 'like', '%' . $search . '%')
+                    ->orWhere('jabatan', 'like', '%' . $search . '%');
             });
         }
 
-        // Mengambil data pegawai dengan paginasi (batas 10 per halaman)
         $pegawai = $pegawai->paginate(10);
 
-        // Mengembalikan data ke view dengan data pegawai dan query pencarian
         return view('manajemen-user', compact('pegawai', 'search'));
     }
+
 
     /**
      * Menampilkan detail pegawai dan penugasannya
@@ -58,37 +56,49 @@ class MasterOrganikController extends Controller
     public function show($id, Request $request)
     {
         $pegawai = Pegawai::where('id', $id)->first();
-        $penugasan_pegawai = PenugasanPegawai::where('petugas', $id);
+        $penugasan_pegawai = PenugasanPegawai::where('petugas', $id)
+            ->with('kegiatan');
 
         $tanggalMulai = $request->input('tanggal_mulai');
         $tanggalAkhir = $request->input('tanggal_akhir');
 
         if ($tanggalMulai && $tanggalAkhir) {
-            $penugasan_pegawai = $penugasan_pegawai->whereBetween('tanggal_penugasan', [$tanggalMulai, $tanggalAkhir]);
+            $penugasan_pegawai = $penugasan_pegawai->where(function ($query) use ($tanggalMulai, $tanggalAkhir) {
+                $query->whereBetween('created_at', [$tanggalMulai, $tanggalAkhir])
+                    ->orWhere(function ($query) use ($tanggalMulai, $tanggalAkhir) {
+                        $query->whereBetween('finished_at', [$tanggalMulai, $tanggalAkhir])
+                            ->orWhereNull('finished_at');
+                    });
+            });
         }
 
-        $kegiatan = $penugasan_pegawai->with('kegiatan')->get();
+        $penugasan_pegawai = $penugasan_pegawai->paginate(10);
+
         $chartData = DB::table('penugasan_pegawai')
             ->select(
-                DB::raw("DATE_FORMAT(kegiatan.tanggal_mulai, '%Y-%m') as bulan_tahun"), // Format Tahun-Bulan
-                DB::raw('SUM(penugasan_pegawai.target) as total_target')  // Menjumlahkan 'target'
+                DB::raw("DATE_FORMAT(kegiatan.tanggal_mulai, '%Y-%m') as bulan_tahun"),
+                DB::raw('SUM(penugasan_pegawai.target) as total_target')
             )
-            ->join('kegiatan', 'penugasan_pegawai.kegiatan_id', '=', 'kegiatan.id')  // Join dengan tabel 'kegiatan'
+            ->join('kegiatan', 'penugasan_pegawai.kegiatan_id', '=', 'kegiatan.id')
             ->where('penugasan_pegawai.petugas', $id);
 
         if ($tanggalMulai && $tanggalAkhir) {
-            $chartData = $chartData->whereBetween('kegiatan.tanggal_mulai', [$tanggalMulai, $tanggalAkhir]);
+            $chartData = $chartData->where(function ($query) use ($tanggalMulai, $tanggalAkhir) {
+                $query->whereBetween('kegiatan.tanggal_mulai', [$tanggalMulai, $tanggalAkhir])
+                    ->orWhere(function ($query) use ($tanggalMulai, $tanggalAkhir) {
+                        $query->whereBetween('penugasan_pegawai.finished_at', [$tanggalMulai, $tanggalAkhir])
+                            ->orWhereNull('penugasan_pegawai.finished_at');
+                    });
+            });
         }
 
         $chartData = $chartData->groupBy(DB::raw("DATE_FORMAT(kegiatan.tanggal_mulai, '%Y-%m')"))
-            ->orderBy(DB::raw("DATE_FORMAT(kegiatan.tanggal_mulai, '%Y-%m')"), 'asc')  // Urutkan berdasarkan tahun dan bulan
+            ->orderBy(DB::raw("DATE_FORMAT(kegiatan.tanggal_mulai, '%Y-%m')"), 'asc')
             ->get();
 
-        // Ambil label bulan dan tahun serta data total target
         $labels = $chartData->map(function ($item) {
-            // Ubah format menjadi Jan'24, Feb'24, dst
-            $bulanTahun = \DateTime::createFromFormat('Y-m', $item->bulan_tahun);
-            return $bulanTahun->format('M\'y');  // Format yang diinginkan: Jan'24, Feb'24
+            $startDate = \DateTime::createFromFormat('Y-m', $item->bulan_tahun)->format('M\'y');
+            return $startDate;
         })->toArray();
 
         $dataTarget = $chartData->pluck('total_target')->toArray();
@@ -97,8 +107,9 @@ class MasterOrganikController extends Controller
         $selesai = $penugasan_pegawai->sum('terlaksana');
         $proses = $total - $selesai;
 
-        return view('organik-detail', compact('pegawai', 'kegiatan', 'total', 'selesai', 'proses', 'labels', 'dataTarget'));
+        return view('organik-detail', compact('pegawai', 'penugasan_pegawai', 'total', 'selesai', 'proses', 'labels', 'dataTarget', 'tanggalMulai', 'tanggalAkhir'));
     }
+
 
     /**
      * Menampilkan form untuk membuat data pegawai baru
@@ -132,7 +143,6 @@ class MasterOrganikController extends Controller
         // Menyimpan data pegawai baru
         Pegawai::create($data);
         return redirect()->route('manajemen-user');
-
     }
 
     /**
@@ -144,7 +154,6 @@ class MasterOrganikController extends Controller
         $options = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
         $pegawai = $this->model->find($id);
         return view('master-organik-edit', compact('pegawai', 'fungsi_ketua_tim', 'options'));
-
     }
 
     /**
@@ -155,15 +164,15 @@ class MasterOrganikController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required|max:100',
             'alias' => 'required|max:20',
-            'nip' => 'required|numeric|unique:pegawai,nip',
-            'nip_bps' => 'required|numeric|unique:pegawai,nip_bps',
-            'password' => 'required',
+            'nip' => 'required|numeric|unique:pegawai,nip,' . $id,
+            'nip_bps' => 'required|numeric|unique:pegawai,nip_bps,' . $id,
             'jabatan' => 'required'
         ]);
 
         Pegawai::where('id', $id)->update($request->except('_token', '_method'));
         return redirect()->route('manajemen-user');
     }
+
 
     /**
      * Menghapus data pegawai

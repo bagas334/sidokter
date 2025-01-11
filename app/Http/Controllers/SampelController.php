@@ -11,15 +11,21 @@ class SampelController extends Controller
 {
     public function show($id)
     {
-        $sampel = Sampel::with('perusahaan')->findOrFail($id);
-        return view('sampel-detail', compact('sampel'));
+        $sampel = Sampel::with(['perusahaan', 'pegawai', 'kegiatan'])->findOrFail($id);
+
+        $perusahaan = $sampel->perusahaan()->paginate(10);
+
+        return view('sampel-detail', compact('sampel', 'perusahaan'));
     }
+
 
     public function index()
     {
-        $sampel = Sampel::with(['pegawai', 'kegiatan'])->get();
+        $sampel = Sampel::with(['pegawai', 'kegiatan'])->paginate(10);
+
         return view('sampel-all', compact('sampel'));
     }
+
 
     public function create()
     {

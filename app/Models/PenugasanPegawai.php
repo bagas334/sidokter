@@ -14,13 +14,14 @@ class PenugasanPegawai extends Model
     protected $fillable = [
         'petugas',
         'kegiatan_id',
-        'tanggal_penugasan',
         'jabatan',
         'status',
         'target',
         'terlaksana',
         'satuan',
         'catatan',
+        'created_at',
+        'finished_at'
     ];
 
     public function pegawai()

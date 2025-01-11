@@ -5,62 +5,77 @@
 
 @section('content')
 <div class="size-full flex flex-col w-full px-4">
-    <div class="w-full pb-6 ">
+    <div class="w-full pb-6">
         <x-judul text="Semua Penugasan" />
     </div>
 
-    <div class="flex flex-col space-y-4 items-start">
+    <div class="flex flex-col space-y-6 items-start ml-0">
+        <!-- Buttons Row -->
+        <div class="flex justify-between items-center w-full">
+            <!-- Filter Button -->
+            <button
+                id="filterToggleButton"
+                class="rounded-md bg-blue-500 text-white px-6 py-3 hover:bg-blue-600 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Filter
+            </button>
+
+            <!-- Tambah Button -->
+            @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
+            <x-tambah-button :route="'/beban-kerja/add'" />
+            @endif
+        </div>
+
         <!-- Form Filter -->
-        <form action="{{ route('beban-kerja-all') }}" method="GET" class="flex flex-col space-y-4">
-            <div class="flex items-center space-x-4">
+        <form
+            id="filterForm"
+            action="{{ route('beban-kerja-all') }}"
+            method="GET"
+            class="flex flex-col space-y-6 w-full max-w-4xl p-6 rounded-lg shadow-lg bg-white hidden mt-4 mb-4">
+            <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
                 <!-- Tanggal Mulai -->
                 <x-input.datepicker
                     :name="'tanggal_mulai'"
                     :value="$filterParams['tanggal_mulai'] ?? ''"
                     :label_size="'sm'"
-                    :placeholder="'Tanggal mulai'" />
+                    :placeholder="'Tanggal mulai'"
+                    class="w-full md:w-1/2 p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
                 <!-- Tanggal Akhir -->
                 <x-input.datepicker
                     :name="'tanggal_akhir'"
                     :value="$filterParams['tanggal_akhir'] ?? ''"
                     :label_size="'sm'"
-                    :placeholder="'Tanggal akhir'" />
+                    :placeholder="'Tanggal akhir'"
+                    class="w-full md:w-1/2 p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
 
             <!-- Tombol Filter -->
-            <div class="flex space-x-4">
-                <button type="submit" class="rounded-md bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition">
-                    Filter
+            <div class="flex space-x-4 mt-6 justify-center md:justify-start">
+                <button type="submit" class="rounded-md bg-blue-500 text-white px-6 py-3 hover:bg-blue-600 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Enter
                 </button>
-                <a href="{{route('beban-kerja-all')}}" id="resetButton" value="Reset" class="rounded-md bg-gray-500 text-white px-4 py-2 hover:bg-gray-600 transition">
+                <a href="{{route('beban-kerja-all')}}" id="resetButton" class="rounded-md bg-gray-500 text-white px-6 py-3 hover:bg-gray-600 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                     Reset
                 </a>
             </div>
         </form>
-    </div>
 
-
-    <div class="flex justify-end mb-3">
-        @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
-        <x-tambah-button :route="'/beban-kerja/add'" />
-        @endif
     </div>
 </div>
 
-<div class="flex flex-col justify-center overflow-x-auto max-w-[78vw]">
-    <div class="relative min-w-[100vw]">
+<div class="flex flex-col justify-center overflow-x-auto w-full">
+    <div class="relative w-full mt-4">
         @if(auth()->user()->jabatan == 'Organik')
-        <table class="table-custom" id="tabel">
+        <table class="table-custom w-full rounded-lg" id="tabel">
             <thead>
                 <tr>
-                    <th scope="col" rowspan="2" class="w-8 text-center">No</th>
-                    <th scope="col" rowspan="2" class="w-56">Kegiatan</th>
-                    <th scope="col" rowspan="2" class="w-24">Asal Fungsi</th>
+                    <th scope="col" rowspan="2" class="w-8 text-center rounded-tl-lg">No</th>
+                    <th scope="col" rowspan="2" class="w-56 text-center">Kegiatan</th>
+                    <th scope="col" rowspan="2" class="w-24 text-center">Asal Fungsi</th>
                     <th scope="col" colspan="2" class="text-center border-b-gray-200 border-b-[1px]">Tanggal</th>
-                    <th scope="col" rowspan="2" class="w-28 text-end">Target</th>
-                    <th scope="col" rowspan="2" class="w-28 text-end">Terlaksana</th>
-                    <th scope="col" rowspan="2" class="w-28 text-center">Aksi</th>
+                    <th scope="col" rowspan="2" class="w-28 text-center">Target</th>
+                    <th scope="col" rowspan="2" class="w-28 text-center">Terlaksana</th>
+                    <th scope="col" rowspan="2" class="w-28 text-center rounded-tr-lg">Aksi</th>
                 </tr>
                 <tr>
                     <th scope="col" class="w-28 text-center">Mulai</th>
@@ -69,16 +84,16 @@
             </thead>
             <tbody>
                 @foreach($kegiatan as $item)
-                <tr>
-                    <td class="text-center">{{$loop->iteration}}</td>
-                    <td>{{$item->kegiatan->nama}}</td>
-                    <td>{{$item->kegiatan->asal_fungsi}}</td>
-                    <td class="text-center">{{$item->kegiatan->tanggal_mulai}}</td>
-                    <td class="text-center">{{$item->kegiatan->tanggal_akhir}}</td>
-                    <td class="text-end">{{$item->target}}</td>
-                    <td class="text-end">{{$item->terlaksana}}</td>
-                    <td class="text-center">
-                        <div class="flex justify-between px-2">
+                <tr class="{{ $loop->last ? 'border-b-0' : '' }}">
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $loop->iteration + ($kegiatan->currentPage() - 1) * $kegiatan->perPage() }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->kegiatan->nama }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->kegiatan->asal_fungsi }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->kegiatan->tanggal_mulai }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->kegiatan->tanggal_akhir }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->target }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->terlaksana }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">
+                        <div class="flex justify-center space-x-2">
                             <a href="/beban-kerja/{{$item->kegiatan_id}}/tugas-organik/{{auth()->user()->id}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-medium rounded-md">Tugas anda</a>
                             <a href="/beban-kerja/{{$item->kegiatan_id}}/penugasan" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-medium rounded-md">Detail</a>
                         </div>
@@ -90,18 +105,18 @@
         @endif
 
         @if(in_array(auth()->user()->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim']))
-        <table class="table-custom">
+        <table class="table-custom w-full rounded-lg">
             <thead>
                 <tr>
-                    <th scope="col" rowspan="2" class="w-8 text-center">No</th>
-                    <th scope="col" rowspan="2" class="w-56">Nama</th>
-                    <th scope="col" rowspan="2" class="w-24">Asal Fungsi</th>
+                    <th scope="col" rowspan="2" class="w-8 text-center rounded-tl-lg">No</th>
+                    <th scope="col" rowspan="2" class="w-56 text-center">Nama</th>
+                    <th scope="col" rowspan="2" class="w-24 text-center">Asal Fungsi</th>
                     <th scope="col" colspan="2" class="text-center border-b-gray-200 border-b-[1px]">Tanggal</th>
-                    <th scope="col" rowspan="2" class="w-28 text-end">Target</th>
-                    <th scope="col" rowspan="2" class="w-28 text-end">Terlaksana</th>
+                    <th scope="col" rowspan="2" class="w-28 text-center">Target</th>
+                    <th scope="col" rowspan="2" class="w-28 text-center">Terlaksana</th>
                     <th scope="col" rowspan="2" class="w-28 text-center">Satuan</th>
-                    <th scope="col" rowspan="2" class="w-28 text-end">Harga Satuan</th>
-                    <th scope="col" rowspan="2" class="w-28 text-center">Aksi</th>
+                    <th scope="col" rowspan="2" class="w-28 text-center">Harga Satuan</th>
+                    <th scope="col" rowspan="2" class="w-28 text-center rounded-tr-lg">Aksi</th>
                 </tr>
                 <tr>
                     <th scope="col" class="w-28 text-center">
@@ -116,33 +131,34 @@
                     </th>
                 </tr>
             </thead>
-
             <tbody>
                 @foreach ($kegiatan as $item)
                 <tr>
-                    <td class="text-center">{{ $loop->iteration }}</td>
-                    <td>{{ $item->nama }}</td>
-                    <td>{{ $item->asal_fungsi }}</td>
-                    <td class="text-center">
+                    <td class="text-center {{ $loop->last ? 'rounded-bl-lg' : '' }}">
+                        {{$loop->iteration + ($kegiatan->currentPage() - 1) * $kegiatan->perPage() }}
+                    </td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->nama }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->asal_fungsi }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">
                         @if($item->tanggal_mulai)
                         {{ Carbon::parse($item->tanggal_mulai)->format('d-m-Y') }}
                         @else
                         -
                         @endif
                     </td>
-                    <td class="text-center">
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">
                         @if($item->tanggal_akhir)
                         {{ Carbon::parse($item->tanggal_akhir)->format('d-m-Y') }}
                         @else
                         -
                         @endif
                     </td>
-                    <td class="text-end">{{ $item->target }}</td>
-                    <td class="text-end">{{ $item->terlaksana }}</td>
-                    <td class="text-center">{{ $item->satuan }}</td>
-                    <td class="text-end">{{ $item->harga_satuan }}</td>
-                    <td class="text-center">
-                        <div class="flex justify-between px-2">
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->target }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->terlaksana }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->satuan }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->harga_satuan }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-br-lg' : '' }}">
+                        <div class="flex justify-center space-x-2">
                             <x-detail-button-table :id="$item->id" :route="'beban-kerja-all'" />
                             <form action="{{ route('beban-kerja-delete', $item->id) }}" method="POST" style="display:inline;">
                                 @csrf
@@ -155,15 +171,21 @@
                 @endforeach
             </tbody>
         </table>
-
         @endif
     </div>
 </div>
 
 {{-- Pagination --}}
-<x-paginator :paginator=" $kegiatan" />
+<x-paginator :paginator=" $kegiatan" :url="request()->fullUrlWithQuery([])" />
 
 </div>
+
+<script>
+    document.getElementById('filterToggleButton').addEventListener('click', function() {
+        const filterForm = document.getElementById('filterForm');
+        filterForm.classList.toggle('hidden');
+    });
+</script>
 
 <script>
     const allButton = document.getElementById('allButton');
