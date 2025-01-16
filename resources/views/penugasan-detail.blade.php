@@ -210,7 +210,7 @@
                                     </td>
                                     <td class="text-center">
                                         <!-- Trigger Modal -->
-                                        <span class="text-blue-500 cursor-pointer" onclick="showModal('catatanModalMitra{{ $item->id }}')">
+                                        <span class="text-blue-500 cursor-pointer" data-modal-target="catatanModalMitra{{ $item->id }}" data-modal-toggle="catatanModalMitra{{ $item->id }}">
                                             Lihat Catatan
                                         </span>
 
