@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,14 +15,20 @@ return new class extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->id(); // Primary key
-            $table->unsignedBigInteger('pegawai_id')->nullable(); // Foreign key to pegawai table
-            $table->string('email')->unique(); // Unique email
-            $table->string('password'); // Password
-            $table->string('jabatan');
-            $table->string('fungsi_ketua_tim')->nullable(); // Jabatan
-            $table->timestamp('email_verified_at')->nullable(); // Email verification timestamp
-            $table->rememberToken(); // Remember token for authentication
-            $table->timestamps(); // Created_at and updated_at
+            $table->unsignedBigInteger('pegawai_id')->nullable(); // Foreign key
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('jabatan')->nullable();
+            $table->string('fungsi_ketua_tim')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
+            $table->timestamps();
+
+            // Foreign key constraint
+            $table->foreign('pegawai_id')
+                ->references('id')
+                ->on('pegawai')
+                ->onDelete('cascade'); // Optional: Handle deleted pegawai
         });
     }
 
@@ -35,4 +41,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('user');
     }
-};
+}
