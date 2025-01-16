@@ -126,7 +126,9 @@ class MasterOrganikController extends Controller
     public function create()
     {
         $options = Pegawai::all();
-        return view('user-create', compact('options'));
+        $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];
+        $opsi = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
+        return view('user-create', compact('options', 'opsi', 'fungsi_ketua_tim'));
     }
 
     // public function store(Request $request)
@@ -152,6 +154,7 @@ class MasterOrganikController extends Controller
     {
         $validatedData = $request->validate([
             'email' => 'required',
+            'jabatan' => 'required',
             'password' => 'required|min:8|max:60',
         ]);
 

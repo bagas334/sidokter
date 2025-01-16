@@ -85,15 +85,15 @@ Route::middleware('auth')->group(function () {
         Route::delete('tugas-organik/delete/{id}', [PenugasanPegawaiController::class, 'deleteTugas'])->name('pengumpulan-tugas-delete');
 
         Route::delete('{penugasan}/penugasan/mitra/delete/{id}', [PenugasanMitraController::class, 'delete'])
-            ->name('penugasan-mitra-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+            ->name('penugasan-mitra-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim,Organik");
         Route::get('/{id}/tambah-mitra', [PenugasanMitraController::class, 'create'])
-            ->name('penugasan-mitra-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+            ->name('penugasan-mitra-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim,Organik");
         Route::post('/{id}/tambah-mitra/save', [PenugasanMitraController::class, 'store'])
-            ->name('penugasan-mitra-create-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+            ->name('penugasan-mitra-create-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim,Organik");
         Route::get('/tugas-mitra/edit/{id}', [PenugasanMitraController::class, 'edit'])
-            ->name('penugasan-mitra-edit-view')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+            ->name('penugasan-mitra-edit-view')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim,Organik");
         Route::put('/{id}/tugas-mitra/edit/{pegawai}', [PenugasanMitraController::class, 'update'])
-            ->name('penugasan-mitra-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+            ->name('penugasan-mitra-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim,Organik");
         Route::get('/organik', [PenugasanPegawaiController::class, 'index'])
             ->name('beban-kerja-organik');
         Route::get('/mitra', [PenugasanMitraController::class, 'index'])

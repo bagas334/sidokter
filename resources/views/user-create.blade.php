@@ -32,6 +32,18 @@
                 @enderror
             </div>
 
+            <label for="jabatan" class="text-lg text-cyan-950 font-medium">Jabatan</label>
+            <x-input.dropdown-single id="jabatan" :options="$opsi" :name="'jabatan'">
+
+            </x-input.dropdown-single>
+
+
+            <div id="fungsi">
+                <label for="fungsi" class="text-lg text-cyan-950 font-medium">Fungsi (Ketua Tim)</label>
+                <x-input.dropdown-single :options="$fungsi_ketua_tim" name="fungsi_ketua_tim">
+                </x-input.dropdown-single>
+            </div>
+
             <div class="w-full pb-2">
                 <label class="text-lg text-cyan-950 font-medium">Password</label>
                 <input type="password" id="nip_bps" name="password"
@@ -49,5 +61,19 @@
         </form>
     </div>
 </div>
+
+<script>
+    const jabatan = document.getElementById('jabatan');
+    const fungsi = document.getElementById('fungsi');
+
+    jabatan.addEventListener('change', function() {
+        if (jabatan.value == 'Ketua Tim') {
+            fungsi.style.display = 'block';
+        } else {
+            fungsi.style.display = 'none';
+            fungsi.value = '';
+        }
+    });
+</script>
 
 @endsection

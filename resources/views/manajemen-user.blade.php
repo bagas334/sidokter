@@ -40,7 +40,6 @@
                     <th scope="col" class="text-center p-2">Nama</th>
                     <th scope="col" class="text-center p-2">Alias</th>
                     <th scope="col" class="text-center p-2">Jabatan</th>
-                    <th scope="col" class="text-center p-2">Status</th>
                     <th scope="col" class="text-center p-2 rounded-tr-lg">Aksi</th>
                 </tr>
             </thead>
@@ -53,7 +52,6 @@
                     <td class="p-2 text-center">{{ $item->nama }}</td>
                     <td class="text-center p-2">{{ $item->alias }}</td>
                     <td class="p-2 text-center">{{ $item->jabatan }}</td>
-                    <td class="text-center p-2">{{ $item->status }}</td>
                     <td class="text-center p-2 rounded-br-lg">
                         <div class="flex justify-center space-x-2">
                             <x-edit-button-table :id="$item->id" :route="'master-organik-edit-view'" />
