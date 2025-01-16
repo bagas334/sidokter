@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
+use App\Models\User;
 use App\Models\PenugasanPegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -114,36 +115,53 @@ class MasterOrganikController extends Controller
     /**
      * Menampilkan form untuk membuat data pegawai baru
      */
+    // public function create()
+    // {
+    //     $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];
+    //     $options = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
+
+    //     return view('manajemen-user-create', compact('options', 'fungsi_ketua_tim'));
+    // }
+
     public function create()
     {
-        $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];
-        $options = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
-
-        return view('manajemen-user-create', compact('options', 'fungsi_ketua_tim'));
+        $options = Pegawai::all();
+        return view('user-create', compact('options'));
     }
 
-    /**
-     * Menyimpan data pegawai baru
-     */
+    // public function store(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'nama' => 'required|max:100',
+    //         'alias' => 'required|max:20',
+    //         'nip' => 'required|numeric|unique:pegawai,nip',
+    //         'nip_bps' => 'required|numeric|unique:pegawai,nip_bps',
+    //         'password' => 'required',
+    //         'jabatan' => 'required'
+    //     ]);
+
+    //     $data = $request->except('_token', '_method');
+    //     $data['password'] = Hash::make($request->password);
+
+    //     // Menyimpan data pegawai baru
+    //     Pegawai::create($data);
+    //     return redirect()->route('manajemen-user');
+    // }
+
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
-            'nama' => 'required|max:100',
-            'alias' => 'required|max:20',
-            'nip' => 'required|numeric|unique:pegawai,nip',
-            'nip_bps' => 'required|numeric|unique:pegawai,nip_bps',
-            'password' => 'required',
-            'jabatan' => 'required'
+            'email' => 'required',
+            'password' => 'required|min:8|max:60',
         ]);
 
         $data = $request->except('_token', '_method');
         $data['password'] = Hash::make($request->password);
 
-        // Menyimpan data pegawai baru
-        Pegawai::create($data);
+        User::create($data);
         return redirect()->route('manajemen-user');
     }
+
 
     /**
      * Menampilkan form untuk mengedit data pegawai

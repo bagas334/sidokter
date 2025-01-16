@@ -107,7 +107,7 @@ class BebanKerjaController extends Controller
             'target' => 'required|numeric|min:1',
             'asal_fungsi' => 'required',
             'tanggal_mulai' => 'required|date',
-            'tanggal_akhir' => 'required|date',
+            'tanggal_akhir' => 'required|date|after:tanggal_mulai',
             'satuan' => 'required',
             'harga_satuan' => 'required'
         ]);
