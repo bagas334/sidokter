@@ -8,7 +8,9 @@
             <a class="text-blue py-1 px-2 bg-blue-200 text-blue-500 font-bold hover:bg-blue-400 hover:text-blue-700 rounded-xl" href="{{route('beban-kerja-all')}}">Kembali</a>
             <p class="mt-2 text-3xl text-teal-600 font-bold"><?php echo $kegiatan->nama ?></p>
         </div>
+        @if(auth()->user()->jabatan == 'Organik')
         <a href="/beban-kerja/{{$kegiatan->id}}/tugas-organik/{{auth()->user()->id}}" class="self-center mx-1 button bg-blue-500 py-1.5 px-2 text-white font-medium rounded-lg hover:bg-blue-600 transition">Lihat tugas anda</a>
+        @endif
     </div>
 
     <div class="grid grid-cols-[7fr_2.5fr] grid-rows-auto size-full pt-6 gap-4">
@@ -41,7 +43,7 @@
                                 @if($pegawai && $pegawai->isNotEmpty())
                                 @foreach ($penugasanPegawai as $item)
                                 <tr>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{$loop->iteration + ($penugasanPegawai->currentPage() - 1) * $penugasanPegawai->perPage() }}</td>
                                     <td>{{ $item->pegawai->nama }}</td>
                                     <td class="text-center">{{ $item->jabatan }}</td>
                                     <td class="text-center">{{ $item->target }}</td>
@@ -57,7 +59,35 @@
                                         <a href="{{route('penugasan-organik-edit',['id'=>$id,'petugas'=>$item->petugas])}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-md rounded-md">Edit</a>
                                         @endif
                                     </td>
-                                    <td class="text-center">{{$item->catatan}}</td>
+                                    <td class="text-center">
+                                        <!-- Trigger Modal -->
+                                        <span class="text-blue-500 cursor-pointer" data-modal-target="catatanModal{{ $item->id }}" data-modal-toggle="catatanModal{{ $item->id }}">
+                                            Lihat Catatan
+                                        </span>
+
+                                        <!-- Modal -->
+                                        <div id="catatanModal{{ $item->id }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+                                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full max-h-full">
+                                            <div class="relative w-full max-w-xl max-h-full">
+                                                <!-- Modal Content -->
+                                                <div class="bg-white rounded-lg shadow dark:bg-gray-700">
+                                                    <!-- Modal Header -->
+                                                    <div class="flex justify-between items-center p-4 border-b dark:border-gray-600">
+                                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Catatan</h3>
+                                                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="catatanModal{{ $item->id }}">
+                                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <!-- Modal Body -->
+                                                    <div class="p-4">
+                                                        <p>{{ $item->catatan ?: 'Tidak ada catatan.' }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @endforeach
                                 @else
@@ -68,16 +98,20 @@
                             </tbody>
                         </table>
                         {{-- Pagination --}}
-                        <x-paginator :paginator="$penugasanPegawai" />
+                        <x-paginator :paginator="$penugasanPegawai" :url="request()->fullUrlWithQuery([])" />
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="row-span-1 flex flex-col justify-between max-w-[75vw]">
-            <div class="size-full bg-gray-50 border border-gray-100 rounded-md rounded-md p-4 h-auto">
+            <div class="size-full bg-gray-50 border border-gray-100 rounded-md p-4 h-auto">
                 <div class="w-full pl-2 pb-6">
                     <span class="text-xl text-teal-600 font-bold">Informasi Penugasan</span>
+                </div>
+                <div class="w-full pl-2 pb-2">
+                    <p class="text-md text-cyan-950 font-medium">Jumlah Satuan: </p>
+                    <p class="text-sm text-gray-600 font-normal">{{$kegiatan->target}}</p>
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium" style="margin-bottom: 5px;">Status</p>
@@ -123,13 +157,13 @@
                 </div>
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium">Ketua Tim: </p>
-                    <p class="text-sm text-gray-600 font-normal">nnn</p>
+                    <p class="text-sm text-gray-600 font-normal"></p>
                 </div>
             </div>
         </div>
 
         <div class="size-full pt-6">
-            <div class="size-full bg-gray-50 border border-gray-100 rounded-md rounded-md p-4">
+            <div class="size-full bg-gray-50 border border-gray-100 rounded-md p-4">
 
                 <div class="w-full flex flex-row justify-between items-center pb-1">
                     <div class="w-full pl-2 pb-6 flex flex-row justify-between">
@@ -156,7 +190,7 @@
                                 @if($mitra && $mitra->count() > 0)
                                 @foreach ($penugasanMitra as $item)
                                 <tr>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{$loop->iteration + ($penugasanMitra->currentPage() - 1) * $penugasanMitra->perPage() }}</td>
                                     <td>{{ $item->mitra->nama }}</td>
                                     <td class="text-end">{{ $item->mitra->pendapatan }}</td>
                                     <td class="text-end">{{ $item->target }}</td>
@@ -175,11 +209,33 @@
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        @if($item->catatan)
-                                        {{$item->catatan}}
-                                        @else
-                                        Tidak ada
-                                        @endif
+                                        <!-- Trigger Modal -->
+                                        <span class="text-blue-500 cursor-pointer" data-modal-target="catatanModalMitra{{ $item->id }}" data-modal-toggle="catatanModalMitra{{ $item->id }}">
+                                            Lihat Catatan
+                                        </span>
+
+                                        <!-- Modal -->
+                                        <div id="catatanModalMitra{{ $item->id }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+                                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full max-h-full">
+                                            <div class="relative w-full max-w-xl max-h-full">
+                                                <!-- Modal Content -->
+                                                <div class="bg-white rounded-lg shadow dark:bg-gray-700">
+                                                    <!-- Modal Header -->
+                                                    <div class="flex justify-between items-center p-4 border-b dark:border-gray-600">
+                                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Catatan</h3>
+                                                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="catatanModalMitra{{ $item->id }}">
+                                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <!-- Modal Body -->
+                                                    <div class="p-4">
+                                                        <p>{{ $item->catatan ?: 'Tidak ada catatan.' }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -192,11 +248,22 @@
                             </tbody>
                         </table>
                         {{-- Pagination --}}
-                        <x-paginator :paginator="$penugasanMitra" />
+                        <x-paginator :paginator="$penugasanMitra" :url="request()->fullUrlWithQuery([])" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function showModal(id) {
+        document.getElementById(id).style.display = 'block';
+    }
+
+    function hideModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+</script>
+
 @endsection

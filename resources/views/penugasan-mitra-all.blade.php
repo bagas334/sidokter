@@ -43,33 +43,32 @@
 
 
     {{-- Tabel --}}
-    <div class="flex flex-col justify-center overflow-x-auto max-w-[78vw]">
-        <div class="relative min-w-[78vw]">
-            <table class="table-custom">
+    <div class="flex flex-col justify-center overflow-x-auto w-full">
+        <div class="relative w-full">
+            <table class="table-custom w-full rounded-lg border-collapse border-none">
                 <thead>
                     <tr>
-                        <th scope="col" rowspan="2" class="w-8 text-center">No</th>
-                        <th scope="col" rowspan="2" class="w-24">Kegiatan</th>
+                        <th scope="col" rowspan="2" class="w-8 text-center rounded-tl-lg">No</th>
+                        <th scope="col" rowspan="2" class="w-24 text-center">Kegiatan</th>
                         <th scope="col" rowspan="2" class="w-28 text-center">Pelaksana</th>
                         <th scope="col" rowspan="2" class="w-28 text-center">Target</th>
                         <th scope="col" rowspan="2" class="w-28 text-center">Terlaksana</th>
                         <th scope="col" rowspan="2" class="w-28 text-center">Satuan</th>
                         <th scope="col" class="w-28 text-center">Mulai</th>
-                        <th scope="col" class="w-28 text-center">Selesai</th>
+                        <th scope="col" class="w-28 text-center rounded-tr-lg">Selesai</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($kegiatan_mitra as $item)
                     <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
-                        <td class="text-center">{{ $item->kegiatan->nama }}</td>
-                        <td class="text-center">{{ $item->mitra->nama }}</td>
-                        <td class="text-center">{{ $item->target }}</td>
-                        <td class="text-center">{{ $item->terlaksana }}</td>
-
-                        <td class="text-center">{{$item->kegiatan->satuan }}</td>
-                        <td class="text-center">{{$item->kegiatan->tanggal_mulai }}</td>
-                        <td class="text-center">{{$item->kegiatan->tanggal_akhir }}</td>
+                        <td class="text-center {{$loop->last ? 'rounded-bl-lg' : ''}}" style="border-left: none; border-right: none; border-top: none; border-bottom: 1px solid #e5e7eb;">{{$loop->iteration + ($kegiatan_mitra->currentPage() - 1) * $kegiatan_mitra->perPage() }}</td>
+                        <td class="text-center" style="border-left: none; border-right: none; border-top: none; border-bottom: 1px solid #e5e7eb;">{{ $item->kegiatan->nama }}</td>
+                        <td class="text-center" style="border-left: none; border-right: none; border-top: none; border-bottom: 1px solid #e5e7eb;">{{ $item->mitra->nama }}</td>
+                        <td class="text-center" style="border-left: none; border-right: none; border-top: none; border-bottom: 1px solid #e5e7eb;">{{ $item->target }}</td>
+                        <td class="text-center" style="border-left: none; border-right: none; border-top: none; border-bottom: 1px solid #e5e7eb;">{{ $item->terlaksana }}</td>
+                        <td class="text-center" style="border-left: none; border-right: none; border-top: none; border-bottom: 1px solid #e5e7eb;">{{$item->kegiatan->satuan }}</td>
+                        <td class="text-center" style="border-left: none; border-right: none; border-top: none; border-bottom: 1px solid #e5e7eb;">{{$item->kegiatan->tanggal_mulai }}</td>
+                        <td class="text-center {{$loop->last ? 'rounded-br-lg' : ''}}" style="border-left: none; border-right: none; border-top: none; border-bottom: 1px solid #e5e7eb;">{{$item->kegiatan->tanggal_akhir }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -78,7 +77,7 @@
     </div>
 
     {{-- Pagination --}}
-    <x-paginator :paginator="$kegiatan_mitra" />
+    <x-paginator :paginator="$kegiatan_mitra" :url="request()->fullUrlWithQuery([])" />
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

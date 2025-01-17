@@ -34,7 +34,6 @@ class Mitra extends Model
 
     const PENDAPATAN_MAKS = 4200000;
 
-
     public function penugasanMitra()
     {
         return $this->hasMany(PenugasanMitra::class, 'petugas');

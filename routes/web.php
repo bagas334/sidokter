@@ -85,15 +85,15 @@ Route::middleware('auth')->group(function () {
         Route::delete('tugas-organik/delete/{id}', [PenugasanPegawaiController::class, 'deleteTugas'])->name('pengumpulan-tugas-delete');
 
         Route::delete('{penugasan}/penugasan/mitra/delete/{id}', [PenugasanMitraController::class, 'delete'])
-            ->name('penugasan-mitra-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+            ->name('penugasan-mitra-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim,Organik");
         Route::get('/{id}/tambah-mitra', [PenugasanMitraController::class, 'create'])
-            ->name('penugasan-mitra-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+            ->name('penugasan-mitra-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim,Organik");
         Route::post('/{id}/tambah-mitra/save', [PenugasanMitraController::class, 'store'])
-            ->name('penugasan-mitra-create-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+            ->name('penugasan-mitra-create-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim,Organik");
         Route::get('/tugas-mitra/edit/{id}', [PenugasanMitraController::class, 'edit'])
-            ->name('penugasan-mitra-edit-view')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+            ->name('penugasan-mitra-edit-view')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim,Organik");
         Route::put('/{id}/tugas-mitra/edit/{pegawai}', [PenugasanMitraController::class, 'update'])
-            ->name('penugasan-mitra-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+            ->name('penugasan-mitra-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim,Organik");
         Route::get('/organik', [PenugasanPegawaiController::class, 'index'])
             ->name('beban-kerja-organik');
         Route::get('/mitra', [PenugasanMitraController::class, 'index'])
@@ -113,20 +113,35 @@ Route::middleware('auth')->group(function () {
             ->name('sampel-detail');
     });
 
-    Route::get('/organik/detail/{id}', [MasterOrganikController::class, 'show'])->name('detail-organik');
-    Route::get('/manajemen-user', [MasterOrganikController::class, 'index'])
-        ->name('manajemen-user')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
-    Route::get('/manajemen-user/create', [MasterOrganikController::class, 'create'])
-        ->name('manajemen-user-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");;
-    Route::post('/manajemen-user/create', [MasterOrganikController::class, 'store'])
+    // Manajemen User
+    Route::get('/manajemen-user/create', [MasterOrganikController::class, 'createUser'])
+        ->name('manajemen-user-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
+    Route::post('/manajemen-user/create', [MasterOrganikController::class, 'storeUser'])
         ->name('manajemen-user-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
-    Route::get('/manajemen-user/edit/{id}', [MasterOrganikController::class, 'edit'])
-        ->name('master-organik-edit-view')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
-    Route::put('/manajemen-user/edit/{id}', [MasterOrganikController::class, 'update'])
+    Route::get('/manajemen-user/edit/{id}', [MasterOrganikController::class, 'editUser'])
+        ->name('manajemen-user-edit')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
+    Route::put('/manajemen-user/update/{id}', [MasterOrganikController::class, 'updateUser'])
+        ->name('manajemen-user-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
+    Route::get('/manajemen-user', [MasterOrganikController::class, 'indexUser'])
+        ->name('manajemen-user')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+    Route::delete('/manajemen-user/delete/{id}', [MasterOrganikController::class, 'deleteUser'])
+        ->name('manajemen-user-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
+
+
+    // Master organik
+    Route::get('/master-organik', [MasterOrganikController::class, 'index'])
+        ->name('master-organik')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+    Route::get('/master-organik/create', [MasterOrganikController::class, 'create'])
+        ->name('master-organik-create')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+    Route::get('/master-organik/edit/{id}', [MasterOrganikController::class, 'edit'])
+        ->name('master-organik-edit')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+    Route::post('/master-organik/save', [MasterOrganikController::class, 'store'])
+        ->name('master-organik-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan,Ketua Tim");
+    Route::put('/master-organik/update/{id}', [MasterOrganikController::class, 'update'])
         ->name('master-organik-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
-    Route::delete('/manajemen-user/delete/{id}', [MasterOrganikController::class, 'delete'])
+    Route::delete('/master-organik/delete/{id}', [MasterOrganikController::class, 'delete'])
         ->name('master-organik-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
-    Route::get('/master-organik', [MasterOrganikController::class, 'index'])->name('master-organik');
+
 
     Route::get('/mitra', [MasterMitraController::class, 'index'])
         ->name('master-mitra');
@@ -167,7 +182,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
     Route::put('/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
     Route::delete('/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
-
 
 
 

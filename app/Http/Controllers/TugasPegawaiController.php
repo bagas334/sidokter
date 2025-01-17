@@ -26,12 +26,12 @@ class TugasPegawaiController extends Controller
                 ->whereHas('penugasanPegawai.kegiatan', function ($query) {
                     $query->where('asal_fungsi', auth()->user()->fungsi_ketua_tim);
                 })
-                ->get();
+                ->paginate(10);
         } else {
             $tugas_pegawai = TugasPegawai::with([
                 'penugasanPegawai.pegawai',
                 'penugasanPegawai.kegiatan'
-            ])->where('status', 'diajukan')->get();
+            ])->where('status', 'diajukan')->paginate(10);
         }
 
         return view('pengajuan', compact('tugas_pegawai'));
