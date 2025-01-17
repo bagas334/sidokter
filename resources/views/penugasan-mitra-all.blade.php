@@ -28,6 +28,20 @@
         </div>
     </div>
 
+    {{-- Pencarian --}}
+        <div class="w-full flex flex-col sm:flex-row justify-between items-center pb-4">
+            <form action="{{ route('perusahaan.index') }}" method="GET" class="relative flex items-center w-full sm:w-96">
+                <input type="text"
+                    name="search"
+                    class="input pl-10 w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600"
+                    placeholder="Cari berdasarkan Nama atau Alamat..."
+                    value="{{ request('search') }}" />
+                <button type="submit" class="absolute right-2 bg-teal-600 text-white px-3 py-1 rounded-md hover:bg-teal-700 focus:outline-none">
+                    Cari
+                </button>
+            </form>
+
+
     {{-- Tabel --}}
     <div class="flex flex-col justify-center overflow-x-auto max-w-[78vw]">
         <div class="relative min-w-[78vw]">

@@ -100,7 +100,6 @@ Route::middleware('auth')->group(function () {
             ->name('beban-kerja-mitra');
         Route::post('/logout', [MasterOrganikController::class, 'logout'])->name('logout');
         Route::get('/search/pegawai', [SearchUser::class, 'search'])->name("search-pegawai");
-        Route::get('/search/mitra', [SearchMitra::class, 'search'])->name("search-mitra");
     });
 
     Route::group(['prefix' => 'manajemen-sampel'], function () {
@@ -127,7 +126,7 @@ Route::middleware('auth')->group(function () {
         ->name('master-organik-edit-save')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
     Route::delete('/manajemen-user/delete/{id}', [MasterOrganikController::class, 'delete'])
         ->name('master-organik-delete')->middleware(RoleMiddleware::class . ":Admin Kabupaten,Pimpinan");
-        Route::get('/master-organik', [MasterOrganikController::class, 'index'])->name('master-organik');
+    Route::get('/master-organik', [MasterOrganikController::class, 'index'])->name('master-organik');
 
     Route::get('/mitra', [MasterMitraController::class, 'index'])
         ->name('master-mitra');
@@ -143,39 +142,37 @@ Route::middleware('auth')->group(function () {
         ->name('master-mitra-delete');
 
 
-Route::get('/master-mitra', [MasterMitraController::class, 'index'])->name('master-mitra');
-Route::get('/master-mitra/create', [MasterMitraController::class, 'create'])->name('master-mitra-create-view');
-Route::post('/master-mitra/store', [MasterMitraController::class, 'store'])->name('master-mitra-store');
-Route::get('/master-mitra/edit/{id}', [MasterMitraController::class, 'edit'])->name('master-mitra-edit-view');
-Route::post('/master-mitra/update/{id}', [MasterMitraController::class, 'update'])->name('master-mitra-update');
-Route::delete('/master-mitra/delete/{id}', [MasterMitraController::class, 'delete'])->name('master-mitra-delete');
-Route::get('/master-mitra/tambahfile', [MasterMitraController::class, 'showUploadForm'])->name('master-mitra-tambahfile');
-Route::post('/master-mitra/import', [MasterMitraController::class, 'import'])->name('master-mitra-import');
-// Rute untuk menampilkan form upload file
-Route::get('/master-mitra/tambahfile', [MasterMitraController::class, 'showUploadForm'])->name('master-mitra-tambahfile');
+    Route::get('/master-mitra', [MasterMitraController::class, 'index'])->name('master-mitra');
+    Route::get('/master-mitra/create', [MasterMitraController::class, 'create'])->name('master-mitra-create-view');
+    Route::post('/master-mitra/store', [MasterMitraController::class, 'store'])->name('master-mitra-store');
+    Route::get('/master-mitra/edit/{id}', [MasterMitraController::class, 'edit'])->name('master-mitra-edit-view');
+    Route::post('/master-mitra/update/{id}', [MasterMitraController::class, 'update'])->name('master-mitra-update');
+    Route::delete('/master-mitra/delete/{id}', [MasterMitraController::class, 'delete'])->name('master-mitra-delete');
+    Route::get('/master-mitra/tambahfile', [MasterMitraController::class, 'showUploadForm'])->name('master-mitra-tambahfile');
+    Route::post('/master-mitra/import', [MasterMitraController::class, 'import'])->name('master-mitra-import');
+    // Rute untuk menampilkan form upload file
+    Route::get('/master-mitra/tambahfile', [MasterMitraController::class, 'showUploadForm'])->name('master-mitra-tambahfile');
 
-// Rute untuk memproses file Excel yang diupload
-Route::post('/master-mitra/import', [MasterMitraController::class, 'import'])->name('import-mitra');
+    // Rute untuk memproses file Excel yang diupload
+    Route::post('/master-mitra/import', [MasterMitraController::class, 'import'])->name('import-mitra');
 
-// Rute untuk menghapus mitra
-Route::delete('/master-mitra/delete/{id}', [MasterMitraController::class, 'delete'])->name('master-mitra-delete');
+    // Rute untuk menghapus mitra
+    Route::delete('/master-mitra/delete/{id}', [MasterMitraController::class, 'delete'])->name('master-mitra-delete');
 
     Route::get('/perusahaan/all', [PerusahaanController::class, 'index'])
         ->name('perusahaan-all');
-        Route::get('/perusahaan', [PerusahaanController::class, 'index'])->name('perusahaan.index');
-        Route::get('/perusahaan/create', [PerusahaanController::class, 'create'])->name('perusahaan.create');
-        Route::post('/perusahaan', [PerusahaanController::class, 'store'])->name('perusahaan.store');
-        Route::get('/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
-        Route::put('/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
-        Route::delete('/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
+    Route::get('/perusahaan', [PerusahaanController::class, 'index'])->name('perusahaan.index');
+    Route::get('/perusahaan/create', [PerusahaanController::class, 'create'])->name('perusahaan.create');
+    Route::post('/perusahaan', [PerusahaanController::class, 'store'])->name('perusahaan.store');
+    Route::get('/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
+    Route::put('/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
+    Route::delete('/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
 
-        
-       
 
-// Rute Dashboard
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-});
 
-        
+
+    // Rute Dashboard
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    });
 });
