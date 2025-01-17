@@ -82,7 +82,29 @@
                                             </form>
                                         </td>
                                         <td class="text-center">
-                                            <p>{{ $item->catatan }}</p>
+                                            <span class="text-blue-500 cursor-pointer" data-modal-target="catatanModal{{ $item->id }}" data-modal-toggle="catatanModal{{ $item->id }}">
+                                                Lihat Catatan
+                                            </span>
+
+                                            <!-- Modal -->
+                                            <div id="catatanModal{{ $item->id }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+                                                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full max-h-full">
+                                                <div class="relative w-full max-w-xl max-h-full">
+                                                    <div class="bg-white rounded-lg shadow dark:bg-gray-700">
+                                                        <div class="flex justify-between items-center p-4 border-b dark:border-gray-600">
+                                                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Catatan</h3>
+                                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="catatanModal{{ $item->id }}">
+                                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                        <div class="p-4">
+                                                            <p>{{ $item->catatan ?: 'Tidak ada catatan.' }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -181,7 +203,31 @@
                                             </button>
                                         </form>
                                     </td>
-                                    <td class="text-center">{{ $item->catatan }}</td>
+                                    <td class="text-center">
+                                        <span class="text-blue-500 cursor-pointer" data-modal-target="catatanModalPengajuan{{ $item->id }}" data-modal-toggle="catatanModalPengajuan{{ $item->id }}">
+                                            Lihat Catatan
+                                        </span>
+
+                                        <!-- Modal -->
+                                        <div id="catatanModalPengajuan{{ $item->id }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+                                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full max-h-full">
+                                            <div class="relative w-full max-w-xl max-h-full">
+                                                <div class="bg-white rounded-lg shadow dark:bg-gray-700">
+                                                    <div class="flex justify-between items-center p-4 border-b dark:border-gray-600">
+                                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Catatan</h3>
+                                                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="catatanModalPengajuan{{ $item->id }}">
+                                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <div class="p-4">
+                                                        <p>{{ $item->catatan ?: 'Tidak ada catatan.' }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
