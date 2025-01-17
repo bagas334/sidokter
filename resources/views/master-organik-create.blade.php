@@ -15,7 +15,7 @@
             <x-judul text="Buat User Baru (Organik)" />
         </div>
 
-        <form action="{{ route('manajemen-user-save') }}" method="POST">
+        <form action="{{ route('master-organik-save') }}" method="POST">
             @csrf
             @method('POST')
 

@@ -50,6 +50,26 @@ class MasterOrganikController extends Controller
         return view('manajemen-user', compact('pegawai', 'search'));
     }
 
+    public function indexUser(Request $request)
+    {
+        $search = $request->input('search', '');
+
+        $user = User::with('pegawai');
+        // if ($search) {
+        //     $user = $user->where(function ($query) use ($search) {
+        //         $query->where('nip_bps', 'like', '%' . $search . '%')
+        //             ->orWhere('nip', 'like', '%' . $search . '%')
+        //             ->orWhere('nama', 'like', '%' . $search . '%')
+        //             ->orWhere('alias', 'like', '%' . $search . '%')
+        //             ->orWhere('jabatan', 'like', '%' . $search . '%');
+        //     });
+        // }
+
+        $user = $user->paginate(10);
+
+        return view('user-all', compact('user', 'search'));
+    }
+
 
     /**
      * Menampilkan detail pegawai dan penugasannya
@@ -115,15 +135,15 @@ class MasterOrganikController extends Controller
     /**
      * Menampilkan form untuk membuat data pegawai baru
      */
-    // public function create()
-    // {
-    //     $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];
-    //     $options = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
-
-    //     return view('manajemen-user-create', compact('options', 'fungsi_ketua_tim'));
-    // }
-
     public function create()
+    {
+        $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];
+        $options = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
+
+        return view('master-organik-create', compact('options', 'fungsi_ketua_tim'));
+    }
+
+    public function createUser()
     {
         $options = Pegawai::all();
         $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];
@@ -131,26 +151,25 @@ class MasterOrganikController extends Controller
         return view('user-create', compact('options', 'opsi', 'fungsi_ketua_tim'));
     }
 
-    // public function store(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'nama' => 'required|max:100',
-    //         'alias' => 'required|max:20',
-    //         'nip' => 'required|numeric|unique:pegawai,nip',
-    //         'nip_bps' => 'required|numeric|unique:pegawai,nip_bps',
-    //         'password' => 'required',
-    //         'jabatan' => 'required'
-    //     ]);
-
-    //     $data = $request->except('_token', '_method');
-    //     $data['password'] = Hash::make($request->password);
-
-    //     // Menyimpan data pegawai baru
-    //     Pegawai::create($data);
-    //     return redirect()->route('manajemen-user');
-    // }
-
     public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nama' => 'required|max:100',
+            'alias' => 'required|max:20',
+            'nip' => 'required|numeric|unique:pegawai,nip',
+            'nip_bps' => 'required|numeric|unique:pegawai,nip_bps',
+            'password' => 'required',
+            'jabatan' => 'required'
+        ]);
+
+        $data = $request->except('_token', '_method');
+        $data['password'] = Hash::make($request->password);
+
+        Pegawai::create($data);
+        return redirect()->route('master-organik');
+    }
+
+    public function storeUser(Request $request)
     {
         $validatedData = $request->validate([
             'email' => 'required',
@@ -177,6 +196,35 @@ class MasterOrganikController extends Controller
         return view('master-organik-edit', compact('pegawai', 'fungsi_ketua_tim', 'options'));
     }
 
+    public function editUser($id)
+    {
+        $user = User::find($id)->with('pegawai')->first();
+        $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];
+        $opsi = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
+        return view('user-edit', compact('user', 'opsi', 'fungsi_ketua_tim'));
+    }
+
+
+    public function updateUser(Request $request, $id)
+    {
+        if ($request->password) {
+            $validatedData = $request->validate([
+                'email' => 'required',
+                'jabatan' => 'required',
+                'password' => 'required|min:8|max:60',
+            ]);
+            User::where('id', $id)->update($request->except('_token', '_method', 'nama'));
+        } else {
+            $validatedData = $request->validate([
+                'email' => 'required',
+                'jabatan' => 'required',
+            ]);
+            User::where('id', $id)->update($request->except('_token', '_method', 'nama', 'password'));
+        }
+
+        return redirect()->route('manajemen-user');
+    }
+
     /**
      * Mengupdate data pegawai
      */
@@ -191,7 +239,7 @@ class MasterOrganikController extends Controller
         ]);
 
         Pegawai::where('id', $id)->update($request->except('_token', '_method'));
-        return redirect()->route('manajemen-user');
+        return redirect()->route('master-organik');
     }
 
 
@@ -205,6 +253,14 @@ class MasterOrganikController extends Controller
 
         return redirect()->route('manajemen-user');
     }
+
+    public function deleteUser($id)
+    {
+        $user = User::where('id', $id);
+        $user->delete();
+        return redirect()->route('manajemen-user');
+    }
+
 
     /**
      * Validasi login pengguna
