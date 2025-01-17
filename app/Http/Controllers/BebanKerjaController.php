@@ -25,27 +25,22 @@ class BebanKerjaController extends Controller
             ->where('kegiatan_id', $id)
             ->paginate(10);
 
-        // Periksa jika data PenugasanPegawai tidak kosong
         if ($penugasanPegawai->isNotEmpty()) {
-            // Map untuk mendapatkan nama pegawai
             $pegawai = $penugasanPegawai->map(function ($item) {
-                return optional($item->pegawai)->nama; // Mengambil nama pegawai jika ada
+                return optional($item->pegawai)->nama;
             });
         } else {
-            $pegawai = []; // Jika tidak ada data, set array kosong
+            $pegawai = [];
         }
 
-        // Periksa jika data PenugasanMitra tidak kosong
         if ($penugasanMitra->isNotEmpty()) {
-            // Map untuk mendapatkan nama mitra
             $mitra = $penugasanMitra->map(function ($item) {
-                return optional($item->mitra)->nama; // Mengambil nama mitra jika ada
+                return optional($item->mitra)->nama;
             });
         } else {
-            $mitra = []; // Jika tidak ada data, set array kosong
+            $mitra = [];
         }
 
-        // Ambil data kegiatan
         $kegiatan = Kegiatan::find($id);
 
         // Hitung progres
@@ -81,12 +76,12 @@ class BebanKerjaController extends Controller
         $progresSelesai = $totalTarget > 0 ? ($totalSelesai / $totalTarget) * 100 : 0;
 
         return view('penugasan-detail', compact(
-            'pegawai', // Mengirim koleksi nama pegawai
-            'mitra',   // Mengirim koleksi nama mitra
-            'kegiatan', // Mengirim data kegiatan
-            'id', // Mengirim id kegiatan
-            'penugasanPegawai', // Mengirim semua data penugasan pegawai
-            'penugasanMitra', // Mengirim semua data penugasan mitra
+            'pegawai',
+            'mitra',
+            'kegiatan',
+            'id',
+            'penugasanPegawai',
+            'penugasanMitra',
             'progresDitugaskan',
             'progresSelesai'
         ));
@@ -112,7 +107,7 @@ class BebanKerjaController extends Controller
             'target' => 'required|numeric|min:1',
             'asal_fungsi' => 'required',
             'tanggal_mulai' => 'required|date',
-            'tanggal_akhir' => 'required|date',
+            'tanggal_akhir' => 'required|date|after:tanggal_mulai',
             'satuan' => 'required',
             'harga_satuan' => 'required'
         ]);

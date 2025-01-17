@@ -4,123 +4,86 @@
 
 @section('content')
 <div class="size-full flex flex-col w-full items-center px-4">
-    <div class="w-full max-w-screen-lg mx-auto">
-        {{-- Judul --}}
-        <div class="w-full pb-6 text-center">
-            <x-judul text="Semua Perusahaan" />
+    {{-- Judul --}}
+    <div class="w-full pb-6">
+        <x-judul text="Semua Perusahaan" />
+    </div>
+
+    {{-- Pencarian dan Tombol Tambah --}}
+    <div class="w-full flex flex-col md:flex-row justify-between items-center pb-4 gap-4">
+        {{-- Search Input Component --}}
+        <x-search-bar
+            :action="route('perusahaan.index')"
+            :search="request()->get('search')"
+            placeholder="Cari berdasarkan Nama atau Alamat..."
+            formId="search-perusahaan-form"
+            inputId="search-perusahaan-input" />
+
+        {{-- Tombol Tambah --}}
+        <div class="flex space-x-4 mt-4 sm:mt-0">
+            {{-- Tombol Tambah Perusahaan --}}
+            <a href="{{ route('perusahaan.create') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-700">
+                Tambah Perusahaan
+            </a>
         </div>
+    </div>
 
-        {{-- Pencarian --}}
-        <div class="w-full flex flex-col sm:flex-row justify-between items-center pb-4">
-            <form action="{{ route('perusahaan.index') }}" method="GET" class="relative flex items-center w-full sm:w-96">
-                <input type="text"
-                    name="search"
-                    class="input pl-10 w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600"
-                    placeholder="Cari berdasarkan Nama atau Alamat..."
-                    value="{{ request('search') }}" />
-                <button type="submit" class="absolute right-2 bg-teal-600 text-white px-3 py-1 rounded-md hover:bg-teal-700 focus:outline-none">
-                    Cari
-                </button>
-            </form>
-
-            {{-- Tombol Tambah --}}
-            <div class="flex space-x-4 mt-4 sm:mt-0">
-                <a href="{{ route('perusahaan.create') }}" class="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700">
-                    Tambah Perusahaan
-                </a>
-            </div>
-        </div>
-
-        {{-- Tabel --}}
-        <div class="w-full bg-white shadow-md rounded-lg overflow-x-auto">
-            <table class="table-auto w-full border-collapse">
+    {{-- Tabel --}}
+    <div class="flex flex-col w-full overflow-x-auto">
+        <div class="relative">
+            <table class="table-custom w-full text-sm border border-gray-200 overflow-hidden rounded-lg">
                 <thead class="bg-teal-600 text-white">
                     <tr>
-                        <th class="px-4 py-2 text-center">No</th>
-                        <th class="px-4 py-2 text-center">ID SBR</th>
-                        <th class="px-4 py-2 text-center">Kode Wilayah</th>
-                        <th class="px-4 py-2">Nama Usaha</th>
-                        <th class="px-4 py-2 text-center">SLS</th>
-                        <th class="px-4 py-2">Alamat Detail</th>
-                        <th class="px-4 py-2 text-center">Kode KBLI</th>
-                        <th class="px-4 py-2">Nama CP</th>
-                        <th class="px-4 py-2 text-center">Nomor CP</th>
-                        <th class="px-4 py-2 text-center">Email</th>
-                        <th class="px-4 py-2 text-center">Aksi</th>
+                        <th scope="col" class="text-center p-2 rounded-tl-lg">No</th>
+                        <th scope="col" class="text-center p-2">ID SBR</th>
+                        <th scope="col" class="text-center p-2">Kode Wilayah</th>
+                        <th scope="col" class="text-center p-2">Nama Usaha</th>
+                        <th scope="col" class="text-center p-2">SLS</th>
+                        <th scope="col" class="text-center p-2">Alamat Detail</th>
+                        <th scope="col" class="text-center p-2">Kode KBLI</th>
+                        <th scope="col" class="text-center p-2">Nama CP</th>
+                        <th scope="col" class="text-center p-2">Nomor CP</th>
+                        <th scope="col" class="text-center p-2">Email</th>
+                        <th scope="col" class="text-center p-2 rounded-tr-lg">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-gray-700">
-                    @forelse ($perusahaan as $item)
-                    <tr class="border-b hover:bg-gray-100">
-                        <td class="px-4 py-2 text-center">{{ $loop->iteration + ($perusahaan->currentPage() - 1) * $perusahaan->perPage() }}</td>
-                        <td class="px-4 py-2 text-center">{{ $item->idsbr }}</td>
-                        <td class="px-4 py-2 text-center">{{ $item->kode_wilayah }}</td>
-                        <td class="px-4 py-2">{{ $item->nama_usaha }}</td>
-                        <td class="px-4 py-2 text-center">{{ $item->sls }}</td>
-                        <td class="px-4 py-2">{{ $item->alamat_detail }}</td>
-                        <td class="px-4 py-2 text-center">{{ $item->kode_kbli }}</td>
-                        <td class="px-4 py-2">{{ $item->nama_cp }}</td>
-                        <td class="px-4 py-2 text-center">{{ $item->nomor_cp }}</td>
-                        <td class="px-4 py-2 text-center">{{ $item->email }}</td>
-                        <td class="px-4 py-2 text-center">
+                <tbody>
+                    @if ($perusahaan->count() > 0)
+                    @foreach ($perusahaan as $item)
+                    <tr class="hover:bg-gray-50">
+                        <td class="text-center p-2 rounded-bl-lg">{{ $loop->iteration + ($perusahaan->currentPage() - 1) * $perusahaan->perPage() }}</td>
+                        <td class="text-center p-2">{{ $item->idsbr }}</td>
+                        <td class="text-center p-2">{{ $item->kode_wilayah }}</td>
+                        <td class="text-center p-2">{{ $item->nama_usaha }}</td>
+                        <td class="text-center p-2">{{ $item->sls }}</td>
+                        <td class="p-2">{{ $item->alamat_detail }}</td>
+                        <td class="text-center p-2">{{ $item->kode_kbli }}</td>
+                        <td class="text-center p-2">{{ $item->nama_cp }}</td>
+                        <td class="text-center p-2">{{ $item->nomor_cp }}</td>
+                        <td class="text-center p-2">{{ $item->email }}</td>
+                        <td class="text-center p-2 rounded-br-lg">
                             <div class="flex justify-center space-x-2">
-                                <a href="{{ route('perusahaan.edit', $item->id) }}" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600">
-                                    Edit
-                                </a>
+                                <x-edit-button-table :id="$item->id" :route="'perusahaan.edit'" />
                                 <form action="{{ route('perusahaan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus perusahaan ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
-                                        Hapus
-                                    </button>
+                                    <x-remove-button />
                                 </form>
                             </div>
                         </td>
                     </tr>
-                    @empty
+                    @endforeach
+                    @else
                     <tr>
-                        <td colspan="11" class="px-4 py-2 text-center text-gray-500">Data tidak ditemukan</td>
+                        <td colspan="12" class="text-center text-gray-500 p-4">
+                            Tidak ada data yang sesuai dengan pencarian "{{ request()->get('search') }}".
+                        </td>
                     </tr>
-                    @endforelse
+                    @endif
                 </tbody>
             </table>
         </div>
-
-        {{-- Pagination dan Tombol Navigasi --}}
-        <div class="w-full flex justify-between items-center mt-4">
-            {{-- Informasi jumlah data --}}
-            <div class="text-gray-500 text-sm">
-                Menampilkan {{ $perusahaan->firstItem() }} - {{ $perusahaan->lastItem() }} dari total {{ $perusahaan->total() }} data
-            </div>
-
-            {{-- Tombol Pagination dan Navigasi Manual --}}
-            <div class="flex justify-end space-x-4">
-                {{-- Tombol Prev --}}
-                @if ($perusahaan->currentPage() > 1)
-                <a href="{{ $perusahaan->previousPageUrl() }}" class="bg-teal-600 text-white px-3 py-1 rounded-md hover:bg-teal-700">
-                    Prev
-                </a>
-                @else
-                <span class="bg-gray-200 text-gray-500 px-3 py-1 rounded-md cursor-not-allowed">
-                    Prev
-                </span>
-                @endif
-
-                {{-- Pagination Default Laravel --}}
-                {{ $perusahaan->links() }}
-
-                {{-- Tombol Next --}}
-                @if ($perusahaan->hasMorePages())
-                <a href="{{ $perusahaan->nextPageUrl() }}" class="bg-teal-600 text-white px-3 py-1 rounded-md hover:bg-teal-700">
-                    Next
-                </a>
-                @else
-                <span class="bg-gray-200 text-gray-500 px-3 py-1 rounded-md cursor-not-allowed">
-                    Next
-                </span>
-                @endif
-            </div>
-        </div>
     </div>
+    <x-paginator :paginator="$perusahaan" :url="request()->fullUrlWithQuery(['search' => request()->get('search'), 'page' => $perusahaan->currentPage()])" />
 </div>
 @endsection

@@ -30,43 +30,48 @@
     </div>
 
     {{-- Tabel--}}
-    <div class="flex flex-col justify-center overflow-x-scroll max-w-[78vw]">
-        <div class="relative w-[90vw]">
-            <table class="table-custom">
-                <thead>
+    <div class="flex flex-col justify-center w-full">
+        <div class="relative w-full">
+            <table class="table-custom rounded-lg overflow-hidden border-separate border-spacing-0 w-full">
+                <thead class="bg-gray-100">
                     <tr>
-                        <th>No</th>
-                        <th>Nama sampel</th>
-                        <th>Tanggal dibuat</th>
-                        <th>Pembuat</th>
-                        <th>Kegiatan</th>
-                        <th>Aksi</th>
-                        <th>Catatan</th>
+                        <th class="px-4 py-2 text-left font-semibold border-t-[1px] border-b-[rgb(229,231,235)] rounded-tl-lg">No</th>
+                        <th class="px-4 py-2 text-left font-semibold border-t-[1px] border-b-[rgb(229,231,235)]">Nama sampel</th>
+                        <th class="px-4 py-2 text-left font-semibold border-t-[1px] border-b-[rgb(229,231,235)]">Tanggal dibuat</th>
+                        <th class="px-4 py-2 text-left font-semibold border-t-[1px] border-b-[rgb(229,231,235)]">Pembuat</th>
+                        <th class="px-4 py-2 text-left font-semibold border-t-[1px] border-b-[rgb(229,231,235)]">Kegiatan</th>
+                        <th class="px-4 py-2 text-left font-semibold border-t-[1px] border-b-[rgb(229,231,235)] rounded-tr-lg">Aksi</th>
+                        <th class="px-4 py-2 text-left font-semibold border-t-[1px] border-b-[rgb(229,231,235)]">Catatan</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($sampel as $item)
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$item->nama}}</td>
-                        <td>{{$item->created_at}}</td>
-                        <td>{{$item->pegawai->nama}}</td>
-                        <td>
+                    <tr class="hover:bg-gray-50 border-b-[1px] border-b-[rgb(229,231,235)]">
+                        <td class="px-4 py-2 border-b-[1px] border-b-[rgb(229,231,235)]">{{$loop->iteration + ($sampel->currentPage() - 1) * $sampel->perPage() }}</td>
+                        <td class="px-4 py-2 border-b-[1px] border-b-[rgb(229,231,235)]">{{$item->nama}}</td>
+                        <td class="px-4 py-2 border-b-[1px] border-b-[rgb(229,231,235)]">{{$item->created_at}}</td>
+                        <td class="px-4 py-2 border-b-[1px] border-b-[rgb(229,231,235)]">{{$item->pegawai->nama}}</td>
+                        <td class="px-4 py-2 border-b-[1px] border-b-[rgb(229,231,235)]">
                             @if($item->kegiatan)
                             {{$item->kegiatan->nama}}
                             @else
                             Tidak ada
                             @endif
                         </td>
-                        <td class="text-center">
+                        <td class="px-4 py-2 text-center border-b-[1px] border-b-[rgb(229,231,235)]">
                             <div class="flex justify-center space-x-2 px-2">
-                                <a href="{{ route('sampel-detail', ['id' => $item->id]) }}" class="inline-block px-6 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">Detail</a>
+                                <a href="{{ route('sampel-detail', ['id' => $item->id]) }}" class="inline-block px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200">Detail</a>
+                            </div>
                         </td>
-                        <td>{{$item->catatan}}</td>
+                        <td class="px-4 py-2 border-b-[1px] border-b-[rgb(229,231,235)]">{{$item->catatan}}</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        {{-- Pagination --}}
-        @endsection
+    </div>
+
+    {{-- Pagination --}}
+    <x-paginator :paginator="$sampel" :url="request()->fullUrlWithQuery([])" />
+</div>
+@endsection

@@ -13,42 +13,66 @@
 
 
     {{-- Tabel--}}
-    <div class="flex flex-col justify-center overflow-x-auto max-w-[78vw]">
-        <div class="relative min-w-[100vw]">
-            <table class="table-custom">
-                <thead>
+    <div class="flex flex-col justify-center overflow-x-auto w-full">
+        <div class="relative w-full shadow-md rounded-lg border border-gray-300 bg-white">
+            <table class="table-auto w-full border-collapse text-sm text-gray-700 rounded-lg">
+                <thead class="bg-[rgb(4,116,129)] text-white">
                     <tr>
-                        <th scope="col" rowspan="2" class="w-8 text-center">No</th>
-                        <th scope="col" rowspan="2" class="w-56">Nama Pegawai</th>
-                        <th scope="col" rowspan="2" class="w-56">Nama Kegiatan</th>
-                        <th scope="col" rowspan="2" class="w-28">Tanggal Pengajuan</th>
-                        <th scope="col" rowspan="2" class="w-28 text-end">Jumlah Pengajuan</th>
-                        <th scope="col" rowspan="2" class="w-28 text-center">Satuan</th>
-                        <th scope="col" rowspan="2" class="w-0 text-center">Aksi</th>
+                        <th scope="col" rowspan="2" class="w-8 text-center py-3 border-b-[rgb(229,231,235)] border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)] rounded-tl-lg">
+                            No
+                        </th>
+                        <th scope="col" rowspan="2" class="text-center py-3 border-b-[rgb(229,231,235)] border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)]">
+                            Nama Pegawai
+                        </th>
+                        <th scope="col" rowspan="2" class="text-center py-3 border-b-[rgb(229,231,235)] border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)]">
+                            Nama Kegiatan
+                        </th>
+                        <th scope="col" rowspan="2" class="text-center py-3 border-b-[rgb(229,231,235)] border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)]">
+                            Tanggal Pengajuan
+                        </th>
+                        <th scope="col" rowspan="2" class="text-center py-3 border-b-[rgb(229,231,235)] border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)]">
+                            Jumlah Pengajuan
+                        </th>
+                        <th scope="col" rowspan="2" class="text-center py-3 border-b-[rgb(229,231,235)] border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)]">
+                            Satuan
+                        </th>
+                        <th scope="col" rowspan="2" class="text-center py-3 border-b-[rgb(229,231,235)] border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)] rounded-tr-lg">
+                            Aksi
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($tugas_pegawai as $item)
-                    <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $item->penugasanPegawai->pegawai->nama }}</td>
-                        <td>{{ $item->penugasanPegawai->kegiatan->nama }}</td>
-                        <td class="text-center">
+                    <tr class="border-b-[rgb(229,231,235)] hover:bg-gray-50 transition duration-150">
+                        <td class="text-center py-3 px-2 border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)] rounded-tl-lg">
+                            {{ $loop->iteration + ($tugas_pegawai->currentPage() - 1) * $tugas_pegawai->perPage() }}
+                        </td>
+                        <td class="text-center py-3 px-4 border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)]">
+                            {{ $item->penugasanPegawai->pegawai->nama }}
+                        </td>
+                        <td class="text-center py-3 px-4 border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)]">
+                            {{ $item->penugasanPegawai->kegiatan->nama }}
+                        </td>
+                        <td class="text-center py-3 px-4 border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)]">
                             @if($item->created_at)
                             {{ Carbon::parse($item->created_at)->format('d-m-Y') }}
                             @else
                             -
                             @endif
                         </td>
-                        <td class="text-end">{{ $item->dikerjakan }}</td>
-                        <td class="text-center">{{$item->penugasanPegawai->kegiatan->satuan }}</td>
-                        <td class="text-center">
-                            <div class="flex justify-between">
-                                <x-detail-button-table :id="$item->id" :route="'master-kegiatan-edit-view'" />
+                        <td class="text-center py-3 px-4 border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)]">
+                            {{ $item->dikerjakan }}
+                        </td>
+                        <td class="text-center py-3 px-4 border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)]">
+                            {{ $item->penugasanPegawai->kegiatan->satuan }}
+                        </td>
+                        <td class="text-center py-3 px-4 border-l-[rgb(249,250,251)] border-r-[rgb(249,250,251)] rounded-tr-lg">
+                            <div class="flex justify-center">
                                 <form action="{{ route('pengajuan-organik-approve-tabel', ['tugasId' => $item->id]) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('POST')
                                     <x-acc-button />
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -57,8 +81,7 @@
             </table>
         </div>
     </div>
-
     {{-- Pagination --}}
-
+    <x-paginator :paginator="$tugas_pegawai" :url="request()->fullUrlWithQuery([])" />
 </div>
 @endsection
