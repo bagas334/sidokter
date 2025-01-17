@@ -88,10 +88,14 @@ class PenugasanPegawaiController extends Controller
         $tugas_pegawai = TugasPegawai::where('penugasan_pegawai', $penugasan_pegawai_id)
             ->whereIn('status', ['proses', 'selesai'])
             ->get();
+
+        $selesai = TugasPegawai::where('status', 'selesai')->sum('dikerjakan');
+        $proses = TugasPegawai::where('status', 'proses')->sum('dikerjakan');
+        $diajukan = TugasPegawai::where('status', 'diajukan')->sum('dikerjakan');
+
+
         $pengajuan_pegawai = TugasPegawai::where(['penugasan_pegawai' => $penugasan_pegawai_id, 'status' => 'diajukan'])->get();
 
-        $created_at = $penugasan_pegawai->created_at;
-        $finished_at = $penugasan_pegawai->finished_at;
         $catatan = TugasPegawai::where('penugasan_pegawai', $penugasan_pegawai_id)
             ->whereIn('status', ['proses', 'selesai'])
             ->pluck('catatan')
@@ -107,8 +111,9 @@ class PenugasanPegawaiController extends Controller
             'harga_satuan',
             'tugas_pegawai',
             'catatan',
-            'created_at',
-            'finished_at'
+            'proses',
+            'selesai',
+            'diajukan'
         ));
     }
 
@@ -145,13 +150,7 @@ class PenugasanPegawaiController extends Controller
 
         $penugasan = PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
 
-
         if ($penugasan) {
-            $request->merge([
-                'created_at' => $penugasan->created_at,
-                'finished_at' => $penugasan->finished_at,
-            ]);
-
             PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])
                 ->update($request->except('_token', '_method'));
         }
@@ -162,7 +161,6 @@ class PenugasanPegawaiController extends Controller
 
     public function edit($id, $pegawai)
     {
-
         $tugas_pegawai = PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
         return view('penugasan-organik-edit', compact('tugas_pegawai', 'id'));
     }

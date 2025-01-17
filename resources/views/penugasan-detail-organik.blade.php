@@ -101,14 +101,13 @@
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium" style="margin-bottom: 5px;">Status</p>
                     <div class="w-full pl-2 pb-2">
-                        <!-- Progres Bar -->
+                        <p>Proses : {{$proses}}</p>
+                        <p>Diajukan : {{$diajukan}}</p>
+                        <p>Selesai : {{$selesai}}</p>
                         <div class="relative w-full h-3 bg-gray-200 rounded-full dark:bg-gray-700 overflow-hidden">
-                            <!-- Selesai -->
                             <div class="absolute top-0 left-0 h-full bg-green-500" style="width: 100%;"></div>
                         </div>
-                        <!-- Keterangan -->
                         <div class="flex items-center gap-4 mt-4">
-                            <!-- Selesai -->
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-green-500"></span>
                                 <span class="text-xs text-gray-700">Selesai</span>
