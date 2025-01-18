@@ -10,19 +10,19 @@ class PerusahaanController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $perusahaan = Perusahaan::query();
+        $perusahaan = Perusahaan::query()->withCount('sampel');
 
         // Search across all columns
         if ($search) {
             $perusahaan = $perusahaan->where('idsbr', 'like', '%' . $search . '%')
-                                     ->orWhere('nama_usaha', 'like', '%' . $search . '%')
-                                     ->orWhere('kode_wilayah', 'like', '%' . $search . '%')
-                                     ->orWhere('sls', 'like', '%' . $search . '%')
-                                     ->orWhere('alamat_detail', 'like', '%' . $search . '%')
-                                     ->orWhere('kode_kbli', 'like', '%' . $search . '%')
-                                     ->orWhere('nama_cp', 'like', '%' . $search . '%')
-                                     ->orWhere('nomor_cp', 'like', '%' . $search . '%')
-                                     ->orWhere('email', 'like', '%' . $search . '%');
+                ->orWhere('nama_usaha', 'like', '%' . $search . '%')
+                ->orWhere('kode_wilayah', 'like', '%' . $search . '%')
+                ->orWhere('sls', 'like', '%' . $search . '%')
+                ->orWhere('alamat_detail', 'like', '%' . $search . '%')
+                ->orWhere('kode_kbli', 'like', '%' . $search . '%')
+                ->orWhere('nama_cp', 'like', '%' . $search . '%')
+                ->orWhere('nomor_cp', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%');
         }
 
         $perusahaan = $perusahaan->paginate(10);

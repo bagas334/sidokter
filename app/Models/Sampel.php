@@ -32,4 +32,11 @@ class Sampel extends Model
     {
         return $this->belongsToMany(Perusahaan::class, 'perusahaan_sampel', 'sampel_id', 'perusahaan_id');
     }
+
+    public function sampelCount()
+    {
+        return $this->belongsToMany(Sampel::class, 'perusahaan_sampel', 'perusahaan_id', 'sampel_id')
+            ->selectRaw('perusahaan_id, COUNT(*) as total_sampel')
+            ->groupBy('perusahaan_id');
+    }
 }

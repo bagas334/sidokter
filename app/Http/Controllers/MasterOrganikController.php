@@ -198,7 +198,7 @@ class MasterOrganikController extends Controller
 
     public function editUser($id)
     {
-        $user = User::find($id)->with('pegawai')->first();
+        $user = User::where('id', $id)->with('pegawai')->first();
         $fungsi_ketua_tim = ['Nerwilis', 'IPDS', 'Statistik Produksi', 'Statistik Distribusi', 'Statistik Sosial', 'Umum'];
         $opsi = ['Ketua Tim', 'Admin Kabupaten', 'Organik', 'Pimpinan'];
         return view('user-edit', compact('user', 'opsi', 'fungsi_ketua_tim'));
@@ -269,7 +269,7 @@ class MasterOrganikController extends Controller
     {
         // Validasi input untuk login
         $credentials = $request->validate([
-            'nip_bps' => 'required',
+            'email' => 'required',
             'password' => 'required'
         ]);
 
@@ -279,7 +279,7 @@ class MasterOrganikController extends Controller
             return redirect()->route('beban-kerja-all');
         }
 
-        return back()->with('loginError', 'NIP BPS atau Password salah');
+        return back()->with('loginError', 'Email atau Password salah');
     }
 
     /**
