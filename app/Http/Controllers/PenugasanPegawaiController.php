@@ -31,7 +31,7 @@ class PenugasanPegawaiController extends Controller
             ->toArray();
 
         // Pass the variables to the view
-        return view('penugasan-organik-detail', compact('detail_tugas', 'kegiatan', 'harga_satuan', 'catatan'));
+        return view('penugasan-detail-organik', compact('detail_tugas', 'kegiatan', 'harga_satuan', 'catatan'));
     }
 
     public function index(Request $request)
@@ -89,9 +89,20 @@ class PenugasanPegawaiController extends Controller
             ->whereIn('status', ['proses', 'selesai'])
             ->get();
 
-        $selesai = TugasPegawai::where('status', 'selesai')->sum('dikerjakan');
-        $proses = TugasPegawai::where('status', 'proses')->sum('dikerjakan');
-        $diajukan = TugasPegawai::where('status', 'diajukan')->sum('dikerjakan');
+        $selesai = TugasPegawai::where([
+            ['penugasan_pegawai', '=', $penugasan_pegawai_id],
+            ['status', '=', 'selesai']
+        ])->sum('dikerjakan');
+
+        $proses = TugasPegawai::where([
+            ['penugasan_pegawai', '=', $penugasan_pegawai_id],
+            ['status', '=', 'proses']
+        ])->sum('dikerjakan');
+
+        $diajukan = TugasPegawai::where([
+            ['penugasan_pegawai', '=', $penugasan_pegawai_id],
+            ['status', '=', 'diajukan']
+        ])->sum('dikerjakan');
 
 
         $pengajuan_pegawai = TugasPegawai::where(['penugasan_pegawai' => $penugasan_pegawai_id, 'status' => 'diajukan'])->get();
@@ -102,7 +113,6 @@ class PenugasanPegawaiController extends Controller
             ->toArray();
 
         $totalTarget = $penugasan_pegawai->target;
-
         $progresDitugaskan = $totalTarget > 0 ? ($proses / $totalTarget) * 100 : 0;
         $progresSelesai = $totalTarget > 0 ? ($selesai / $totalTarget) * 100 : 0;
 
@@ -207,9 +217,11 @@ class PenugasanPegawaiController extends Controller
         $penugasanPegawai = TugasPegawai::create($request->except('_token', '_method', 'id', 'pegawai_id'));
 
         $kegiatan = Kegiatan::find($id);
+        $nama_kegiatan = $kegiatan ? $kegiatan->nama : 'Unknown Kegiatan';
+        $nama_pegawai = $nama_pegawai = Pegawai::find($pegawai)->nama;
         $tugas_pegawai = TugasPegawai::find($penugasanPegawai->id);
 
-        return view('penugasan-organik-detail', compact('kegiatan', 'tugas_pegawai', 'id', 'pegawai'));  // Pass the $kegiatan variable to the view
+        return redirect()->route('penugasan-organik-detail', ['id' => $id, 'petugas' => $pegawai]);
     }
 
 

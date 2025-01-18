@@ -51,9 +51,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($tugas_pegawai as $index => $item)
+                                    @foreach ($tugas_pegawai as $item)
                                     <tr>
-                                        <td class="text-center">{{ $index + 1 }}</td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $item->dikerjakan }}</td>
                                         <td class="text-center">{{ $item->updated_at }}</td>
                                         <td class="text-center">{{ $item->status }}</td>
@@ -101,9 +101,6 @@
                 <div class="w-full pl-2 pb-2">
                     <p class="text-md text-cyan-950 font-medium" style="margin-bottom: 5px;">Status</p>
                     <div class="w-full pl-2 pb-2">
-                        <p>Proses : {{$proses}}</p>
-                        <p>Diajukan : {{$diajukan}}</p>
-                        <p>Selesai : {{$selesai}}</p>
                         <div class="relative w-full h-3 bg-gray-200 rounded-full dark:bg-gray-700 overflow-hidden">
 
                             <!-- Selesai -->
@@ -124,12 +121,12 @@
                             <!-- Ditugaskan -->
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
-                                <span class="text-xs text-gray-700">Ditugaskan ({{ number_format($progresDitugaskan, 2) }}%)</span>
+                                <span class="text-xs text-gray-700">Menunggu Persetujuan ({{ number_format($progresDitugaskan, 2) }}%)</span>
                             </div>
                             <!-- Sisanya -->
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-gray-400"></span>
-                                <span class="text-xs text-gray-700">Belum dialokasikan ({{ number_format(100 - $progresSelesai - $progresDitugaskan, 2) }}%)</span>
+                                <span class="text-xs text-gray-700">Belum dikerjakan ({{ number_format(100 - $progresSelesai - $progresDitugaskan, 2) }}%)</span>
                             </div>
                         </div>
                     </div>
@@ -178,7 +175,7 @@
                             <tbody>
                                 @foreach($pengajuan_pegawai as $index => $item)
                                 <tr>
-                                    <td class="text-center">{{ $index + 1 }}</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $item->dikerjakan }}</td>
                                     <td class="text-center">{{ $item->created_at }}</td>
                                     <td class="text-center">{{ $item->status }}</td>
