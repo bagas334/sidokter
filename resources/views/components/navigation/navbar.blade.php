@@ -5,7 +5,7 @@
     <div class="flex-none">
         <div class="dropdown dropdown-bottom relative flex items-center">
             <div class="pr-3 text-right">
-                <p class="text-sm text-teal-900 font-bold">{{ auth()->user()->nama }}</p>
+                <p class="text-sm text-teal-900">{{ auth()->user()->pegawai->nama }}</p>
                 <p class="text-sm text-teal-900">
                     {{ auth()->user()->jabatan }}
                     @if(auth()->user()->jabatan == 'Ketua Tim')
