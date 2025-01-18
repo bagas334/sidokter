@@ -105,12 +105,31 @@
                         <p>Diajukan : {{$diajukan}}</p>
                         <p>Selesai : {{$selesai}}</p>
                         <div class="relative w-full h-3 bg-gray-200 rounded-full dark:bg-gray-700 overflow-hidden">
-                            <div class="absolute top-0 left-0 h-full bg-green-500" style="width: 100%;"></div>
+
+                            <!-- Selesai -->
+                            <div class="absolute top-0 left-0 h-full bg-green-500"
+                                style="width: {{ $progresSelesai }}%;">
+                            </div>
+                            <!-- Ditugaskan -->
+                            <div class="absolute top-0 left-0 h-full bg-yellow-300"
+                                style="width: {{ $progresDitugaskan }}%; margin-left: {{ $progresSelesai }}%;">
+                            </div>
+
                         </div>
                         <div class="flex items-center gap-4 mt-4">
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                                <span class="text-xs text-gray-700">Selesai</span>
+                                <span class="text-xs text-gray-700">Selesai ({{ number_format($progresSelesai, 2) }}%)</span>
+                            </div>
+                            <!-- Ditugaskan -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+                                <span class="text-xs text-gray-700">Ditugaskan ({{ number_format($progresDitugaskan, 2) }}%)</span>
+                            </div>
+                            <!-- Sisanya -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-gray-400"></span>
+                                <span class="text-xs text-gray-700">Belum dialokasikan ({{ number_format(100 - $progresSelesai - $progresDitugaskan, 2) }}%)</span>
                             </div>
                         </div>
                     </div>

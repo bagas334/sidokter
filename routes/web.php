@@ -100,7 +100,6 @@ Route::middleware('auth')->group(function () {
             ->name('beban-kerja-mitra');
         Route::post('/logout', [MasterOrganikController::class, 'logout'])->name('logout');
         Route::get('/search/pegawai', [SearchUser::class, 'search'])->name("search-pegawai");
-        Route::get('/search/mitra', [SearchMitra::class, 'search'])->name("search-mitra");
     });
 
     Route::group(['prefix' => 'manajemen-sampel'], function () {
@@ -158,7 +157,7 @@ Route::middleware('auth')->group(function () {
         ->name('master-mitra-delete');
 
 
-    Route::get('/master-mitra', [MasterMitraController::class, 'index'])->name('master-mitra.index');
+    Route::get('/master-mitra', [MasterMitraController::class, 'index'])->name('master-mitra');
     Route::get('/master-mitra/create', [MasterMitraController::class, 'create'])->name('master-mitra-create-view');
     Route::post('/master-mitra/store', [MasterMitraController::class, 'store'])->name('master-mitra-store');
     Route::get('/master-mitra/edit/{id}', [MasterMitraController::class, 'edit'])->name('master-mitra-edit-view');
@@ -183,7 +182,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
     Route::put('/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
     Route::delete('/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
-
 
 
 

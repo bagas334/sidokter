@@ -101,6 +101,11 @@ class PenugasanPegawaiController extends Controller
             ->pluck('catatan')
             ->toArray();
 
+        $totalTarget = $penugasan_pegawai->target;
+
+        $progresDitugaskan = $totalTarget > 0 ? ($proses / $totalTarget) * 100 : 0;
+        $progresSelesai = $totalTarget > 0 ? ($selesai / $totalTarget) * 100 : 0;
+
         return view('penugasan-detail-organik', compact(
             'pengajuan_pegawai',
             'penugasan_pegawai_id',
@@ -113,7 +118,9 @@ class PenugasanPegawaiController extends Controller
             'catatan',
             'proses',
             'selesai',
-            'diajukan'
+            'diajukan',
+            'progresDitugaskan',
+            'progresSelesai'
         ));
     }
 
