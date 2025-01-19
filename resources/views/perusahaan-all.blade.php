@@ -6,7 +6,7 @@
 
 <style>
 </style>
-<div class="size-full flex flex-col items-center px-4 overflow-x-hidden max-w-screen-md">
+<div class="size-full flex flex-col items-center px-4 overflow-x-hidden max-w-screen-md md:max-w-screen-xl">
     {{-- Judul --}}
     <div class="w-full pb-6">
         <x-judul text="Semua Perusahaan" />
