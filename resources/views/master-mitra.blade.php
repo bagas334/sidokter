@@ -3,7 +3,9 @@
 @section('title', 'Master Mitra')
 
 @section('content')
-<div class="size-full flex flex-col w-full items-center px-4">
+<style>
+</style>
+<div class="size-full flex flex-col items-center px-4 overflow-x-hidden max-w-screen-md md:max-w-screen-xl">
     {{-- Judul --}}
     <div class="w-full pb-6">
         <x-judul text="Daftar Mitra" />
@@ -13,7 +15,7 @@
     <div class="w-full flex flex-col md:flex-row justify-between items-center pb-4 gap-4">
         {{-- Search Input Component --}}
         <x-search-bar
-            :action="route('master-mitra.index')"
+            :action="route('master-mitra')"
             :search="request()->get('search')"
             placeholder="Cari Mitra"
             formId="search-mitra-form"

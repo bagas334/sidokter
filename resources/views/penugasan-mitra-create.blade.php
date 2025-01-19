@@ -17,10 +17,14 @@
 
             <input type="text" name="kegiatan_id" value="{{$id}}" hidden>
 
+
             <x-input.dropdown-mitra :label="'Mitra'"
                 :options="$mitra"
                 :name="'petugas'"
                 required></x-input.dropdown-mitra>
+            @error('petugas')
+            <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
 
             <x-input.double-input-layout
                 :label="'Kuantitas'"
@@ -32,9 +36,6 @@
                     :label_size="'md'"></x-input.number-field>
             </x-input.double-input-layout>
 
-            <div class="mb-1 text-gray-500">Potensi pendapatan mitra : <span id="pendapatan"></span></div>
-
-
             <x-input.text-area
                 :label="'Catatan'"
                 :name="'catatan'"></x-input.text-area>
@@ -45,7 +46,32 @@
                 </x-submit-button>
             </div>
         </form>
+
+        @if (session('pendapatanError'))
+        <div id="pendapatanErrorModal" class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center w-11/12 max-w-sm">
+                <h2 class="text-lg font-semibold text-red-600 mb-4">Error</h2>
+                <p class="text-gray-700 mb-6">{{ session('pendapatanError') }}</p>
+                <button id="closeModal" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">OK</button>
+            </div>
+        </div>
+        @endif
+
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('pendapatanErrorModal');
+        const closeModalButton = document.getElementById('closeModal');
+
+        if (modal && closeModalButton) {
+            closeModalButton.addEventListener('click', function() {
+                modal.classList.add('hidden'); // Menyembunyikan modal
+            });
+        }
+    });
+</script>
+
 
 @endsection

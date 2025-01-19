@@ -9,7 +9,7 @@
             <p class="mt-2 text-3xl text-teal-600 font-bold"><?php echo $kegiatan->nama ?></p>
         </div>
         @if(auth()->user()->jabatan == 'Organik')
-        <a href="/beban-kerja/{{$kegiatan->id}}/tugas-organik/{{auth()->user()->id}}" class="self-center mx-1 button bg-blue-500 py-1.5 px-2 text-white font-medium rounded-lg hover:bg-blue-600 transition">Lihat tugas anda</a>
+        <a href="/beban-kerja/{{$kegiatan->id}}/tugas-organik/{{auth()->user()->pegawai_id}}" class="self-center mx-1 button bg-blue-500 py-1.5 px-2 text-white font-medium rounded-lg hover:bg-blue-600 transition">Lihat tugas anda</a>
         @endif
     </div>
 
