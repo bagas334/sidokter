@@ -14,24 +14,24 @@ use Illuminate\Support\Facades\DB;
 
 class PenugasanPegawaiController extends Controller
 {
-    public function show($id)
-    {
-        $detail_tugas = PenugasanPegawai::with(['pegawai', 'kegiatan'])->find($id);
+    // public function show($id)
+    // {
+    //     $detail_tugas = PenugasanPegawai::with(['pegawai', 'kegiatan'])->find($id);
 
-        if (!$detail_tugas) {
-            return redirect()->back()->withErrors(['error' => 'Penugasan not found']);
-        }
+    //     if (!$detail_tugas) {
+    //         return redirect()->back()->withErrors(['error' => 'Penugasan not found']);
+    //     }
 
-        $kegiatan = $detail_tugas->kegiatan;
-        $harga_satuan = $kegiatan ? $kegiatan->harga_satuan : 'Tidak tersedia';
+    //     $kegiatan = $detail_tugas->kegiatan;
+    //     $harga_satuan = $kegiatan ? $kegiatan->harga_satuan : 'Tidak tersedia';
 
-        $catatan = TugasPegawai::where('penugasan_pegawai', $id)
-            ->whereIn('status', ['proses', 'selesai'])
-            ->pluck('catatan')
-            ->toArray();
+    //     $catatan = TugasPegawai::where('penugasan_pegawai', $id)
+    //         ->whereIn('status', ['proses', 'selesai'])
+    //         ->pluck('catatan')
+    //         ->toArray();
 
-        return view('penugasan-organik-detail', compact('detail_tugas', 'kegiatan', 'harga_satuan', 'catatan'));
-    }
+    //     return view('penugasan-organik-detail', compact('detail_tugas', 'kegiatan', 'harga_satuan', 'catatan'));
+    // }
 
     public function index(Request $request)
     {

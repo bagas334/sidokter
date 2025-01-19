@@ -54,8 +54,8 @@
                     <td class="p-2 text-center">{{ $item->jabatan }}</td>
                     <td class="text-center p-2 rounded-br-lg">
                         <div class="flex justify-center space-x-2">
-                            <x-edit-button-table :id="$item->id" :route="'master-organik-edit'" />
-                            <form action="{{ route('master-organik-delete', $item->id) }}" method="POST">
+                            <x-edit-button-table :id="$item->id" :route="'manajemen-user-edit'" />
+                            <form action="{{ route('manajemen-user-delete', $item->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <x-remove-button />
