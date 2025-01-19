@@ -14,7 +14,7 @@
     <div class="w-full flex flex-col md:flex-row justify-between items-center pb-4 gap-4">
         {{-- Search Input Component --}}
         <x-search-bar
-            :action="route('master-organik')"
+            :action="route('manajemen-user')"
             :search="request()->get('search')"
             placeholder="Cari Pengguna"
             formId="search-form-organik"
@@ -22,7 +22,7 @@
 
 
         {{-- Tombol Tambah --}}
-        <a href="{{ route('master-organik-create') }}"
+        <a href="{{ route('manajemen-user-create') }}"
             class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-700">Tambah
         </a>
     </div>
@@ -54,8 +54,8 @@
                     <td class="p-2 text-center">{{ $item->jabatan }}</td>
                     <td class="text-center p-2 rounded-br-lg">
                         <div class="flex justify-center space-x-2">
-                            <x-edit-button-table :id="$item->id" :route="'master-organik-edit'" />
-                            <form action="{{ route('master-organik-delete', $item->id) }}" method="POST">
+                            <x-edit-button-table :id="$item->id" :route="'manajemen-user-edit'" />
+                            <form action="{{ route('manajemen-user-delete', $item->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <x-remove-button />

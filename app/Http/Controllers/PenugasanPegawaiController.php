@@ -14,21 +14,21 @@ use Illuminate\Support\Facades\DB;
 
 class PenugasanPegawaiController extends Controller
 {
-    public function show($id)
-    {
-        $detail_tugas = PenugasanPegawai::with(['pegawai', 'kegiatan'])->find($id);
+    // public function show($id)
+    // {
+    //     $detail_tugas = PenugasanPegawai::with(['pegawai', 'kegiatan'])->find($id);
 
-        if (!$detail_tugas) {
-            return redirect()->back()->withErrors(['error' => 'Penugasan not found']);
-        }
+    //     if (!$detail_tugas) {
+    //         return redirect()->back()->withErrors(['error' => 'Penugasan not found']);
+    //     }
 
-        $kegiatan = $detail_tugas->kegiatan;
-        $harga_satuan = $kegiatan ? $kegiatan->harga_satuan : 'Tidak tersedia';
+    //     $kegiatan = $detail_tugas->kegiatan;
+    //     $harga_satuan = $kegiatan ? $kegiatan->harga_satuan : 'Tidak tersedia';
 
-        $catatan = TugasPegawai::where('penugasan_pegawai', $id)
-            ->whereIn('status', ['proses', 'selesai'])
-            ->pluck('catatan')
-            ->toArray();
+    //     $catatan = TugasPegawai::where('penugasan_pegawai', $id)
+    //         ->whereIn('status', ['proses', 'selesai'])
+    //         ->pluck('catatan')
+    //         ->toArray();
 
         return view('penugasan-detail-organik', compact('detail_tugas', 'kegiatan', 'harga_satuan', 'catatan'));
     }
@@ -131,6 +131,10 @@ class PenugasanPegawaiController extends Controller
             'status' => 'required|string|in:Ditugaskan'
         ]);
 
+
+
+
+
         PenugasanPegawai::create($request->except('_token', '_method'));
         return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
@@ -200,6 +204,29 @@ class PenugasanPegawaiController extends Controller
         $id = $request->kegiatan_id;
         $pegawai = $request->pegawai_id;
 
+        $penugasan_pegawai = PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
+
+        $penugasan_pegawai_id = $penugasan_pegawai->id;
+
+
+        $selesai = TugasPegawai::where([
+            ['penugasan_pegawai', '=', $penugasan_pegawai_id],
+            ['status', '=', 'selesai']
+        ])->sum('dikerjakan');
+
+        $proses = TugasPegawai::where([
+            ['penugasan_pegawai', '=', $penugasan_pegawai_id],
+            ['status', '=', 'proses']
+        ])->sum('dikerjakan');
+
+
+        if ($proses + $selesai + $request->dikerjakan > $penugasan_pegawai->target) {
+            return redirect()->back()->with('terlaksanaError', 'Jumlah terlaksana melebihi target');
+            // tambahkan pesan error disini
+        }
+
+        $request->validate(['dikerjakan' => 'required|numeric']);
+
         $penugasanPegawai = TugasPegawai::create($request->except('_token', '_method', 'id', 'pegawai_id'));
 
         $tugas_pegawai = TugasPegawai::whereHas('penugasanPegawai', function ($query) use ($id, $pegawai) {
@@ -221,6 +248,25 @@ class PenugasanPegawaiController extends Controller
     {
         $id = $request->kegiatan_id;
         $pegawai = $request->pegawai_id;
+
+        $penugasan_pegawai = PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
+        $penugasan_pegawai_id = $penugasan_pegawai->id;
+
+        $selesai = TugasPegawai::where([
+            ['penugasan_pegawai', '=', $penugasan_pegawai_id],
+            ['status', '=', 'selesai']
+        ])->sum('dikerjakan');
+
+        $proses = TugasPegawai::where([
+            ['penugasan_pegawai', '=', $penugasan_pegawai_id],
+            ['status', '=', 'proses']
+        ])->sum('dikerjakan');
+
+
+        if ($proses + $selesai + $request->dikerjakan > $penugasan_pegawai->target) {
+            return redirect()->back()->with('terlaksanaError', 'Jumlah terlaksana melebihi target');
+            // tambahkan pesan error disini
+        }
 
         TugasPegawai::where('id', $request->id)->first()->update($request->except('_token', '_method', 'id', 'pegawai_id'));
 

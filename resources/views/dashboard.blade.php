@@ -10,7 +10,7 @@
 
 <div class="mb-4">
     <div class="bg-green-50 text-green-900 p-6 rounded-lg shadow-md border border-green-200 mb-4">
-        <p class="text-3xl font-semibold font-sans">Selamat Datang, {{auth()->user()->nama}}!</p>
+        <p class="text-3xl font-semibold font-sans">Selamat Datang, {{auth()->user()->pegawai->nama}}!</p>
     </div>
     <div class="bg-gray-50 p-4 rounded-lg shadow-md border border-gray-200 flex space-x-4">
         <div class="w-1/3 p-4 bg-white rounded-lg shadow-lg">

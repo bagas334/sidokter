@@ -256,7 +256,14 @@ class MasterOrganikController extends Controller
 
     public function deleteUser($id)
     {
-        $user = User::where('id', $id);
+        $user = User::where('id', $id)->first();
+        if ($user->jabatan == 'Admin Kabupaten') {
+            if (User::where('jabatan', 'Admin Kabupaten')->count() == 1) {
+                return redirect()->back();
+            }
+        }
+
+        dd('Mandeko sik');
         $user->delete();
         return redirect()->route('manajemen-user');
     }

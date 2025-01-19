@@ -1,0 +1,842 @@
+[33mcommit 16c5729b56d752a6617ef4c5c162546051c2cc37[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sun Jan 19 21:54:29 2025 +0700
+
+    penambahan pesan error
+
+[33mcommit dca9808cdfa79a9c3d5d64d58217cf4f4dc5ce11[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sun Jan 19 20:57:15 2025 +0700
+
+    perbaikan bug
+
+[33mcommit 9814de27e4acc418ad45df53991257a67ae293b8[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sat Jan 18 23:40:09 2025 +0700
+
+    perbaikan penugasan
+
+[33mcommit c8ed247595460481ad51939e5a5edc924d4afa7a[m
+Merge: 0b52900 fd6c10e
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Sat Jan 18 23:11:22 2025 +0700
+
+    Merge pull request #41 from bagas334/akbar
+    
+    Akbar
+
+[33mcommit fd6c10e084871c1d7ae6e051798616714328876a[m
+Merge: 14042d8 0b52900
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Sat Jan 18 23:11:13 2025 +0700
+
+    Merge branch 'main' into akbar
+
+[33mcommit 14042d8207a0fec77cec1ef23cbb424f27df690e[m[33m ([m[1;32makbar[m[33m)[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sat Jan 18 23:08:56 2025 +0700
+
+    yee
+
+[33mcommit 0b52900566abb41e0ef0e2053d044b4888aab637[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sat Jan 18 22:54:53 2025 +0700
+
+    perubahan login
+
+[33mcommit d0f2ecb524cbc41ab1c2cef6432f43bc91b24ca2[m
+Merge: cc23e94 513f134
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Fri Jan 17 10:42:46 2025 +0700
+
+    Merge branch 'main' of https://github.com/bagas334/sidokter
+
+[33mcommit cc23e943e5a7a67dd99ea173fd32caad2b9621c3[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Fri Jan 17 10:38:00 2025 +0700
+
+    comat comit
+
+[33mcommit baf91049742027cd16606a75518f976cf62aebca[m
+Merge: 87d153f 0ff6d9d
+Author: Fakhrizal Akbar <222212595@stis.ac.id>
+Date:   Fri Jan 17 10:32:36 2025 +0700
+
+    Merge branch 'akbar' of https://github.com/bagas334/sidokter into akbar
+
+[33mcommit 87d153fb58a942713a2accb36295a653e6b902b0[m
+Merge: 55285dc e13b56a
+Author: Fakhrizal Akbar <222212595@stis.ac.id>
+Date:   Fri Jan 17 10:32:27 2025 +0700
+
+    commat commit
+
+[33mcommit 0ff6d9d8e567f165ce0c688a7cba899c8bfed492[m
+Merge: e13b56a 513f134
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Fri Jan 17 10:30:09 2025 +0700
+
+    Merge pull request #40 from bagas334/main
+    
+    Merge pull request #39 from bagas334/akbar
+
+[33mcommit 513f1347ced313768aed0052db8ad296e4d2f620[m
+Merge: c338e7d e13b56a
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Fri Jan 17 10:29:38 2025 +0700
+
+    Merge pull request #39 from bagas334/akbar
+    
+    Merge pull request #38 from bagas334/main
+
+[33mcommit 55285dcd3242837940fe4412faba675ab8860ed3[m
+Author: Fakhrizal Akbar <222212595@stis.ac.id>
+Date:   Fri Jan 17 10:26:38 2025 +0700
+
+    comat comit
+
+[33mcommit e13b56afeb92918c2956d69bd2d2665ab6986d02[m
+Merge: d09b76e c338e7d
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Fri Jan 17 08:43:49 2025 +0700
+
+    Merge pull request #38 from bagas334/main
+    
+    coba nggih
+
+[33mcommit c338e7d9798bc7ba321a4ffc80ff0883005f60f1[m
+Merge: d285f3f 6032b91
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Fri Jan 17 08:01:00 2025 +0700
+
+    Merge pull request #37 from bagas334/beban_kerja
+    
+    Beban kerja
+
+[33mcommit 6032b91ae121c018155739482c9081c81cbee112[m
+Merge: 862c0c6 d285f3f
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Fri Jan 17 08:00:16 2025 +0700
+
+    Merge pull request #36 from bagas334/main
+    
+    perbaikan logika user dan organik
+
+[33mcommit 862c0c6a7c36e6d7eeb1bacab3c9429e56143d0a[m
+Author: Novia Ade Yuanita <222212802@stis.ac.id>
+Date:   Fri Jan 17 05:34:16 2025 +0700
+
+    perbaikan pop-up
+
+[33mcommit 5a1ed76536aa3ffd45c00bba78050a97062ce487[m
+Author: Novia Ade Yuanita <222212802@stis.ac.id>
+Date:   Fri Jan 17 05:21:56 2025 +0700
+
+    catatan dan filter
+
+[33mcommit d285f3f75174c962a7291143bac598756251ebd6[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Fri Jan 17 04:32:57 2025 +0700
+
+    perbaikan logika user dan organik
+
+[33mcommit bddef63baab3821667b23d28f22fcc38780d85c8[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Thu Jan 16 23:19:21 2025 +0700
+
+    commit hehehe
+
+[33mcommit 2f09ade49e2ccb3e4887d226ab5b6d5eb902402e[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Thu Jan 16 14:17:57 2025 +0700
+
+    commit kesekian
+
+[33mcommit 9af1ec348557823510804100a96f5c404f5be9d9[m
+Merge: dc14661 5f71af7
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sat Jan 11 12:59:10 2025 +0700
+
+    try
+
+[33mcommit dc14661398a5f0f7a877233f9068b7b237afc3c6[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sat Jan 11 12:57:13 2025 +0700
+
+    abc
+
+[33mcommit 5f71af731b1b86261d9abc362a55411b4eb7b591[m
+Author: AzzaAzzikra <tan.azza2005@gmail.com>
+Date:   Sat Jan 11 12:51:09 2025 +0700
+
+    Maha Update Frontend dan Backend Part.1
+    
+    Perobakan logika backend semua page dan perbaikan frontend sebagian besar view
+
+[33mcommit ff12d27a0b9e60af1d69903291e8674cf2825a31[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Fri Jan 10 09:05:45 2025 +0700
+
+    validasi organik
+
+[33mcommit 5c6dae7e776eb73f6cb6b09ed42655c10970dc3c[m
+Author: AzzaAzzikra <tan.azza2005@gmail.com>
+Date:   Thu Jan 9 20:14:04 2025 +0700
+
+    Dashboard admin selamat
+
+[33mcommit 8dead456e82a8867ff0d70e9adb1e9f753df3000[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Thu Jan 9 07:57:47 2025 +0700
+
+    hahahihi
+
+[33mcommit 2f691b318c6125050e50fa857bb1d5fab355e440[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Thu Jan 9 07:49:19 2025 +0700
+
+    commit pagi pagi
+
+[33mcommit 568c3506159d4956eba2ece95fa467b5f2291a93[m
+Merge: f0cc0b7 d09b76e
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Wed Jan 8 15:33:43 2025 +0700
+
+    Merge pull request #33 from bagas334/akbar
+    
+    Akbar
+
+[33mcommit d09b76ef1f290b00ee0a5ba06b11332de467d77f[m
+Merge: 3d75149 f0cc0b7
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Wed Jan 8 15:33:33 2025 +0700
+
+    Merge branch 'main' into akbar
+
+[33mcommit 3d751492324712d07e033ae02482532c83249379[m
+Merge: 390d4e2 1f743c2
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Wed Jan 8 14:39:27 2025 +0700
+
+    Merge branch 'akbar' of https://github.com/bagas334/sidokter into akbar
+
+[33mcommit f0cc0b7e41c10309cd7b186330d07b62c71c0861[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Wed Jan 8 14:38:57 2025 +0700
+
+    perbaikan ringan versi wijayakusuma
+
+[33mcommit 1f743c24f8521adf44537de8f4c1e4db0da6a454[m
+Author: Fakhrizal Akbar <222212595@stis.ac.id>
+Date:   Wed Jan 8 14:17:01 2025 +0700
+
+    searchmanjemenuser
+
+[33mcommit 196ad4c80abb495fd8bac1922bd1ab77d75e315a[m
+Merge: 938ea0f da59b9e
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Wed Jan 8 12:36:05 2025 +0700
+
+    Merge branch 'main' of https://github.com/bagas334/sidokter
+
+[33mcommit da59b9e439489d8339f55287faa8401151f13c04[m
+Merge: 30620fc 9d7fda8
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Wed Jan 8 12:33:28 2025 +0700
+
+    Merge pull request #32 from bagas334/prima_branch
+    
+    Prima branch
+
+[33mcommit 9d7fda8a6a19fcc8cb108deed2e7c8ab671de6bd[m
+Merge: ce63cb4 30620fc
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Wed Jan 8 12:33:20 2025 +0700
+
+    Merge branch 'main' into prima_branch
+
+[33mcommit 938ea0f8bb6be1da7a599436b33c3ca9ba50eb3d[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Wed Jan 8 12:14:53 2025 +0700
+
+    update versi 0.8.11 revisi afdal
+
+[33mcommit 30620fca07b5fc02d8224315c912ae3de965cd66[m
+Merge: 23a7c33 78dc921
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Wed Jan 8 12:04:17 2025 +0700
+
+    Merge pull request #31 from bagas334/afdal
+    
+    Merge pull request #30 from bagas334/main
+
+[33mcommit 78dc921811ddffe46dce6561c067e4ffdeddca95[m[33m ([m[1;31morigin/afdal[m[33m)[m
+Merge: d06eda3 23a7c33
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Wed Jan 8 12:03:39 2025 +0700
+
+    Merge pull request #30 from bagas334/main
+    
+    update 8.10
+
+[33mcommit 23a7c33e5e02e03c55d8bc333286f9c3ce0c8f3d[m
+Merge: f8350b6 d06eda3
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Wed Jan 8 12:03:30 2025 +0700
+
+    Merge branch 'afdal' into main
+
+[33mcommit 390d4e2db984826993f9b838d7756db64403ee31[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Wed Jan 8 11:58:16 2025 +0700
+
+    a
+
+[33mcommit ce63cb44f1f355c019cbd9261c2efcc6f59e1e9a[m
+Author: prima <222212673@stis.ac.id>
+Date:   Wed Jan 8 11:56:45 2025 +0700
+
+    perubahan master file
+
+[33mcommit d06eda394669c5fa636d9125e763e4029f77c0d9[m
+Author: addaal24 <222212744@stis.ac.id>
+Date:   Wed Jan 8 01:04:08 2025 +0700
+
+    menambahkan tombol detail di halaman beban kerja organik-detail
+
+[33mcommit 1eda933c497b1df67b6f166c958cbbc84e83c3ee[m
+Merge: d6f0af0 3f9d380
+Author: addaal24 <222212744@stis.ac.id>
+Date:   Wed Jan 8 00:33:48 2025 +0700
+
+    Merge branch 'afdal' of https://github.com/bagas334/sidokter into afdal
+
+[33mcommit d6f0af02a10a7428642aa7d4503dd4a2fc829db9[m
+Author: addaal24 <222212744@stis.ac.id>
+Date:   Wed Jan 8 00:31:56 2025 +0700
+
+    merapikan halaman bagian beban kerja penugasan-all
+
+[33mcommit b6a452e369360ed7239e2d99fd42707db6519708[m
+Merge: 302c2d2 f8350b6
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Tue Jan 7 20:41:27 2025 +0700
+
+    Merge pull request #29 from bagas334/main
+    
+    update
+
+[33mcommit 64c8fa582e3169b57c94a0634a524ffba77d6f13[m
+Merge: 6d6d8f0 1230a54
+Author: prima <222212673@stis.ac.id>
+Date:   Tue Jan 7 20:40:02 2025 +0700
+
+    Merge branch 'prima_branch' of https://github.com/bagas334/sidokter into prima_branch
+
+[33mcommit f8350b6b4485f8ef6aae92ece55b6cd9b0431448[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Tue Jan 7 20:38:25 2025 +0700
+
+    perbaikan 1
+
+[33mcommit 89666fa5a78217db74e2ff940334e7944cdce561[m
+Merge: 2d5f0cf 4d14cce
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Tue Jan 7 20:35:00 2025 +0700
+
+    Merge pull request #28 from bagas334/beban_kerja
+    
+    perbaikan grafik organik
+
+[33mcommit 6d6d8f061f08ff7e71e53ae0211c33e40c00f53c[m
+Author: prima <222212673@stis.ac.id>
+Date:   Tue Jan 7 19:55:42 2025 +0700
+
+    coba
+
+[33mcommit 4d14cce355f75d10849ba3824256becc5b4dc6be[m
+Author: Novia Ade Yuanita <222212802@stis.ac.id>
+Date:   Tue Jan 7 18:20:28 2025 +0700
+
+    perbaikan grafik organik
+
+[33mcommit 2d5f0cfd45f16cab126da6c2b5f152313d6f3444[m
+Merge: 06da323 302c2d2
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Tue Jan 7 18:04:48 2025 +0700
+
+    Merge pull request #27 from bagas334/akbar
+    
+    Merge pull request #26 from bagas334/main
+
+[33mcommit 06da323221e16d4c8dfe2e0c46963bed900e6840[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Tue Jan 7 17:55:40 2025 +0700
+
+    ubah versi
+
+[33mcommit 302c2d24961d73292a6aeb9e92d17a254e7273a4[m
+Merge: 7816066 d335fac
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Tue Jan 7 17:54:04 2025 +0700
+
+    Merge pull request #26 from bagas334/main
+    
+    Merge
+
+[33mcommit 3f9d380036fa1eb6c20bc07659a25adf69b611ce[m
+Merge: a9ce493 d335fac
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Tue Jan 7 15:19:55 2025 +0700
+
+    Merge pull request #25 from bagas334/main
+    
+    CobaMerge
+
+[33mcommit d335face1b765968015747b5d6c2be62a5c54beb[m
+Merge: ccb6cb9 a9ce493
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Tue Jan 7 15:19:08 2025 +0700
+
+    Merge pull request #24 from bagas334/afdal
+    
+    memperbaiki frontend beban kerja organik, detail organik
+
+[33mcommit 1230a549c8022d061dcb9fb8dc96323a4b0f970f[m
+Author: prima <222212673@stis.ac.id>
+Date:   Tue Jan 7 03:16:32 2025 +0700
+
+    coba2
+
+[33mcommit 3768b15ba767b699ecd93ee9b4fe77c33577a3fe[m
+Author: prima <222212673@stis.ac.id>
+Date:   Tue Jan 7 03:08:43 2025 +0700
+
+    coba
+
+[33mcommit a9ce493fd2efd2ec4f685cc6b4077fe7f6b81010[m
+Author: addaal24 <222212744@stis.ac.id>
+Date:   Mon Jan 6 23:08:05 2025 +0700
+
+    memperbaiki frontend beban kerja organik, detail organik
+
+[33mcommit ccb6cb97d1ee9947b7f35fbcd6eae6f902d34085[m
+Merge: deeb366 d4dd14a
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Mon Jan 6 15:44:31 2025 +0700
+
+    Merge branch 'main' of https://github.com/bagas334/sidokter
+
+[33mcommit deeb3668423b8b1d82e43886e8b0f011403115b0[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Mon Jan 6 15:44:07 2025 +0700
+
+    validasi penambahan organik
+
+[33mcommit 1377636a06c15f52951b18b5c117c0c3d1a21f14[m
+Merge: bdc44d6 d4dd14a
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Mon Jan 6 14:44:03 2025 +0700
+
+    Merge pull request #23 from bagas334/main
+    
+    gabunggg
+
+[33mcommit d4dd14ab9ad83cb777e1919507dace48bfecce7e[m
+Merge: 398a925 7816066
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Mon Jan 6 14:42:34 2025 +0700
+
+    Merge pull request #22 from bagas334/akbar
+    
+    Merge pull request #21 from bagas334/main
+
+[33mcommit 781606611efcf3e5169e035cdce662ef6f4c3180[m
+Merge: 0b2f40a 398a925
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Mon Jan 6 14:42:10 2025 +0700
+
+    Merge pull request #21 from bagas334/main
+    
+    gabung
+
+[33mcommit 398a925ec8abed365d87c9863c975addde366186[m[33m ([m[1;32mafdal[m[33m)[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Mon Jan 6 14:32:27 2025 +0700
+
+    coba
+
+[33mcommit 7281f65d6132617d24a5901fbdf89d7af52abc8d[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Mon Jan 6 14:15:39 2025 +0700
+
+    perbaikan view ketua tim
+
+[33mcommit 5775100e2cfc68e0b449ee574084f7ce18cd3ed1[m
+Merge: f18284a bdc44d6
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Mon Jan 6 12:35:13 2025 +0700
+
+    Merge pull request #20 from bagas334/prima_branch
+    
+    Merge pull request #19 from bagas334/akbar
+
+[33mcommit bdc44d6b8fa740572b4635f75cfc817b87625a25[m
+Merge: ec2f962 0b2f40a
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Mon Jan 6 12:19:44 2025 +0700
+
+    Merge pull request #19 from bagas334/akbar
+    
+    Merge pull request #15 from bagas334/main
+
+[33mcommit f18284a2fb6fbcdb11793547de4dbc10942bd25e[m
+Merge: 4089dcd 0b2f40a
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Mon Jan 6 12:17:59 2025 +0700
+
+    Merge pull request #18 from bagas334/akbar
+    
+    Merge pull request #15 from bagas334/main
+
+[33mcommit 4089dcd69f5b459beb9a3595024e9e25844a1e14[m
+Merge: cdd1400 ec2f962
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Mon Jan 6 12:17:38 2025 +0700
+
+    Merge pull request #17 from bagas334/prima_branch
+    
+    Prima branch
+
+[33mcommit ec2f962b085af9110dec0ab89c1c1741e63f64e1[m
+Author: prima <222212673@stis.ac.id>
+Date:   Mon Jan 6 12:15:59 2025 +0700
+
+    sinkronisasi branch
+
+[33mcommit cdd14008b649373a73aa09247bfc6f36805a64cb[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Mon Jan 6 12:13:41 2025 +0700
+
+    perbaikan kecil
+
+[33mcommit cdbefeba08e708e9fe9b775445024755c664724b[m
+Merge: 43d0cb7 05fe8f9
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Mon Jan 6 11:50:40 2025 +0700
+
+    Merge pull request #16 from bagas334/main
+    
+    yoi
+
+[33mcommit 0b2f40ab9312ab1ac7af03ba2bddeac51f98f617[m
+Merge: 410945c 05fe8f9
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Mon Jan 6 11:44:10 2025 +0700
+
+    Merge pull request #15 from bagas334/main
+    
+    try
+
+[33mcommit 05fe8f979c413d9aa65a8245088ce72b203722a7[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Mon Jan 6 10:08:14 2025 +0700
+
+    sementara commit
+
+[33mcommit af2ad2c5780d1202653de6d50b1f7aeeb34f24e4[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sun Jan 5 18:23:07 2025 +0700
+
+    perbaikan fitur organik
+
+[33mcommit c852b7507263b1b7a0a8062ec11008761b3d0b1d[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sun Jan 5 11:21:40 2025 +0700
+
+    perbaikan besar-besaran
+
+[33mcommit 016af71312498a5b50a4256c12fc557fc4b3b68d[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sat Jan 4 21:28:33 2025 +0700
+
+    perbaikan dashboard admin
+
+[33mcommit edcf9d71e62b5f0fc34970566cf89e3be0c570c8[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sat Jan 4 15:05:18 2025 +0700
+
+    develop halaman home
+
+[33mcommit 75674fb1b29c1af58e1863990de527922a67dad0[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Fri Jan 3 07:12:45 2025 +0700
+
+    validasi pendapatan mitra
+
+[33mcommit b85607d732a2a331dfcb9d2497dcaa921a786410[m
+Merge: 470c5d5 410945c
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Fri Jan 3 06:45:10 2025 +0700
+
+    Merge pull request #14 from bagas334/akbar
+    
+    Akbar
+
+[33mcommit 470c5d591315c55eebefe945ed037217f4c968b0[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Fri Jan 3 06:41:24 2025 +0700
+
+    penambahan validasi tipis
+
+[33mcommit fe59e9d34eb28c67512ce9158d6a5b73c68c64cc[m
+Merge: eb37c3a 9e8aa46
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Wed Jan 1 19:36:09 2025 +0700
+
+    penambahan fitur validasi buat penugasan
+
+[33mcommit 410945c92106f5e693a661d44c5a0247479ccca4[m
+Author: Fakhrizal Akbar <222212595@stis.ac.id>
+Date:   Tue Dec 31 18:56:50 2024 +0700
+
+    31desember2024
+
+[33mcommit 7cc3d72c71a47cc92d6ccadd10bf96f55bbe68ff[m
+Merge: 43d0cb7 9e8aa46
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Tue Dec 31 12:12:57 2024 +0700
+
+    Merge pull request #13 from bagas334/main
+    
+    ehhh
+
+[33mcommit eb37c3aa33e883895e4d6f13ff801de10457e381[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Mon Dec 30 17:32:46 2024 +0700
+
+    perbaikan error
+
+[33mcommit 9e8aa46e54d9adea19e211dc038aa2984d2e672d[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Mon Dec 30 17:09:49 2024 +0700
+
+    coba
+
+[33mcommit 4b1cc1956d041c3cfa1f1e487370f430c335a9ba[m
+Merge: f7b718b a0d950c
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Mon Dec 30 17:06:22 2024 +0700
+
+    Merge pull request #12 from bagas334/beban_kerja
+    
+    Beban kerja
+
+[33mcommit f7b718b932907c942cfe27c289bb63f4e318c0a5[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sun Dec 29 18:35:08 2024 +0700
+
+    penambahan fitur manajemen sampel
+
+[33mcommit 42785632598bf5dc49e2f2d2dc277b055d6bae12[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sun Dec 29 13:06:39 2024 +0700
+
+    perbaikan edit penugasan
+
+[33mcommit dc5252d16cbdf8a91f2a2d702599869ca0acb0bb[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sat Dec 28 20:38:38 2024 +0700
+
+    perbaikan organik
+
+[33mcommit a0d950c710c499c647dc80e3d472fb8817cd00ca[m
+Author: Novia Ade Yuanita <222212802@stis.ac.id>
+Date:   Sat Dec 28 20:37:00 2024 +0700
+
+    commit keenam
+
+[33mcommit 965f5d94cff0dd5b430ce879604d22a1f7447986[m
+Author: Novia Ade Yuanita <222212802@stis.ac.id>
+Date:   Sat Dec 28 18:46:01 2024 +0700
+
+    commit kelima
+
+[33mcommit 6c2d19899762a9b7883c9b9d8cd6df70161c716f[m
+Merge: 2aebf19 c05312f
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sat Dec 28 15:24:30 2024 +0700
+
+    Merge branch 'main' of https://github.com/bagas334/sidokter
+
+[33mcommit 2aebf192c2333f8e9b67fcb32e262247b6af5a40[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Sat Dec 28 15:24:04 2024 +0700
+
+    penambahan backend organik
+
+[33mcommit c05312f981dbf46d9796a5b9e898dc24ee30430b[m
+Merge: b944521 b3b796f
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Fri Dec 27 20:31:53 2024 +0700
+
+    Merge pull request #11 from bagas334/login_page
+    
+    coba dulu gan
+
+[33mcommit b944521de820935fac3a03f72d3eecfae2355466[m
+Merge: 9243bee 43d0cb7
+Author: Fakhrizal Akbar <222212595@stis.ac.id>
+Date:   Fri Dec 27 20:23:47 2024 +0700
+
+    akbar
+
+[33mcommit c79dab790008fd31d3d82a96b5ce2f23813bea85[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Fri Dec 27 20:18:31 2024 +0700
+
+    cobaaa
+
+[33mcommit 43d0cb70773b25578ec25a80eeb580df0e03d59c[m[33m ([m[1;31morigin/organik[m[33m, [m[1;31morigin/dashboard[m[33m, [m[1;32morganik[m[33m, [m[1;32mima[m[33m)[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Fri Dec 27 18:48:18 2024 +0700
+
+    menambahkan fitur perusahaan
+
+[33mcommit 324623a814acdf6d5153ad8ba3fdb3b0c06258cb[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Fri Dec 27 08:29:02 2024 +0700
+
+    perbaikan halaman detail organik
+
+[33mcommit 8b42bc20208a143d7a7928b3893302285da7c730[m
+Merge: be609a2 61ac87a
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Thu Dec 26 10:51:38 2024 +0700
+
+    Merge pull request #10 from bagas334/beban_kerja
+    
+    Beban kerja
+
+[33mcommit 9243bee6e5078edf2e32b9895ce97fc2da246d49[m
+Author: Fakhrizal Akbar <222212595@stis.ac.id>
+Date:   Wed Dec 25 17:16:43 2024 +0700
+
+    tes
+
+[33mcommit 61ac87a8caedf656a808ce1a23aca2fbef099df2[m
+Author: Novia Ade Yuanita <222212802@stis.ac.id>
+Date:   Wed Dec 25 15:48:38 2024 +0700
+
+    commit keempat
+
+[33mcommit 2779b4c50b45b1e1c7f3750f22910b06ab0b55a5[m
+Author: Novia Ade Yuanita <222212802@stis.ac.id>
+Date:   Wed Dec 25 15:42:29 2024 +0700
+
+    commit keempat rev
+
+[33mcommit be609a2ee1a1c9cec75508d7ec9fcec7db5b858f[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Wed Dec 25 15:32:21 2024 +0700
+
+    sementara
+
+[33mcommit 7b5a6f3ffd502b9622c51415d134b8b69eb9c6fd[m
+Author: Novia Ade Yuanita <222212802@stis.ac.id>
+Date:   Wed Dec 25 15:23:15 2024 +0700
+
+    commit keempat
+
+[33mcommit b3b796f433307e2cab5e55c81336c8abcc2c5377[m[33m ([m[1;31morigin/login_page[m[33m)[m
+Author: Fakhrizal Akbar <222212595@stis.ac.id>
+Date:   Wed Dec 25 15:20:41 2024 +0700
+
+    coba dulu gan
+
+[33mcommit 8f8dd88eea26cb2a1d91497ad46f3ff0dfa52d90[m
+Merge: 759a146 7f675af
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Wed Dec 25 14:57:43 2024 +0700
+
+    coba lagi
+
+[33mcommit 9bbd70d7109ce72713b1000a9b68e52be7b66a7d[m
+Merge: 1140111 c68f746
+Author: Novia Ade Yuanita <222212802@stis.ac.id>
+Date:   Wed Dec 25 14:33:52 2024 +0700
+
+    Merge branch 'beban_kerja' of https://github.com/bagas334/sidokter into beban_kerja
+    Merge branch 'beban_kerja' of https://github.com/bagas334/sidokter into beban_kerja
+    Menyinkronkan perubahan dari branch remote ke lokal
+    Merge branch 'beban_kerja' of https://github.com/bagas334/sidokter into beban_kerja
+    Menyinkronkan perubahan dari branch remote ke lokal
+
+[33mcommit 1140111bee766ae31d343f7bbae96bf60626429b[m
+Author: Novia Ade Yuanita <222212802@stis.ac.id>
+Date:   Wed Dec 25 14:29:43 2024 +0700
+
+    commit ketiga
+
+[33mcommit 759a146f469fe75e0b911ce7fc282ad04dc603c4[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Wed Dec 25 13:29:18 2024 +0700
+
+    simpan
+
+[33mcommit 7f675af491deecb7752de289da2a0285febce6f6[m
+Merge: efd9faf f6ed3a5
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Wed Dec 25 13:25:39 2024 +0700
+
+    Merge pull request #9 from bagas334/login_page
+    
+    orghin logi_page
+
+[33mcommit f6ed3a5468f2cecf68d16e4da201fb6c9b7dbbbb[m
+Author: Fakhrizal Akbar <222212595@stis.ac.id>
+Date:   Wed Dec 25 13:11:39 2024 +0700
+
+    orghin logi_page
+
+[33mcommit efd9faf6ba8d1cbe2434b5e9afd416bf6f0cc184[m
+Merge: 670811b 09f922f
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Wed Dec 25 12:31:50 2024 +0700
+
+    Merge pull request #8 from bagas334/login_page
+    
+    login page 1
+
+[33mcommit 09f922f696e0919147d20beeec7ca9f5b22e411b[m
+Author: Fakhrizal Akbar <222212595@stis.ac.id>
+Date:   Wed Dec 25 12:29:59 2024 +0700
+
+    login page 1
+
+[33mcommit 670811b3432b947cc0549559eb37a361438d9d17[m[33m ([m[1;32mlogin_page[m[33m)[m
+Merge: ddd077e c68f746
+Author: bagas334 <153337835+bagas334@users.noreply.github.com>
+Date:   Tue Dec 24 21:27:47 2024 +0700
+
+    Merge pull request #7 from bagas334/beban_kerja
+    
+    revisi paginate kegiatan
+
+[33mcommit c68f74666ab9db9e274fa6e7c8c3926eb96263e9[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Tue Dec 24 21:27:01 2024 +0700
+
+    revisi paginate kegiatan
+
+[33mcommit ddd077ec50f90faf3b8037e1090ac1978489e980[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Tue Dec 24 17:50:39 2024 +0700
+
+    commit kedua
+
+[33mcommit da26b9fe4f9a6da5c3a7686df35f7136abb4c745[m
+Author: bagassunu <bagassunu334@gmail.com>
+Date:   Fri Dec 20 12:16:22 2024 +0700
+
+    commit pertama

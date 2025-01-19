@@ -21,6 +21,9 @@
                 :label="'Jumlah Dikerjakan'"
                 :name="'dikerjakan'"
                 required></x-input.text-field>
+            @error('dikerjakan')
+            <div class="text-sm text-red-500" id="namaKegiatanError">{{$message}}</div>
+            @enderror
 
             <x-input.text-field
                 :label="'Link Bukti'"
