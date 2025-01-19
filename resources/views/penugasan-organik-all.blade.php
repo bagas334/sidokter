@@ -29,7 +29,7 @@
                         <td class="text-center">{{ $item->nama }}</td>
                         <td class="text-center">
                             <div class="flex justify-center px-2">
-                                <a class="px-2 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600" href="{{route('detail-organik',['id'=>$item->id])}}">Detail</a>
+                                <a class="px-2 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600" href="{{route('organik-detail',['id'=>$item->id])}}">Detail</a>
                             </div>
                         </td>
                     </tr>

@@ -38,7 +38,7 @@ class PenugasanMitraController extends Controller
         $tanggal_penugasan = Carbon::now()->format('Y-m-d');
 
         $request->validate([
-            'mitra' => 'required|unique:penugasan_mitra,petugas',
+            'petugas' => 'required|unique:penugasan_mitra,petugas',
             'target' => 'required|numeric',
         ]);
 
@@ -46,13 +46,14 @@ class PenugasanMitraController extends Controller
         $request->merge([
             'tanggal_penugasan' => $tanggal_penugasan,
         ]);
+
         $harga = Kegiatan::where('id', $request->kegiatan_id)->first()->harga_satuan;
         $mitra = Mitra::where('id', $request->petugas)->first();
         $pendapatanAwal = $mitra->pendapatan;
         $pendapatanAkhir = $pendapatanAwal + $harga * $request->target;
 
         if ($pendapatanAkhir > 4000000) {
-            return redirect()->back();
+            return redirect()->back()->with('pendapatanError', 'Pendapatan total di atas 4 juta.');
         }
 
         $mitra->pendapatan = $pendapatanAkhir;
@@ -73,15 +74,24 @@ class PenugasanMitraController extends Controller
     public function update(Request $request, $id, $pegawai)
     {
         $request->validate([
-            'mitra' => 'unique:penugasan_mitra,petugas|required',
-            'target' => 'required|number',
-            'terlaksana' => 'number',
+            'target' => 'required|numeric',
+            'terlaksana' => 'numeric',
         ]);
 
         $penugasan_mitra = PenugasanMitra::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
         if ($penugasan_mitra->target < $request->terlaksana) {
-            return redirect()->back();
+            return redirect()->back()->with('terlaksanaError', 'Jumlah terlaksana melebihi target');
         }
+
+        $harga = Kegiatan::where('id', $request->kegiatan_id)->first()->harga_satuan;
+        $mitra = Mitra::where('id', $request->petugas)->first();
+        $pendapatanAwal = $mitra->pendapatan;
+        $pendapatanAkhir = $pendapatanAwal + $harga * $request->target;
+
+        if ($pendapatanAkhir > 4000000) {
+            return redirect()->back()->with('pendapatanError', 'Pendapatan total di atas 4 juta.');
+        }
+
         $penugasan_mitra->update($request->except('_token', '_method'));
         return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
