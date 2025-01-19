@@ -30,19 +30,15 @@ class PenugasanPegawaiController extends Controller
             ->pluck('catatan')
             ->toArray();
 
-        // Pass the variables to the view
         return view('penugasan-organik-detail', compact('detail_tugas', 'kegiatan', 'harga_satuan', 'catatan'));
     }
 
     public function index(Request $request)
     {
-        $pegawai = Pegawai::paginate(10);
-
         $tanggalMulai = $request->get('tanggal_mulai');
         $tanggalAkhir = $request->get('tanggal_akhir');
 
-        $query = DB::table('penugasan_pegawai')
-            ->where('petugas', auth()->user()->id);
+        $query = PenugasanPegawai::with('pegawai', 'kegiatan');
 
         if ($tanggalMulai && $tanggalAkhir) {
             $query->whereBetween('created_at', [$tanggalMulai, $tanggalAkhir]);
@@ -54,7 +50,7 @@ class PenugasanPegawaiController extends Controller
 
         $penugasan = $query->paginate(10);
 
-        return view('penugasan-organik-all', compact('pegawai', 'penugasan'));
+        return view('penugasan-organik-all', compact('penugasan'));
     }
 
     public function view($id, $pegawai)
@@ -75,7 +71,7 @@ class PenugasanPegawaiController extends Controller
 
         $kegiatan = Kegiatan::find($id);
         $nama_kegiatan = $kegiatan ? $kegiatan->nama : 'Unknown Kegiatan';
-        $harga_satuan = $kegiatan ? $kegiatan->harga_satuan : null; // Fetch harga_satuan if available
+        $harga_satuan = $kegiatan ? $kegiatan->harga_satuan : null;
         $nama_pegawai = Pegawai::find($pegawai)->nama;
 
         if (auth()->user()->jabatan == 'Ketua Tim') {
@@ -87,24 +83,22 @@ class PenugasanPegawaiController extends Controller
         $penugasan_pegawai_id = $penugasan_pegawai->id;
         $tugas_pegawai = TugasPegawai::where('penugasan_pegawai', $penugasan_pegawai_id)
             ->whereIn('status', ['proses', 'selesai'])
-            ->get();
+            ->paginate(10);
+        $pengajuan_pegawai = TugasPegawai::where(['penugasan_pegawai' => $penugasan_pegawai_id, 'status' => 'diajukan'])->paginate(10);
 
-        $selesai = TugasPegawai::where('status', 'selesai')->sum('dikerjakan');
-        $proses = TugasPegawai::where('status', 'proses')->sum('dikerjakan');
-        $diajukan = TugasPegawai::where('status', 'diajukan')->sum('dikerjakan');
-
-
-        $pengajuan_pegawai = TugasPegawai::where(['penugasan_pegawai' => $penugasan_pegawai_id, 'status' => 'diajukan'])->get();
-
+        $created_at = $penugasan_pegawai->created_at;
+        $finished_at = $penugasan_pegawai->finished_at;
         $catatan = TugasPegawai::where('penugasan_pegawai', $penugasan_pegawai_id)
             ->whereIn('status', ['proses', 'selesai'])
             ->pluck('catatan')
             ->toArray();
 
-        $totalTarget = $penugasan_pegawai->target;
+        $totalTasks = TugasPegawai::where('penugasan_pegawai', $penugasan_pegawai_id)->count();
+        $completedTasks = TugasPegawai::where('penugasan_pegawai', $penugasan_pegawai_id)->where('status', 'selesai')->count();
+        $assignedTasks = TugasPegawai::where('penugasan_pegawai', $penugasan_pegawai_id)->where('status', 'diajukan')->count();
 
-        $progresDitugaskan = $totalTarget > 0 ? ($proses / $totalTarget) * 100 : 0;
-        $progresSelesai = $totalTarget > 0 ? ($selesai / $totalTarget) * 100 : 0;
+        $progresSelesai = $totalTasks > 0 ? ($completedTasks / $totalTasks) * 100 : 0;
+        $progresDitugaskan = $totalTasks > 0 ? ($assignedTasks / $totalTasks) * 100 : 0;
 
         return view('penugasan-detail-organik', compact(
             'pengajuan_pegawai',
@@ -116,13 +110,13 @@ class PenugasanPegawaiController extends Controller
             'harga_satuan',
             'tugas_pegawai',
             'catatan',
-            'proses',
-            'selesai',
-            'diajukan',
-            'progresDitugaskan',
-            'progresSelesai'
+            'created_at',
+            'finished_at',
+            'progresSelesai',
+            'progresDitugaskan'
         ));
     }
+
 
     public function create($id)
     {
@@ -157,7 +151,13 @@ class PenugasanPegawaiController extends Controller
 
         $penugasan = PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
 
+
         if ($penugasan) {
+            $request->merge([
+                'created_at' => $penugasan->created_at,
+                'finished_at' => $penugasan->finished_at,
+            ]);
+
             PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])
                 ->update($request->except('_token', '_method'));
         }
@@ -168,6 +168,7 @@ class PenugasanPegawaiController extends Controller
 
     public function edit($id, $pegawai)
     {
+
         $tugas_pegawai = PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
         return view('penugasan-organik-edit', compact('tugas_pegawai', 'id'));
     }
