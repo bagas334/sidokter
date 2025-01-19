@@ -24,6 +24,12 @@
                         id="target"
                         value="{{$awal->target}}"
                         :label_size="'md'"></x-input.number-field>
+                    <x-input.number-field
+                        :label="'Terlaksana'"
+                        :name="'terlaksana'"
+                        id="terlaksana"
+                        value="0"
+                        :label_size="'md'"></x-input.number-field>
                 </x-input.double-input-layout>
 
                 <div class="mb-1 text-gray-500">Potensi pendapatan mitra : <span id="pendapatan"></span></div>

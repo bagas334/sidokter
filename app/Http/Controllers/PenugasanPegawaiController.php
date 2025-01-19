@@ -152,6 +152,8 @@ class PenugasanPegawaiController extends Controller
             'status' => 'required|string|in:Ditugaskan'
         ]);
 
+
+
         PenugasanPegawai::create($request->except('_token', '_method'));
         return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
@@ -214,12 +216,36 @@ class PenugasanPegawaiController extends Controller
         $id = $request->kegiatan_id;
         $pegawai = $request->pegawai_id;
 
+        $penugasan_pegawai = PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
+
+        $penugasan_pegawai_id = $penugasan_pegawai->id;
+
+
+        $selesai = TugasPegawai::where([
+            ['penugasan_pegawai', '=', $penugasan_pegawai_id],
+            ['status', '=', 'selesai']
+        ])->sum('dikerjakan');
+
+        $proses = TugasPegawai::where([
+            ['penugasan_pegawai', '=', $penugasan_pegawai_id],
+            ['status', '=', 'proses']
+        ])->sum('dikerjakan');
+
+
+        if ($proses + $selesai + $request->dikerjakan > $penugasan_pegawai->target) {
+            return redirect()->back();
+            // tambahkan pesan error disini
+        }
+
+        $request->validate(['dikerjakan' => 'required|numeric']);
+
         $penugasanPegawai = TugasPegawai::create($request->except('_token', '_method', 'id', 'pegawai_id'));
 
         $kegiatan = Kegiatan::find($id);
         $nama_kegiatan = $kegiatan ? $kegiatan->nama : 'Unknown Kegiatan';
         $nama_pegawai = $nama_pegawai = Pegawai::find($pegawai)->nama;
         $tugas_pegawai = TugasPegawai::find($penugasanPegawai->id);
+
 
         return redirect()->route('penugasan-organik-detail', ['id' => $id, 'petugas' => $pegawai]);
     }

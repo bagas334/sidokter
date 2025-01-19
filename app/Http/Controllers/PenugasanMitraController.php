@@ -37,6 +37,12 @@ class PenugasanMitraController extends Controller
     {
         $tanggal_penugasan = Carbon::now()->format('Y-m-d');
 
+        $request->validate([
+            'mitra' => 'required|unique:penugasan_mitra,petugas',
+            'target' => 'required|numeric',
+        ]);
+
+
         $request->merge([
             'tanggal_penugasan' => $tanggal_penugasan,
         ]);
@@ -44,7 +50,8 @@ class PenugasanMitraController extends Controller
         $mitra = Mitra::where('id', $request->petugas)->first();
         $pendapatanAwal = $mitra->pendapatan;
         $pendapatanAkhir = $pendapatanAwal + $harga * $request->target;
-        if ($pendapatanAkhir > 100000) {
+
+        if ($pendapatanAkhir > 4000000) {
             return redirect()->back();
         }
 
@@ -56,6 +63,8 @@ class PenugasanMitraController extends Controller
 
     public function edit($id, $petugas)
     {
+
+
         $awal = PenugasanMitra::where(['kegiatan_id' => $id, 'petugas' => $petugas])->with('kegiatan', 'mitra')->first();
         $mitra = Mitra::all();
         return view('penugasan-mitra-edit', compact('id', 'petugas', 'mitra', 'awal'));
@@ -63,7 +72,17 @@ class PenugasanMitraController extends Controller
 
     public function update(Request $request, $id, $pegawai)
     {
-        PenugasanMitra::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first()->update($request->except('_token', '_method'));
+        $request->validate([
+            'mitra' => 'unique:penugasan_mitra,petugas|required',
+            'target' => 'required|number',
+            'terlaksana' => 'number',
+        ]);
+
+        $penugasan_mitra = PenugasanMitra::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
+        if ($penugasan_mitra->target < $request->terlaksana) {
+            return redirect()->back();
+        }
+        $penugasan_mitra->update($request->except('_token', '_method'));
         return redirect()->route('beban-kerja-tugas', ['id' => $id]);
     }
 
