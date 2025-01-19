@@ -32,7 +32,6 @@
                     <div class="w-full pl-2 pb-6 flex justify-between">
                         <span class="text-2xl text-teal-600 font-medium">Tinjau Beban Kerja</span>
                         <x-tambah-button :route="route('pengumpulan-tugas-organik-create', ['id' => $id, 'petugas' => $pegawai])">
-
                         </x-tambah-button>
                     </div>
 
@@ -53,7 +52,7 @@
                                 <tbody>
                                     @foreach ($tugas_pegawai as $item)
                                     <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $loop->iteration + ($tugas_pegawai->currentPage() - 1) * $tugas_pegawai->perPage() }}</td>
                                         <td>{{ $item->dikerjakan }}</td>
                                         <td class="text-center">{{ $item->updated_at }}</td>
                                         <td class="text-center">{{ $item->status }}</td>
@@ -89,6 +88,11 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+
+                    {{-- Pagination --}}
+                    <div class="mt-4">
+                        <x-paginator :paginator="$tugas_pegawai" :url="request()->fullUrlWithQuery([])" />
                     </div>
                 </div>
             </div>
@@ -202,6 +206,10 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+                {{-- Pagination --}}
+                <div class="mt-4">
+                    <x-paginator :paginator="$tugas_pegawai" :url="request()->fullUrlWithQuery([])" />
                 </div>
             </div>
         </div>

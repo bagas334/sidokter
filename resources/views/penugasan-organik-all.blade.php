@@ -22,14 +22,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($pegawai as $item)
+                    @foreach ($penugasan as $item)
                     <tr>
-                        <td class="text-center">{{ $loop->iteration + ($pegawai->currentPage() - 1) * $pegawai->perPage() }}</td>
-                        <td class="text-center">{{ $item->nip_bps }}</td>
-                        <td class="text-center">{{ $item->nama }}</td>
+                        <td class="text-center">{{ $loop->iteration + ($penugasan->currentPage() - 1) * $penugasan->perPage() }}</td>
+                        <td class="text-center">{{ $item->pegawai->nip_bps }}</td>
+                        <td class="text-center">{{ $item->pegawai->nama }}</td>
                         <td class="text-center">
                             <div class="flex justify-center px-2">
-                                <a class="px-2 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600" href="{{route('detail-organik',['id'=>$item->id])}}">Detail</a>
+                                <a class="px-2 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600" href="{{ route('penugasan-organik-detail', ['id' => $item->kegiatan->id, 'petugas' => $item->pegawai->id]) }}">
+                                    Detail
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -40,7 +42,7 @@
     </div>
 
     {{-- Pagination --}}
-    <x-paginator :paginator="$pegawai" :url="request()->fullUrlWithQuery([])" />
+    <x-paginator :paginator="$penugasan" :url="request()->fullUrlWithQuery([])" />
 
 </div>
 </div>
