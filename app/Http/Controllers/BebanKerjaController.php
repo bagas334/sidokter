@@ -122,53 +122,43 @@ class BebanKerjaController extends Controller
 
         if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan'])) {
             $query = Kegiatan::query();
-        } elseif ($user && $user->jabatan == 'Organik') {
-            $query = PenugasanPegawai::where('petugas', $user->id)->with('kegiatan');
         } else {
-            $query = Kegiatan::where('asal_fungsi', $user->fungsi_ketua_tim);
+            $query = PenugasanPegawai::where('petugas', $user->pegawai_id)->with('kegiatan');
         }
 
-        // Filter berdasarkan parameter tanggal_mulai dan tanggal_akhir
         if ($request->filled('tanggal_mulai') && $request->filled('tanggal_akhir')) {
             $tanggalMulai = Carbon::parse($request->tanggal_mulai)->startOfDay();
             $tanggalAkhir = Carbon::parse($request->tanggal_akhir)->endOfDay();
 
             $query->whereBetween('tanggal_mulai', [$tanggalMulai, $tanggalAkhir]);
         } elseif ($request->filled('tanggal_mulai')) {
-            // Jika hanya tanggal mulai yang diisi
             $tanggalMulai = Carbon::parse($request->tanggal_mulai)->startOfDay();
             $query->where('tanggal_mulai', '>=', $tanggalMulai);
         } elseif ($request->filled('tanggal_akhir')) {
-            // Jika hanya tanggal akhir yang diisi
             $tanggalAkhir = Carbon::parse($request->tanggal_akhir)->endOfDay();
             $query->where('tanggal_mulai', '<=', $tanggalAkhir);
         }
 
-        // Filter berdasarkan bulan (jika ada)
         if ($request->filled('bulan')) {
             $query->whereMonth('tanggal_mulai', $request->bulan);
         }
 
-        // Sorting berdasarkan parameter (sort dan order)
         if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim'])) {
-            $sort = $request->get('sort', 'tanggal_mulai'); // Default sort by 'tanggal_mulai'
-            $order = $request->get('order', 'asc'); // Default order is ascending
+            $sort = $request->get('sort', 'tanggal_mulai');
+            $order = $request->get('order', 'asc');
             $query->orderBy($sort, $order);
         }
-        // Perbarui kolom 'terlaksana' secara batch
+
         Kegiatan::query()->update([
             'terlaksana' => DB::raw('(
-        SELECT COALESCE(SUM(p.terlaksana), 0) 
-        FROM penugasan_pegawai p
-        WHERE p.kegiatan_id = kegiatan.id
-    ) + (
-        SELECT COALESCE(SUM(m.terlaksana), 0)
-        FROM penugasan_mitra m
-        WHERE m.kegiatan_id = kegiatan.id
-    )')
+                SELECT COALESCE(SUM(p.terlaksana), 0) 
+                FROM penugasan_pegawai p
+                WHERE p.kegiatan_id = kegiatan.id) + (
+                SELECT COALESCE(SUM(m.terlaksana), 0)
+                FROM penugasan_mitra m
+                WHERE m.kegiatan_id = kegiatan.id)')
         ]);
 
-        // Data tambahan untuk view
         $filterParams = $request->only('tanggal_mulai', 'tanggal_akhir', 'bulan', 'sort', 'order');
 
         if ($user && in_array($user->jabatan, ['Admin Kabupaten', 'Pimpinan', 'Ketua Tim'])) {

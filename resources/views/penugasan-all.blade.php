@@ -85,16 +85,22 @@
             <tbody>
                 @foreach($kegiatan as $item)
                 <tr class="{{ $loop->last ? 'border-b-0' : '' }}">
-                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $loop->iteration + ($kegiatan->currentPage() - 1) * $kegiatan->perPage() }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">
+                        {{ $loop->iteration + ($kegiatan->currentPage() - 1) * $kegiatan->perPage() }}
+                    </td>
                     <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->kegiatan->nama }}</td>
                     <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->kegiatan->asal_fungsi }}</td>
-                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->kegiatan->tanggal_mulai }}</td>
-                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->kegiatan->tanggal_akhir }}</td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">
+                        {{ \Carbon\Carbon::parse($item->kegiatan->tanggal_mulai)->format('d-m-Y') }}
+                    </td>
+                    <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">
+                        {{ \Carbon\Carbon::parse($item->kegiatan->tanggal_akhir)->format('d-m-Y') }}
+                    </td>
                     <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->target }}</td>
                     <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">{{ $item->terlaksana }}</td>
                     <td class="text-center {{ $loop->last ? 'rounded-b-lg' : '' }}">
                         <div class="flex justify-center space-x-2">
-                            <a href="/beban-kerja/{{$item->kegiatan_id}}/tugas-organik/{{auth()->user()->id}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-medium rounded-md">Tugas anda</a>
+                            <a href="/beban-kerja/{{$item->kegiatan_id}}/tugas-organik/{{auth()->user()->pegawai_id}}" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-medium rounded-md">Tugas anda</a>
                             <a href="/beban-kerja/{{$item->kegiatan_id}}/penugasan" class="mx-1 button bg-blue-500 py-1 px-2 text-white font-medium rounded-md">Detail</a>
                         </div>
                     </td>

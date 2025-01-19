@@ -30,7 +30,7 @@ class PenugasanPegawaiController extends Controller
             ->pluck('catatan')
             ->toArray();
 
-        return view('penugasan-organik-detail', compact('detail_tugas', 'kegiatan', 'harga_satuan', 'catatan'));
+        return view('penugasan-detail-organik', compact('detail_tugas', 'kegiatan', 'harga_satuan', 'catatan'));
     }
 
     public function index(Request $request)
@@ -55,11 +55,6 @@ class PenugasanPegawaiController extends Controller
 
     public function view($id, $pegawai)
     {
-        if (auth()->user()->jabatan == 'Organik') {
-            if (auth()->user()->id != $pegawai) {
-                return redirect()->back();
-            }
-        }
 
         $penugasan_pegawai = PenugasanPegawai::with(['pegawai', 'kegiatan'])
             ->where(['kegiatan_id' => $id, 'petugas' => $pegawai])
@@ -183,8 +178,8 @@ class PenugasanPegawaiController extends Controller
     {
         $penugasan = PenugasanPegawai::where(['kegiatan_id' => $id, 'petugas' => $pegawai])->first();
         $penugasan_pegawai_id = $penugasan->id;
-        $kegiatan = Kegiatan::find($id);  // Retrieve the Kegiatan for the given ID
-        return view('pengumpulan-tugas-organik-create', compact('penugasan_pegawai_id', 'id', 'pegawai', 'kegiatan'));  // Pass the $kegiatan variable to the view
+        $kegiatan = Kegiatan::find($id);
+        return view('pengumpulan-tugas-organik-create', compact('penugasan_pegawai_id', 'id', 'pegawai', 'kegiatan'));
     }
 
     public function createPengajuan($id, $pegawai)
@@ -207,12 +202,20 @@ class PenugasanPegawaiController extends Controller
 
         $penugasanPegawai = TugasPegawai::create($request->except('_token', '_method', 'id', 'pegawai_id'));
 
+        $tugas_pegawai = TugasPegawai::whereHas('penugasanPegawai', function ($query) use ($id, $pegawai) {
+            $query->where('kegiatan_id', $id)
+                ->where('petugas', $pegawai);
+        })
+            ->paginate(10);
+
         $kegiatan = Kegiatan::find($id);
-        $tugas_pegawai = TugasPegawai::find($penugasanPegawai->id);
+        $nama_kegiatan = $kegiatan ? $kegiatan->nama : 'Unknown Kegiatan';
 
-        return view('penugasan-organik-detail', compact('kegiatan', 'tugas_pegawai', 'id', 'pegawai'));  // Pass the $kegiatan variable to the view
+        return redirect()->route('penugasan-organik-detail', [
+            'id' => $request->kegiatan_id,
+            'petugas' => $request->pegawai_id
+        ]);
     }
-
 
     public function updateTugas(Request $request)
     {
@@ -224,7 +227,10 @@ class PenugasanPegawaiController extends Controller
         $kegiatan = Kegiatan::find($id);
         $tugas_pegawai = TugasPegawai::find($request->id);
 
-        return view('penugasan-organik-detail', compact('kegiatan', 'tugas_pegawai', 'id', 'pegawai'));
+        return redirect()->route('penugasan-organik-detail', [
+            'id' => $request->kegiatan_id,
+            'petugas' => $request->pegawai_id
+        ]);
     }
 
 
