@@ -3,8 +3,6 @@
 @section('title', 'Master Mitra')
 
 @section('content')
-<style>
-</style>
 <div class="size-full flex flex-col items-center px-4 overflow-x-hidden max-w-screen-md md:max-w-screen-xl">
     {{-- Judul --}}
     <div class="w-full pb-6">

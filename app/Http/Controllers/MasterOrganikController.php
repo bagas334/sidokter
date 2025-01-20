@@ -259,11 +259,10 @@ class MasterOrganikController extends Controller
         $user = User::where('id', $id)->first();
         if ($user->jabatan == 'Admin Kabupaten') {
             if (User::where('jabatan', 'Admin Kabupaten')->count() == 1) {
-                return redirect()->back();
+                return redirect()->back()->with('adminError', 'Tidak terdapat akun admin. Penghapusan ditolak');
             }
         }
 
-        dd('Mandeko sik');
         $user->delete();
         return redirect()->route('manajemen-user');
     }

@@ -57,21 +57,20 @@
         </div>
         @endif
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const modal = document.getElementById('pendapatanErrorModal');
+                const closeModalButton = document.getElementById('closeModal');
+
+                if (modal && closeModalButton) {
+                    closeModalButton.addEventListener('click', function() {
+                        modal.classList.add('hidden'); // Menyembunyikan modal
+                    });
+                }
+            });
+        </script>
+
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('pendapatanErrorModal');
-        const closeModalButton = document.getElementById('closeModal');
-
-        if (modal && closeModalButton) {
-            closeModalButton.addEventListener('click', function() {
-                modal.classList.add('hidden'); // Menyembunyikan modal
-            });
-        }
-    });
-</script>
-
 
 @endsection

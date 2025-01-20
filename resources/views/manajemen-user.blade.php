@@ -72,8 +72,29 @@
                 @endforelse
             </tbody>
         </table>
+        @if (session('adminError'))
+        <div id="adminErrorModal" class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center w-11/12 max-w-sm">
+                <h2 class="text-lg font-semibold text-red-600 mb-4">Error</h2>
+                <p class="text-gray-700 mb-6">{{ session('adminError')}}</p>
+                <button id="closeModal" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">OL</button>
+            </div>
+        </div>
     </div>
     <x-paginator :paginator="$pegawai" :url="request()->fullUrlWithQuery(['search' => request()->get('search'), 'page' => $pegawai->currentPage()])" />
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('adminErrorModal');
+        const closeModalButton = document.getElementById('closeModal');
+
+        if (modal && closeModalButton) {
+            closeModalButton.addEventListener('click', function() {
+                modal.classList.add('hidden');
+            });
+        }
+    });
+</script>
 
 @endsection
