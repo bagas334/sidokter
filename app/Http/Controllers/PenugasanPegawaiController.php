@@ -30,11 +30,7 @@ class PenugasanPegawaiController extends Controller
             ->pluck('catatan')
             ->toArray();
 
-<<<<<<< HEAD
-        return view('penugasan-organik-detail', compact('detail_tugas', 'kegiatan', 'harga_satuan', 'catatan'));
-=======
         return view('penugasan-detail-organik', compact('detail_tugas', 'kegiatan', 'harga_satuan', 'catatan'));
->>>>>>> 020277b2130901be440fa406a7d196b9d99c8478
     }
 
     public function index(Request $request)
